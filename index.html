@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- KONFIGURASI PWA AGAR BISA DI-INSTALL SEPERTI APK -->
+    <meta name="theme-color" content="#020714">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Cyber Vault">
+    <link rel="manifest" href="manifest.json">
+
     <!-- Mencegah Cache Browser -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -53,7 +61,6 @@
             --text-light: #ffffff;
             --text-muted: #a5f3fc;
             
-            /* Dynamic Opacity Variable for Glassmorphism */
             --glass-alpha: 0.28;
             --glass-blur: 16px;
         }
@@ -108,6 +115,33 @@
             padding: 20px 14px;
             animation: containerAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             transition: background 0.2s ease, backdrop-filter 0.2s ease;
+        }
+
+        /* TOMBOL INSTAL APLIKASI DI HEADER */
+        .install-app-btn {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.2) 0%, rgba(0, 119, 255, 0.2) 100%);
+            border: 1px solid rgba(0, 240, 255, 0.6);
+            color: #00f0ff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 8px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: none; /* Muncul otomatis jika PWA siap diinstal */
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin: 0 auto 14px auto;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            transition: all 0.2s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .install-app-btn:active {
+            transform: scale(0.95);
+            background: rgba(0, 240, 255, 0.4);
         }
 
         /* LAYAR LOCK SCREEN PIN */
@@ -295,7 +329,7 @@
             opacity: 0.95;
         }
 
-        /* PEMUTAR MUSIK DARI FOLDER HP - PRESISI & UKURAN TOMBOL KONTROL SERAGAM */
+        /* PEMUTAR MUSIK DARI FOLDER HP */
         .music-player-panel {
             background: rgba(0, 240, 255, 0.08);
             border: 1px solid rgba(0, 240, 255, 0.3);
@@ -344,7 +378,6 @@
             text-overflow: ellipsis;
         }
 
-        /* GRUP KONTROL MUSIK DENGAN UKURAN KONTROL YANG 100% SAMA PERSIS */
         .music-controls-group {
             display: flex;
             align-items: center;
@@ -374,7 +407,6 @@
             transform: scale(0.95);
         }
 
-        /* TOMBOL PREVIOUS & NEXT KOTAK 34px × 34px */
         .btn-music-skip {
             background: rgba(2, 12, 32, 0.85);
             border: 1px solid rgba(0, 240, 255, 0.4);
@@ -403,7 +435,6 @@
             display: block;
         }
 
-        /* TOMBOL PLAY / PAUSE DIBUAT SAMA PERSIS KOTAK 34px × 34px SEPERTI TOMBOL PREV & NEXT */
         .btn-music-play {
             background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%);
             border: none;
@@ -441,7 +472,7 @@
             flex-shrink: 0;
         }
 
-        /* POP-UP MODAL PLAYER MUSIK FULLSCREEN DI LUAR KONTAINER UTAMA */
+        /* POP-UP MODAL PLAYER MUSIK FULLSCREEN */
         .music-modal-overlay {
             position: fixed;
             top: 0;
@@ -517,7 +548,6 @@
             color: #fb7185;
         }
 
-        /* ANIMASI KASET / VINYL BERPUTAR */
         .vinyl-container {
             width: 130px;
             height: 130px;
@@ -636,7 +666,6 @@
             gap: 6px;
         }
 
-        /* TOMBOL HAPUS (X) SESUAI TEMA WEB */
         .playlist-delete-btn {
             color: #00f0ff;
             font-size: 0.85rem;
@@ -981,7 +1010,6 @@
             background: linear-gradient(135deg, rgba(0, 100, 180, 0.8) 0%, rgba(0, 50, 150, 0.8) 100%);
         }
 
-        /* JUDUL RIWAYAT TRANSAKSI KLIKABILITAS */
         .history-title-wrapper {
             display: flex;
             justify-content: space-between;
@@ -1220,14 +1248,13 @@
     <div class="cyber-vignette"></div>
 </div>
 
-<!-- POP-UP MODAL PLAYER MUSIK FULLSCREEN DI LUAR KONTAINER UTAMA (MENUTUPI SEMUA ELEMEN) -->
+<!-- POP-UP MODAL PLAYER MUSIK FULLSCREEN -->
 <div class="music-modal-overlay" id="musicModalOverlay">
     <div class="music-modal-card">
         <button type="button" class="close-music-modal" id="closeMusicModalBtn">✕</button>
         
         <div style="font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 800; color: #00f0ff; letter-spacing: 1px;">CYBER AUDIO PLAYER</div>
         
-        <!-- PIRINGAN KASET BERPUTAR -->
         <div class="vinyl-container" id="vinylRecord">
             <div class="vinyl-center"></div>
         </div>
@@ -1250,7 +1277,6 @@
             </button>
         </div>
 
-        <!-- PLAYLIST LAGU -->
         <div style="width: 100%; text-align: left; font-size: 0.75rem; font-weight: 800; color: #7dd3fc; margin-top: 4px;">PLAYLIST DARI FOLDER:</div>
         <div class="playlist-wrapper" id="playlistContainer">
             <div style="font-size: 0.7rem; color: #64748b; font-style: italic; padding: 12px;">Daftar lagu masih kosong. Klik Unggah Musik.</div>
@@ -1258,7 +1284,7 @@
     </div>
 </div>
 
-<!-- POP-UP MODAL BESAR DAN DIPERBESAR (UKURAN & TULISAN LEBIH BESAR) -->
+<!-- POP-UP MODAL FILTER RIWAYAT -->
 <div class="popup-overlay" id="filterModalOverlay">
     <div class="popup-box" style="max-width: 410px; width: 92%; text-align: left; align-items: stretch; gap: 20px; padding: 32px 24px; border-width: 2px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -1280,13 +1306,18 @@
 </div>
 
 <div class="container">
+    <!-- Tombol Instal Aplikasi (Otomatis Muncul di Browser) -->
+    <button type="button" class="install-app-btn" id="btnInstallApp">
+        ⚡ INSTAL APLIKASI
+    </button>
+
     <!-- Header -->
     <div class="header-box">
         <h2 class="title-cyber">CYBER VAULT</h2>
         <div class="subtitle-cyber">FINANCIAL MONITORING SYSTEM</div>
     </div>
 
-    <!-- PEMUTAR MUSIK RINGKAS DENGAN KONTROL UKURAN SAMA PERSIS -->
+    <!-- PEMUTAR MUSIK RINGKAS -->
     <div class="music-player-panel" id="openMusicModalPanel">
         <div class="music-label">
             <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
@@ -1294,15 +1325,12 @@
             <span id="musicTimeText" style="font-size: 0.6rem; color: #38bdf8; flex-shrink: 0;">(00:00)</span>
         </div>
         <div class="music-controls-group" onclick="event.stopPropagation();">
-            <!-- TOMBOL PREVIOUS -->
             <button type="button" class="btn-music-skip" id="btnPrevMusic" title="Sebelumnya">
                 <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
             </button>
-            <!-- TOMBOL NEXT -->
             <button type="button" class="btn-music-skip" id="btnNextMusic" title="Selanjutnya">
                 <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
             </button>
-            <!-- TOMBOL PLAY / PAUSE DISAMAKAN UKURAN KOTAKNYA -->
             <button type="button" class="btn-music-play" id="btnPlayMusic" title="Play/Pause" style="display: none;">
                 <span id="musicBtnIcon">
                     <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -1386,7 +1414,6 @@
             </div>
         </div>
 
-        <!-- METODE PEMBAYARAN KHUSUS PENGELUARAN SAJA -->
         <div class="form-group" id="paymentMethodGroup" style="display: none;">
             <label for="paymentMethod">Metode Pembayaran Pengeluaran</label>
             <select id="paymentMethod">
@@ -1401,7 +1428,6 @@
         </button>
     </form>
 
-    <!-- JUDUL RIWAYAT TRANSAKSI DAPAT DIKLIK UNTUK MEMBUKA POP-UP FILTER -->
     <div class="history-title-wrapper" id="openFilterModalBtn" title="Klik untuk filter berdasarkan Bulan & Tahun">
         <h3 class="history-title">Riwayat Transaksi</h3>
         <span class="filter-badge-indicator" id="filterBadgeIndicator">Semua Data</span>
@@ -1484,6 +1510,31 @@
 </div>
 
 <script>
+    /* SCRIPT INSTALASI PWA (PROGRESIVE WEB APP) */
+    let deferredPrompt;
+    const btnInstallApp = document.getElementById('btnInstallApp');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        btnInstallApp.style.display = 'flex';
+    });
+
+    btnInstallApp.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            btnInstallApp.style.display = 'none';
+        }
+        deferredPrompt = null;
+    });
+
+    window.addEventListener('appinstalled', () => {
+        btnInstallApp.style.display = 'none';
+        showCustomNotification("Terinstal", "Cyber Vault berhasil diinstal di perangkat Anda!");
+    });
+
     /* LOGIKA PIN AKSES & KEYPAD ON-SCREEN */
     const CORRECT_PIN = "040698"; 
     let enteredPin = "";
@@ -1547,7 +1598,7 @@
         }
     }
 
-    /* KONTROL INPUT METODE PEMBAYARAN (KHUSUS PENGELUARAN) */
+    /* KONTROL INPUT METODE PEMBAYARAN */
     const typeSelect = document.getElementById('type');
     const paymentMethodGroup = document.getElementById('paymentMethodGroup');
 
@@ -1575,7 +1626,7 @@
 
     editTypeSelect.addEventListener('change', toggleEditPaymentMethodVisibility);
 
-    /* SISTEM PEMUTAR MUSIK LENGKAP */
+    /* SISTEM PEMUTAR MUSIK */
     const openMusicModalPanel = document.getElementById('openMusicModalPanel');
     const musicModalOverlay = document.getElementById('musicModalOverlay');
     const closeMusicModalBtn = document.getElementById('closeMusicModalBtn');
@@ -1600,7 +1651,6 @@
     let currentTrackIndex = -1;
     let audioTimer = null;
 
-    // SVG ICONS UNTUK PLAY & PAUSE
     const playSvgIcon = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
     const pauseSvgIcon = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
 
@@ -1693,7 +1743,6 @@
         renderPlaylist();
     }
 
-    // TOMBOL PREVIOUS & NEXT DENGAN LOGIKA OTOMATIS BERJALAN
     btnPrevMusic.addEventListener('click', (e) => {
         e.stopPropagation();
         if (playlist.length === 0) return;
@@ -1712,7 +1761,6 @@
 
     function deleteTrack(e, index) {
         e.stopPropagation();
-        
         playlist.splice(index, 1);
 
         if (index === currentTrackIndex) {
@@ -1802,6 +1850,7 @@
         }
     });
 
+    /* LATAR BELAKANG SIRKUIT ANIMASI */
     (function initTechCircuitBackground() {
         const canvas = document.getElementById('circuitCanvas');
         const ctx = canvas.getContext('2d');
@@ -1990,9 +2039,8 @@
     });
 
     let transactions = JSON.parse(localStorage.getItem('my_transactions')) || [];
-    let currentFilterMonth = ""; // Format "YYYY-MM"
+    let currentFilterMonth = "";
 
-    // LOGIKA MODAL FILTER BULAN & TAHUN
     const openFilterModalBtn = document.getElementById('openFilterModalBtn');
     const filterModalOverlay = document.getElementById('filterModalOverlay');
     const closeFilterModalBtn = document.getElementById('closeFilterModalBtn');
@@ -2106,18 +2154,6 @@
         if (lastBackupTimeText) {
             lastBackupTimeText.innerText = `Backup Terakhir: ${timestamp} WIB`;
         }
-
-        if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "") {
-            fetch(GOOGLE_SHEETS_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(backupData)
-            }).then(() => {
-                const statusTag = document.getElementById('backupStatusText');
-                if (statusTag) statusTag.innerText = "Cloud Synced";
-            }).catch(err => console.log("Google Sheets Sync Error:", err));
-        }
     }
 
     const savedLastTime = localStorage.getItem('cyber_vault_backup_last_time');
@@ -2129,7 +2165,6 @@
         const historyList = document.getElementById('historyList');
         historyList.innerHTML = '';
 
-        // Filter transaksi jika currentFilterMonth diatur (format "YYYY-MM")
         let filteredTransactions = transactions;
         if (currentFilterMonth) {
             filteredTransactions = transactions.filter(t => t.date && t.date.startsWith(currentFilterMonth));
@@ -2294,7 +2329,6 @@
         if (e.target === popupNotification) hidePopupNotification();
     });
 
-    /* SUBMIT TRANSAKSI DENGAN LOADING 3 DETIK */
     document.getElementById('transactionForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
