@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- Mencegah Cache Browser agar perubahan langsung terlihat di HP -->
+    <!-- Mencegah Cache Browser -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -103,12 +103,165 @@
             -webkit-backdrop-filter: blur(var(--glass-blur));
             border-radius: 20px;
             border: 1px solid rgba(0, 240, 255, 0.35);
-            /* Memperbaiki Box-Shadow agar tidak meluap ke samping layar */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 
                         inset 0 1px 1px rgba(255, 255, 255, 0.2);
             padding: 20px 14px;
             animation: containerAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             transition: background 0.2s ease, backdrop-filter 0.2s ease;
+        }
+
+        /* LAYAR LOCK SCREEN PIN */
+        .pin-screen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            height: 100dvh;
+            background: rgba(2, 7, 20, 0.95);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .pin-screen-overlay.unlocked {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .pin-card {
+            width: 100%;
+            max-width: 360px;
+            background: rgba(3, 14, 38, 0.85);
+            border: 1.5px solid rgba(0, 240, 255, 0.5);
+            border-radius: 24px;
+            padding: 28px 20px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .pin-icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+
+        .pin-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .pin-subtitle {
+            font-size: 0.78rem;
+            color: #7dd3fc;
+            margin-top: -8px;
+        }
+
+        /* 6 Kolom PIN (Sudah Dipresisikan Tengah) */
+        .pin-inputs-container {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .pin-box {
+            width: 42px;
+            height: 50px;
+            border-radius: 12px;
+            border: 1.5px solid rgba(0, 240, 255, 0.35);
+            background: rgba(2, 12, 32, 0.8);
+            color: #00f0ff;
+            font-size: 1.1rem;
+            font-weight: 900;
+            /* Flexbox Alignment Presisi Tengah */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .pin-box.active {
+            border-color: #00f0ff;
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.8);
+            background: rgba(0, 240, 255, 0.15);
+        }
+
+        .pin-box.filled {
+            border-color: #38bdf8;
+            color: #ffffff;
+        }
+
+        .pin-error-msg {
+            color: #fb7185;
+            font-size: 0.75rem;
+            font-weight: 700;
+            min-height: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        /* PAPAN KETIK (KEYPAD) ON-SCREEN */
+        .on-screen-keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            width: 100%;
+            max-width: 280px;
+            margin-top: 5px;
+        }
+
+        .keypad-btn {
+            background: rgba(0, 240, 255, 0.06);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            color: #ffffff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            padding: 12px 0;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .keypad-btn:active {
+            background: rgba(0, 240, 255, 0.3);
+            border-color: #00f0ff;
+            transform: scale(0.95);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .keypad-btn.action-btn {
+            font-size: 1.1rem;
+            color: #7dd3fc;
         }
 
         @keyframes containerAppear {
@@ -602,6 +755,43 @@
 </head>
 <body>
 
+<!-- SCREEN LOCK PIN AKSES -->
+<div class="pin-screen-overlay" id="pinScreenOverlay">
+    <div class="pin-card">
+        <div class="pin-icon-box">🔒</div>
+        <div class="pin-title">SECURITY ACCESS</div>
+        <div class="pin-subtitle">Masukkan 6-Digit PIN Akses Anda</div>
+
+        <!-- 6 Box PIN -->
+        <div class="pin-inputs-container" id="pinInputsContainer">
+            <div class="pin-box active" data-index="0"></div>
+            <div class="pin-box" data-index="1"></div>
+            <div class="pin-box" data-index="2"></div>
+            <div class="pin-box" data-index="3"></div>
+            <div class="pin-box" data-index="4"></div>
+            <div class="pin-box" data-index="5"></div>
+        </div>
+
+        <div class="pin-error-msg" id="pinErrorMsg"></div>
+
+        <!-- On-Screen Custom Keypad -->
+        <div class="on-screen-keypad">
+            <button type="button" class="keypad-btn" onclick="pressKey('1')">1</button>
+            <button type="button" class="keypad-btn" onclick="pressKey('2')">2</button>
+            <button type="button" class="keypad-btn" onclick="pressKey('3')">3</button>
+            <button type="button" class="keypad-btn" onclick="pressKey('4')">4</button>
+            <button type="button" class="keypad-btn" onclick="pressKey('5')">5</button>
+            <button type="button" class="keypad-btn" onclick="pressKey('6')">6</button>
+            <button type="button" class="keypad-btn" onclick="pressKey('7')">7</button>
+            <button type="button" class="keypad-btn" onclick="pressKey('8')">8</button>
+            <button type="button" class="keypad-btn" onclick="pressKey('9')">9</button>
+            <button type="button" class="keypad-btn action-btn" onclick="clearAllPin()">C</button>
+            <button type="button" class="keypad-btn" onclick="pressKey('0')">0</button>
+            <button type="button" class="keypad-btn action-btn" onclick="deletePin()">⌫</button>
+        </div>
+    </div>
+</div>
+
 <div class="tech-bg-container">
     <canvas id="circuitCanvas"></canvas>
     <div class="cyber-vignette"></div>
@@ -763,6 +953,69 @@
 </div>
 
 <script>
+    /* LOGIKA PIN AKSES BARU & KEYPAD ON-SCREEN */
+    const CORRECT_PIN = "040698"; // PIN Baru Diperbarui
+    let enteredPin = "";
+
+    const pinBoxes = document.querySelectorAll('.pin-box');
+    const pinErrorMsg = document.getElementById('pinErrorMsg');
+    const pinScreenOverlay = document.getElementById('pinScreenOverlay');
+
+    function updatePinDisplay() {
+        pinBoxes.forEach((box, index) => {
+            if (index < enteredPin.length) {
+                box.innerText = "●"; // Simbol Titik Presisi Sempurna di Tengah
+                box.classList.add('filled');
+                box.classList.remove('active');
+            } else if (index === enteredPin.length) {
+                box.innerText = "";
+                box.classList.remove('filled');
+                box.classList.add('active');
+            } else {
+                box.innerText = "";
+                box.classList.remove('filled', 'active');
+            }
+        });
+
+        if (enteredPin.length === 6) {
+            verifyPin();
+        }
+    }
+
+    function pressKey(num) {
+        if (enteredPin.length < 6) {
+            enteredPin += num;
+            pinErrorMsg.innerText = "";
+            updatePinDisplay();
+        }
+    }
+
+    function deletePin() {
+        if (enteredPin.length > 0) {
+            enteredPin = enteredPin.slice(0, -1);
+            pinErrorMsg.innerText = "";
+            updatePinDisplay();
+        }
+    }
+
+    function clearAllPin() {
+        enteredPin = "";
+        pinErrorMsg.innerText = "";
+        updatePinDisplay();
+    }
+
+    function verifyPin() {
+        if (enteredPin === CORRECT_PIN) {
+            pinScreenOverlay.classList.add('unlocked');
+            playSuccessSound();
+        } else {
+            pinErrorMsg.innerText = "PIN Salah! Silakan coba lagi.";
+            setTimeout(() => {
+                clearAllPin();
+            }, 600);
+        }
+    }
+
     (function initTechCircuitBackground() {
         const canvas = document.getElementById('circuitCanvas');
         const ctx = canvas.getContext('2d');
