@@ -12,7 +12,7 @@
     <!-- Google Fonts for high-end modern sci-fi aesthetic -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700;1,9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700;1,9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
     
     <style>
         *, *::before, *::after {
@@ -121,7 +121,7 @@
             background: rgba(2, 7, 20, 0.95);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            z-index: 999;
+            z-index: 999999;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -180,7 +180,6 @@
             margin-top: -8px;
         }
 
-        /* 6 Kolom PIN (Sudah Dipresisikan Tengah) */
         .pin-inputs-container {
             display: flex;
             gap: 8px;
@@ -197,7 +196,6 @@
             color: #00f0ff;
             font-size: 1.1rem;
             font-weight: 900;
-            /* Flexbox Alignment Presisi Tengah */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -225,7 +223,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* PAPAN KETIK (KEYPAD) ON-SCREEN */
         .on-screen-keypad {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -271,31 +268,396 @@
 
         .header-box {
             text-align: center;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         h2.title-cyber {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(1.2rem, 5vw, 1.55rem);
-            letter-spacing: 2px;
+            font-size: clamp(1.8rem, 7vw, 2.3rem);
+            letter-spacing: 3px;
             text-transform: uppercase;
             background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #38bdf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+            text-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
             display: inline-block;
         }
 
         .subtitle-cyber {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 2px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            letter-spacing: 2.5px;
             color: #7dd3fc;
             text-transform: uppercase;
-            margin-top: 2px;
-            opacity: 0.9;
+            margin-top: 4px;
+            opacity: 0.95;
+        }
+
+        /* PEMUTAR MUSIK DARI FOLDER HP - PRESISI & UKURAN TOMBOL KONTROL SERAGAM */
+        .music-player-panel {
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 14px;
+            padding: 8px 10px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .music-player-panel:hover {
+            background: rgba(0, 240, 255, 0.15);
+            border-color: rgba(0, 240, 255, 0.6);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .music-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #7dd3fc;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            min-width: 0;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .cyber-svg-icon {
+            width: 14px;
+            height: 14px;
+            fill: #00f0ff;
+            filter: drop-shadow(0 0 4px #00f0ff);
+            flex-shrink: 0;
+        }
+
+        .music-label span#musicTrackName {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* GRUP KONTROL MUSIK DENGAN UKURAN KONTROL YANG 100% SAMA PERSIS */
+        .music-controls-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .btn-music-action {
+            background: rgba(2, 12, 32, 0.8);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            color: #00f0ff;
+            font-weight: 700;
+            font-size: 0.7rem;
+            padding: 6px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            height: 34px;
+        }
+
+        .btn-music-action:active {
+            transform: scale(0.95);
+        }
+
+        /* TOMBOL PREVIOUS & NEXT KOTAK 34px × 34px */
+        .btn-music-skip {
+            background: rgba(2, 12, 32, 0.85);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            color: #00f0ff;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 6px rgba(0, 240, 255, 0.2);
+            flex-shrink: 0;
+        }
+
+        .btn-music-skip:active {
+            transform: scale(0.92);
+            background: rgba(0, 240, 255, 0.2);
+        }
+
+        .btn-music-skip svg {
+            width: 14px;
+            height: 14px;
+            fill: #00f0ff;
+            display: block;
+        }
+
+        /* TOMBOL PLAY / PAUSE DIBUAT SAMA PERSIS KOTAK 34px × 34px SEPERTI TOMBOL PREV & NEXT */
+        .btn-music-play {
+            background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%);
+            border: none;
+            color: #020714;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .btn-music-play:active {
+            transform: scale(0.95);
+        }
+
+        .btn-music-play span#musicBtnIcon,
+        .btn-music-play span#modalPlayIcon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+        }
+
+        .btn-music-play svg {
+            width: 14px;
+            height: 14px;
+            fill: #020714;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        /* POP-UP MODAL PLAYER MUSIK FULLSCREEN DI LUAR KONTAINER UTAMA */
+        .music-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background: #020714;
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            overflow-y: auto;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .music-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .music-modal-card {
+            background: rgba(3, 14, 38, 0.98);
+            border: 1.5px solid rgba(0, 240, 255, 0.6);
+            border-radius: 24px;
+            padding: 26px 20px;
+            width: 100%;
+            max-width: 380px;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: center;
+            box-shadow: 0 0 70px rgba(0, 240, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin: auto;
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .music-modal-overlay.active .music-modal-card {
+            transform: translateY(0) scale(1);
+        }
+
+        .close-music-modal {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: #7dd3fc;
+            font-size: 1.1rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .close-music-modal:active {
+            transform: scale(0.9);
+            background: rgba(244, 63, 94, 0.2);
+            color: #fb7185;
+        }
+
+        /* ANIMASI KASET / VINYL BERPUTAR */
+        .vinyl-container {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: repeating-radial-gradient(
+                circle,
+                #030c1d 0px,
+                #030c1d 8px,
+                #00f0ff 9px,
+                #020714 10px,
+                #061838 18px
+            );
+            border: 3px solid #00f0ff;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 6px 0;
+            animation: rotateVinyl 4s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .vinyl-container::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px dashed rgba(0, 240, 255, 0.6);
+        }
+
+        .vinyl-container.playing {
+            animation-play-state: running !important;
+        }
+
+        .vinyl-center {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%);
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.9);
+            z-index: 2;
+        }
+
+        @keyframes rotateVinyl {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .modal-track-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #ffffff;
+            max-width: 90%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .modal-track-time {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #00f0ff;
+            margin-top: -10px;
+        }
+
+        .playlist-wrapper {
+            width: 100%;
+            max-height: 150px;
+            overflow-y: auto;
+            background: rgba(2, 12, 32, 0.6);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 12px;
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            padding: 8px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .playlist-item:hover, .playlist-item.active-track {
+            background: rgba(0, 240, 255, 0.18);
+            border-color: #00f0ff;
+        }
+
+        .playlist-item-name {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+            padding-right: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* TOMBOL HAPUS (X) SESUAI TEMA WEB */
+        .playlist-delete-btn {
+            color: #00f0ff;
+            font-size: 0.85rem;
+            font-weight: 800;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            background: rgba(0, 240, 255, 0.1);
+            transition: all 0.15s ease;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .playlist-delete-btn:hover, .playlist-delete-btn:active {
+            background: rgba(0, 240, 255, 0.3);
+            border-color: #00f0ff;
+            box-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
+            color: #ffffff;
         }
 
         .glass-control-panel {
@@ -515,7 +877,7 @@
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
             min-width: 0;
             width: 100%;
         }
@@ -550,21 +912,23 @@
         }
 
         input[type="date"],
-        input[type="time"] {
+        input[type="time"],
+        input[type="month"] {
             -webkit-appearance: none;
             appearance: none;
-            font-size: 0.8rem;
-            padding: 9px 6px;
+            font-size: 0.85rem;
+            padding: 10px;
         }
 
         input[type="date"]::-webkit-calendar-picker-indicator,
-        input[type="time"]::-webkit-calendar-picker-indicator {
+        input[type="time"]::-webkit-calendar-picker-indicator,
+        input[type="month"]::-webkit-calendar-picker-indicator {
             filter: invert(0.9) sepia(0.3) saturate(3) hue-rotate(170deg);
             cursor: pointer;
             margin-left: 2px;
             padding: 0;
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
         }
 
         select option {
@@ -592,15 +956,66 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        @keyframes cyberSpinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .spinner-icon {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid #00f0ff;
+            border-radius: 50%;
+            animation: cyberSpinner 0.8s linear infinite;
+            display: inline-block;
+        }
+
+        button[type="submit"]:disabled {
+            opacity: 0.75;
+            cursor: not-allowed;
+            background: linear-gradient(135deg, rgba(0, 100, 180, 0.8) 0%, rgba(0, 50, 150, 0.8) 100%);
+        }
+
+        /* JUDUL RIWAYAT TRANSAKSI KLIKABILITAS */
+        .history-title-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 8px;
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .history-title-wrapper:hover {
+            background: rgba(0, 240, 255, 0.12);
+            border-color: rgba(0, 240, 255, 0.5);
         }
 
         .history-title {
-            margin-bottom: 10px;
             font-size: 0.95rem;
             color: var(--text-light);
             font-weight: 800;
             letter-spacing: 0.4px;
+            margin: 0;
+        }
+
+        .filter-badge-indicator {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: #00f0ff;
+            background: rgba(0, 240, 255, 0.15);
+            padding: 2px 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 240, 255, 0.4);
         }
 
         .history-list {
@@ -653,6 +1068,17 @@
             white-space: nowrap;
         }
 
+        .item-method-badge {
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: #fb7185;
+            background: rgba(244, 63, 94, 0.15);
+            border: 1px solid rgba(244, 63, 94, 0.35);
+            padding: 1px 6px;
+            border-radius: 6px;
+            margin-left: 4px;
+        }
+
         .item-amount {
             font-weight: 800;
             font-size: 0.88rem;
@@ -670,7 +1096,6 @@
             font-style: italic;
         }
 
-        /* Popups / Modals */
         .popup-overlay {
             position: fixed;
             top: 0;
@@ -762,7 +1187,6 @@
         <div class="pin-title">SECURITY ACCESS</div>
         <div class="pin-subtitle">Masukkan 6-Digit PIN Akses Anda</div>
 
-        <!-- 6 Box PIN -->
         <div class="pin-inputs-container" id="pinInputsContainer">
             <div class="pin-box active" data-index="0"></div>
             <div class="pin-box" data-index="1"></div>
@@ -774,7 +1198,6 @@
 
         <div class="pin-error-msg" id="pinErrorMsg"></div>
 
-        <!-- On-Screen Custom Keypad -->
         <div class="on-screen-keypad">
             <button type="button" class="keypad-btn" onclick="pressKey('1')">1</button>
             <button type="button" class="keypad-btn" onclick="pressKey('2')">2</button>
@@ -797,11 +1220,97 @@
     <div class="cyber-vignette"></div>
 </div>
 
+<!-- POP-UP MODAL PLAYER MUSIK FULLSCREEN DI LUAR KONTAINER UTAMA (MENUTUPI SEMUA ELEMEN) -->
+<div class="music-modal-overlay" id="musicModalOverlay">
+    <div class="music-modal-card">
+        <button type="button" class="close-music-modal" id="closeMusicModalBtn">✕</button>
+        
+        <div style="font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 800; color: #00f0ff; letter-spacing: 1px;">CYBER AUDIO PLAYER</div>
+        
+        <!-- PIRINGAN KASET BERPUTAR -->
+        <div class="vinyl-container" id="vinylRecord">
+            <div class="vinyl-center"></div>
+        </div>
+
+        <div class="modal-track-title" id="modalTrackTitle">
+            <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            Belum ada musik dipilih
+        </div>
+        <div class="modal-track-time" id="modalTrackTime">(00:00)</div>
+
+        <div style="display: flex; gap: 10px; width: 100%;">
+            <button type="button" class="btn-music-action" id="modalUploadBtn" style="flex: 1;">
+                Unggah Musik
+            </button>
+            <button type="button" class="btn-music-play" id="modalPlayBtn" title="Play/Pause" style="flex: 1; display: none; width: auto; height: 38px;">
+                <span id="modalPlayIcon">
+                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+                <span id="modalPlayText" style="font-size: 0.75rem; font-weight: 800; margin-left: 4px;">Play</span>
+            </button>
+        </div>
+
+        <!-- PLAYLIST LAGU -->
+        <div style="width: 100%; text-align: left; font-size: 0.75rem; font-weight: 800; color: #7dd3fc; margin-top: 4px;">PLAYLIST DARI FOLDER:</div>
+        <div class="playlist-wrapper" id="playlistContainer">
+            <div style="font-size: 0.7rem; color: #64748b; font-style: italic; padding: 12px;">Daftar lagu masih kosong. Klik Unggah Musik.</div>
+        </div>
+    </div>
+</div>
+
+<!-- POP-UP MODAL BESAR DAN DIPERBESAR (UKURAN & TULISAN LEBIH BESAR) -->
+<div class="popup-overlay" id="filterModalOverlay">
+    <div class="popup-box" style="max-width: 410px; width: 92%; text-align: left; align-items: stretch; gap: 20px; padding: 32px 24px; border-width: 2px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-family: 'Orbitron', sans-serif; font-size: 1.15rem; font-weight: 900; color: #00f0ff; letter-spacing: 1.5px;">FILTER RIWAYAT</div>
+            <button type="button" id="closeFilterModalBtn" style="background:none; border:none; color:#94a3b8; font-size:1.6rem; cursor:pointer; padding:4px; width:auto; line-height:1;">✕</button>
+        </div>
+        <div style="font-size: 0.92rem; color: #a5f3fc; line-height: 1.4;">Pilih Bulan dan Tahun untuk menyortir riwayat transaksi:</div>
+        
+        <div class="form-group" style="gap: 8px;">
+            <label for="filterMonthInput" style="font-size: 0.85rem; letter-spacing: 0.5px;">Pilih Bulan & Tahun</label>
+            <input type="month" id="filterMonthInput" style="font-size: 1.05rem; padding: 14px 12px; border-radius: 12px;">
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 8px;">
+            <button type="button" id="btnResetFilter" style="background: rgba(244, 63, 94, 0.2); border: 1.5px solid rgba(244, 63, 94, 0.6); color: #fb7185; flex: 1; padding: 14px; border-radius: 14px; font-size: 0.95rem; font-weight: 800; cursor: pointer;">Reset</button>
+            <button type="button" id="btnApplyFilter" style="background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%); border: none; color: #020714; flex: 2; padding: 14px; border-radius: 14px; font-size: 0.95rem; font-weight: 900; cursor: pointer; box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);">Terapkan Filter</button>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <!-- Header -->
     <div class="header-box">
         <h2 class="title-cyber">CYBER VAULT</h2>
         <div class="subtitle-cyber">FINANCIAL MONITORING SYSTEM</div>
+    </div>
+
+    <!-- PEMUTAR MUSIK RINGKAS DENGAN KONTROL UKURAN SAMA PERSIS -->
+    <div class="music-player-panel" id="openMusicModalPanel">
+        <div class="music-label">
+            <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            <span id="musicTrackName">Pilih Musik</span>
+            <span id="musicTimeText" style="font-size: 0.6rem; color: #38bdf8; flex-shrink: 0;">(00:00)</span>
+        </div>
+        <div class="music-controls-group" onclick="event.stopPropagation();">
+            <!-- TOMBOL PREVIOUS -->
+            <button type="button" class="btn-music-skip" id="btnPrevMusic" title="Sebelumnya">
+                <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            </button>
+            <!-- TOMBOL NEXT -->
+            <button type="button" class="btn-music-skip" id="btnNextMusic" title="Selanjutnya">
+                <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+            </button>
+            <!-- TOMBOL PLAY / PAUSE DISAMAKAN UKURAN KOTAKNYA -->
+            <button type="button" class="btn-music-play" id="btnPlayMusic" title="Play/Pause" style="display: none;">
+                <span id="musicBtnIcon">
+                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+            </button>
+        </div>
+        <input type="file" id="localAudioInput" accept="audio/*" multiple style="display: none;">
+        <audio id="bgAudioPlayer" style="display: none;"></audio>
     </div>
 
     <!-- Panel Pengatur Transparansi -->
@@ -816,12 +1325,12 @@
     <!-- Panel Backup & Restore -->
     <div class="backup-panel">
         <div class="backup-header">
-            <div class="backup-title-text">💾 BACKUP OTOMATIS</div>
+            <div class="backup-title-text">BACKUP OTOMATIS</div>
             <div class="backup-status-tag" id="backupStatusText">Auto-Saved</div>
         </div>
         <div class="backup-actions">
-            <button type="button" class="btn-backup-action" id="btnExportBackup">⬇️ Unduh Backup</button>
-            <button type="button" class="btn-backup-action" id="btnImportBackup">⬆️ Pulihkan Data</button>
+            <button type="button" class="btn-backup-action" id="btnExportBackup">Unduh Backup</button>
+            <button type="button" class="btn-backup-action" id="btnImportBackup">Pulihkan Data</button>
             <input type="file" id="importFileInput" accept=".json" style="display: none;">
         </div>
         <div class="backup-info-text" id="lastBackupTimeText">Sistem otomatis mencadangkan data setiap kali ada perubahan.</div>
@@ -866,7 +1375,6 @@
             <input type="text" id="description" placeholder="Contoh: Gaji, Makan Siang" required>
         </div>
         
-        <!-- Input Tanggal & Jam Terpisah dengan Presisi Grid -->
         <div class="datetime-group">
             <div class="form-group">
                 <label for="inputDate">Tanggal Input</label>
@@ -878,16 +1386,31 @@
             </div>
         </div>
 
+        <!-- METODE PEMBAYARAN KHUSUS PENGELUARAN SAJA -->
+        <div class="form-group" id="paymentMethodGroup" style="display: none;">
+            <label for="paymentMethod">Metode Pembayaran Pengeluaran</label>
+            <select id="paymentMethod">
+                <option value="CASH">💵 CASH (Tunai)</option>
+                <option value="TRANSFER">🏦 TRANSFER BANK</option>
+                <option value="QRIS">📱 QRIS (E-Wallet)</option>
+            </select>
+        </div>
+
         <button type="submit" id="btnSubmit">
             <span id="btnText">Tambah Transaksi</span>
         </button>
     </form>
 
-    <h3 class="history-title">Riwayat Transaksi</h3>
+    <!-- JUDUL RIWAYAT TRANSAKSI DAPAT DIKLIK UNTUK MEMBUKA POP-UP FILTER -->
+    <div class="history-title-wrapper" id="openFilterModalBtn" title="Klik untuk filter berdasarkan Bulan & Tahun">
+        <h3 class="history-title">Riwayat Transaksi</h3>
+        <span class="filter-badge-indicator" id="filterBadgeIndicator">Semua Data</span>
+    </div>
+    
     <ul class="history-list" id="historyList"></ul>
 </div>
 
-<!-- Modal Pop-up Notifikasi "Selesai" -->
+<!-- Modal Pop-up Notifikasi -->
 <div class="popup-overlay" id="popupNotification">
     <div class="popup-box">
         <div class="popup-icon" id="popupIcon">✓</div>
@@ -944,6 +1467,14 @@
                     <input type="time" id="editTime" required>
                 </div>
             </div>
+            <div class="form-group" id="editPaymentMethodGroup" style="display: none;">
+                <label for="editPaymentMethod">Metode Pembayaran Pengeluaran</label>
+                <select id="editPaymentMethod">
+                    <option value="CASH">💵 CASH (Tunai)</option>
+                    <option value="TRANSFER">🏦 TRANSFER BANK</option>
+                    <option value="QRIS">📱 QRIS (E-Wallet)</option>
+                </select>
+            </div>
             <div style="display: flex; gap: 8px; margin-top: 6px;">
                 <button type="button" id="btnDeleteModal" style="background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.5); color: #fb7185; flex: 1; padding: 10px; border-radius: 10px;">Hapus</button>
                 <button type="submit" style="flex: 2; margin-top: 0; padding: 10px;">Simpan Perubahan</button>
@@ -953,8 +1484,8 @@
 </div>
 
 <script>
-    /* LOGIKA PIN AKSES BARU & KEYPAD ON-SCREEN */
-    const CORRECT_PIN = "040698"; // PIN Baru Diperbarui
+    /* LOGIKA PIN AKSES & KEYPAD ON-SCREEN */
+    const CORRECT_PIN = "040698"; 
     let enteredPin = "";
 
     const pinBoxes = document.querySelectorAll('.pin-box');
@@ -964,7 +1495,7 @@
     function updatePinDisplay() {
         pinBoxes.forEach((box, index) => {
             if (index < enteredPin.length) {
-                box.innerText = "●"; // Simbol Titik Presisi Sempurna di Tengah
+                box.innerText = "●"; 
                 box.classList.add('filled');
                 box.classList.remove('active');
             } else if (index === enteredPin.length) {
@@ -1015,6 +1546,261 @@
             }, 600);
         }
     }
+
+    /* KONTROL INPUT METODE PEMBAYARAN (KHUSUS PENGELUARAN) */
+    const typeSelect = document.getElementById('type');
+    const paymentMethodGroup = document.getElementById('paymentMethodGroup');
+
+    function togglePaymentMethodVisibility() {
+        if (typeSelect.value === 'out') {
+            paymentMethodGroup.style.display = 'flex';
+        } else {
+            paymentMethodGroup.style.display = 'none';
+        }
+    }
+
+    typeSelect.addEventListener('change', togglePaymentMethodVisibility);
+    togglePaymentMethodVisibility();
+
+    const editTypeSelect = document.getElementById('editType');
+    const editPaymentMethodGroup = document.getElementById('editPaymentMethodGroup');
+
+    function toggleEditPaymentMethodVisibility() {
+        if (editTypeSelect.value === 'out') {
+            editPaymentMethodGroup.style.display = 'flex';
+        } else {
+            editPaymentMethodGroup.style.display = 'none';
+        }
+    }
+
+    editTypeSelect.addEventListener('change', toggleEditPaymentMethodVisibility);
+
+    /* SISTEM PEMUTAR MUSIK LENGKAP */
+    const openMusicModalPanel = document.getElementById('openMusicModalPanel');
+    const musicModalOverlay = document.getElementById('musicModalOverlay');
+    const closeMusicModalBtn = document.getElementById('closeMusicModalBtn');
+    
+    const localAudioInput = document.getElementById('localAudioInput');
+    const modalUploadBtn = document.getElementById('modalUploadBtn');
+    
+    const bgAudioPlayer = document.getElementById('bgAudioPlayer');
+    const btnPlayMusic = document.getElementById('btnPlayMusic');
+    const modalPlayBtn = document.getElementById('modalPlayBtn');
+    const btnPrevMusic = document.getElementById('btnPrevMusic');
+    const btnNextMusic = document.getElementById('btnNextMusic');
+    
+    const musicTrackName = document.getElementById('musicTrackName');
+    const musicTimeText = document.getElementById('musicTimeText');
+    const modalTrackTitle = document.getElementById('modalTrackTitle');
+    const modalTrackTime = document.getElementById('modalTrackTime');
+    const vinylRecord = document.getElementById('vinylRecord');
+    const playlistContainer = document.getElementById('playlistContainer');
+
+    let playlist = [];
+    let currentTrackIndex = -1;
+    let audioTimer = null;
+
+    // SVG ICONS UNTUK PLAY & PAUSE
+    const playSvgIcon = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+    const pauseSvgIcon = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+
+    openMusicModalPanel.addEventListener('click', () => {
+        musicModalOverlay.classList.add('active');
+    });
+
+    closeMusicModalBtn.addEventListener('click', () => {
+        musicModalOverlay.classList.remove('active');
+    });
+
+    musicModalOverlay.addEventListener('click', (e) => {
+        if (e.target === musicModalOverlay) {
+            musicModalOverlay.classList.remove('active');
+        }
+    });
+
+    modalUploadBtn.addEventListener('click', () => {
+        localAudioInput.click();
+    });
+
+    localAudioInput.addEventListener('change', function(e) {
+        const files = Array.from(e.target.files);
+        if (files.length === 0) return;
+
+        files.forEach(file => {
+            const url = URL.createObjectURL(file);
+            playlist.push({
+                name: file.name,
+                url: url
+            });
+        });
+
+        renderPlaylist();
+
+        if (currentTrackIndex === -1) {
+            playTrack(playlist.length - files.length);
+        }
+        this.value = '';
+    });
+
+    function renderPlaylist() {
+        playlistContainer.innerHTML = '';
+        if (playlist.length === 0) {
+            playlistContainer.innerHTML = '<div style="font-size: 0.7rem; color: #64748b; font-style: italic; padding: 12px;">Daftar lagu masih kosong. Klik Unggah Musik.</div>';
+            return;
+        }
+
+        playlist.forEach((track, index) => {
+            const item = document.createElement('div');
+            item.className = `playlist-item ${index === currentTrackIndex ? 'active-track' : ''}`;
+            item.onclick = () => playTrack(index);
+
+            item.innerHTML = `
+                <span class="playlist-item-name">
+                    <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                    ${track.name}
+                </span>
+                <span class="playlist-delete-btn" onclick="deleteTrack(event, ${index})">✕</span>
+            `;
+            playlistContainer.appendChild(item);
+        });
+    }
+
+    function playTrack(index) {
+        if (index < 0 || index >= playlist.length) return;
+
+        currentTrackIndex = index;
+        const track = playlist[index];
+
+        bgAudioPlayer.src = track.url;
+        bgAudioPlayer.play().then(() => {
+            updatePlayStateUI(true);
+        }).catch(() => {
+            updatePlayStateUI(false);
+        });
+
+        const cleanName = track.name.length > 8 ? track.name.substring(0, 5) + "..." : track.name;
+        musicTrackName.innerText = cleanName;
+        
+        modalTrackTitle.innerHTML = `
+            <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            ${track.name}
+        `;
+
+        btnPlayMusic.style.display = 'inline-flex';
+        modalPlayBtn.style.display = 'inline-flex';
+
+        startTimer();
+        renderPlaylist();
+    }
+
+    // TOMBOL PREVIOUS & NEXT DENGAN LOGIKA OTOMATIS BERJALAN
+    btnPrevMusic.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (playlist.length === 0) return;
+        let newIndex = currentTrackIndex - 1;
+        if (newIndex < 0) newIndex = playlist.length - 1;
+        playTrack(newIndex);
+    });
+
+    btnNextMusic.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (playlist.length === 0) return;
+        let newIndex = currentTrackIndex + 1;
+        if (newIndex >= playlist.length) newIndex = 0;
+        playTrack(newIndex);
+    });
+
+    function deleteTrack(e, index) {
+        e.stopPropagation();
+        
+        playlist.splice(index, 1);
+
+        if (index === currentTrackIndex) {
+            stopAudio();
+            if (playlist.length > 0) {
+                playTrack(Math.min(index, playlist.length - 1));
+            } else {
+                currentTrackIndex = -1;
+                musicTrackName.innerText = "Pilih Musik";
+                modalTrackTitle.innerHTML = `
+                    <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                    Belum ada musik dipilih
+                `;
+                btnPlayMusic.style.display = 'none';
+                modalPlayBtn.style.display = 'none';
+            }
+        } else if (index < currentTrackIndex) {
+            currentTrackIndex--;
+        }
+
+        renderPlaylist();
+    }
+
+    function togglePlayPause() {
+        if (!bgAudioPlayer.src) return;
+
+        if (bgAudioPlayer.paused) {
+            bgAudioPlayer.play();
+            updatePlayStateUI(true);
+            startTimer();
+        } else {
+            bgAudioPlayer.pause();
+            updatePlayStateUI(false);
+            if (audioTimer) clearInterval(audioTimer);
+        }
+    }
+
+    function updatePlayStateUI(isPlaying) {
+        const playIconSvg = isPlaying ? pauseSvgIcon : playSvgIcon;
+        const playText = isPlaying ? "Pause" : "Play";
+
+        document.getElementById('musicBtnIcon').innerHTML = playIconSvg;
+        document.getElementById('modalPlayIcon').innerHTML = playIconSvg;
+        document.getElementById('modalPlayText').innerText = playText;
+
+        if (isPlaying) {
+            vinylRecord.classList.add('playing');
+        } else {
+            vinylRecord.classList.remove('playing');
+        }
+    }
+
+    function startTimer() {
+        if (audioTimer) clearInterval(audioTimer);
+        audioTimer = setInterval(() => {
+            const current = Math.floor(bgAudioPlayer.currentTime);
+            const mins = String(Math.floor(current / 60)).padStart(2, '0');
+            const secs = String(current % 60).padStart(2, '0');
+            const timeStr = `(${mins}:${secs})`;
+            
+            musicTimeText.innerText = timeStr;
+            modalTrackTime.innerText = timeStr;
+        }, 1000);
+    }
+
+    function stopAudio() {
+        bgAudioPlayer.pause();
+        bgAudioPlayer.currentTime = 0;
+        updatePlayStateUI(false);
+        if (audioTimer) clearInterval(audioTimer);
+        musicTimeText.innerText = "(00:00)";
+        modalTrackTime.innerText = "(00:00)";
+    }
+
+    btnPlayMusic.addEventListener('click', (e) => {
+        e.stopPropagation();
+        togglePlayPause();
+    });
+
+    modalPlayBtn.addEventListener('click', togglePlayPause);
+
+    bgAudioPlayer.addEventListener('ended', function() {
+        if (currentTrackIndex + 1 < playlist.length) {
+            playTrack(currentTrackIndex + 1);
+        } else {
+            playTrack(0);
+        }
+    });
 
     (function initTechCircuitBackground() {
         const canvas = document.getElementById('circuitCanvas');
@@ -1204,6 +1990,44 @@
     });
 
     let transactions = JSON.parse(localStorage.getItem('my_transactions')) || [];
+    let currentFilterMonth = ""; // Format "YYYY-MM"
+
+    // LOGIKA MODAL FILTER BULAN & TAHUN
+    const openFilterModalBtn = document.getElementById('openFilterModalBtn');
+    const filterModalOverlay = document.getElementById('filterModalOverlay');
+    const closeFilterModalBtn = document.getElementById('closeFilterModalBtn');
+    const filterMonthInput = document.getElementById('filterMonthInput');
+    const btnApplyFilter = document.getElementById('btnApplyFilter');
+    const btnResetFilter = document.getElementById('btnResetFilter');
+    const filterBadgeIndicator = document.getElementById('filterBadgeIndicator');
+
+    openFilterModalBtn.addEventListener('click', () => {
+        filterMonthInput.value = currentFilterMonth;
+        filterModalOverlay.classList.add('active');
+    });
+
+    closeFilterModalBtn.addEventListener('click', () => {
+        filterModalOverlay.classList.remove('active');
+    });
+
+    filterModalOverlay.addEventListener('click', (e) => {
+        if (e.target === filterModalOverlay) {
+            filterModalOverlay.classList.remove('active');
+        }
+    });
+
+    btnApplyFilter.addEventListener('click', () => {
+        currentFilterMonth = filterMonthInput.value;
+        filterModalOverlay.classList.remove('active');
+        updateUI();
+    });
+
+    btnResetFilter.addEventListener('click', () => {
+        currentFilterMonth = "";
+        filterMonthInput.value = "";
+        filterModalOverlay.classList.remove('active');
+        updateUI();
+    });
 
     function formatRupiah(number) {
         return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
@@ -1258,6 +2082,8 @@
         }
     }
 
+    const GOOGLE_SHEETS_URL = "";
+
     function performAutoBackup() {
         const timestamp = new Date().toLocaleString('id-ID', {
             day: '2-digit', month: '2-digit', year: 'numeric',
@@ -1280,6 +2106,18 @@
         if (lastBackupTimeText) {
             lastBackupTimeText.innerText = `Backup Terakhir: ${timestamp} WIB`;
         }
+
+        if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "") {
+            fetch(GOOGLE_SHEETS_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(backupData)
+            }).then(() => {
+                const statusTag = document.getElementById('backupStatusText');
+                if (statusTag) statusTag.innerText = "Cloud Synced";
+            }).catch(err => console.log("Google Sheets Sync Error:", err));
+        }
     }
 
     const savedLastTime = localStorage.getItem('cyber_vault_backup_last_time');
@@ -1291,22 +2129,34 @@
         const historyList = document.getElementById('historyList');
         historyList.innerHTML = '';
 
-        if (transactions.length === 0) {
-            historyList.innerHTML = '<li class="empty-state">Belum ada transaksi dicatat</li>';
+        // Filter transaksi jika currentFilterMonth diatur (format "YYYY-MM")
+        let filteredTransactions = transactions;
+        if (currentFilterMonth) {
+            filteredTransactions = transactions.filter(t => t.date && t.date.startsWith(currentFilterMonth));
+            const [fYear, fMonth] = currentFilterMonth.split('-');
+            const monthsName = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            filterBadgeIndicator.innerText = `${monthsName[parseInt(fMonth, 10)]} ${fYear}`;
         } else {
-            const sortedTransactions = [...transactions].sort((a, b) => {
+            filterBadgeIndicator.innerText = "Semua Data";
+        }
+
+        if (filteredTransactions.length === 0) {
+            historyList.innerHTML = '<li class="empty-state">Tidak ada transaksi pada periode ini</li>';
+        } else {
+            const sortedTransactions = [...filteredTransactions].sort((a, b) => {
                 const dateA = new Date(`${a.date}T${a.time}`);
                 const dateB = new Date(`${b.date}T${b.time}`);
                 return dateB - dateA;
             });
 
             sortedTransactions.forEach((t) => {
+                const methodBadge = (t.type === 'out' && t.method) ? `<span class="item-method-badge">${t.method}</span>` : '';
                 const li = document.createElement('li');
                 li.className = `history-item ${t.type}`;
                 li.onclick = function() { openEditModal(t.id); };
                 li.innerHTML = `
                     <div class="item-info">
-                        <span class="item-desc">${t.description}</span>
+                        <span class="item-desc">${t.description} ${methodBadge}</span>
                         <span class="item-date">🕒 ${formatDisplayDate(t.date, t.time)}</span>
                     </div>
                     <span class="item-amount ${t.type === 'in' ? 'amount-in' : 'amount-out'}">
@@ -1444,8 +2294,12 @@
         if (e.target === popupNotification) hidePopupNotification();
     });
 
+    /* SUBMIT TRANSAKSI DENGAN LOADING 3 DETIK */
     document.getElementById('transactionForm').addEventListener('submit', function(e) {
         e.preventDefault();
+
+        const btnSubmit = document.getElementById('btnSubmit');
+        const btnText = document.getElementById('btnText');
 
         const type = document.getElementById('type').value;
         const amountRaw = document.getElementById('amount').value.replace(/\./g, '');
@@ -1453,27 +2307,37 @@
         const description = document.getElementById('description').value;
         const date = document.getElementById('inputDate').value;
         const time = document.getElementById('inputTime').value;
+        const method = (type === 'out') ? document.getElementById('paymentMethod').value : null;
 
         if (!amount || isNaN(amount) || !description || !date || !time) return;
 
-        transactions.push({
-            id: Date.now(),
-            type,
-            amount,
-            description,
-            date,
-            time
-        });
+        btnSubmit.disabled = true;
+        btnText.innerHTML = `<span class="spinner-icon"></span> Menyimpan...`;
 
-        updateUI();
+        setTimeout(() => {
+            transactions.push({
+                id: Date.now(),
+                type,
+                amount,
+                description,
+                date,
+                time,
+                method
+            });
 
-        document.getElementById('amount').value = '';
-        document.getElementById('description').value = '';
-        
-        userHasCustomDateTime = false;
-        updateLiveDateTime();
+            updateUI();
 
-        showCustomNotification("Selesai", "Transaksi berhasil dicatat & dicadangkan");
+            document.getElementById('amount').value = '';
+            document.getElementById('description').value = '';
+            
+            userHasCustomDateTime = false;
+            updateLiveDateTime();
+
+            btnSubmit.disabled = false;
+            btnText.innerText = "Tambah Transaksi";
+
+            showCustomNotification("Selesai", "Transaksi berhasil dicatat & dicadangkan");
+        }, 3000);
     });
 
     window.openEditModal = function(id) {
@@ -1486,6 +2350,11 @@
         document.getElementById('editDescription').value = t.description;
         document.getElementById('editDate').value = t.date;
         document.getElementById('editTime').value = t.time;
+        
+        toggleEditPaymentMethodVisibility();
+        if (t.type === 'out') {
+            document.getElementById('editPaymentMethod').value = t.method || 'CASH';
+        }
 
         document.getElementById('editModal').classList.add('active');
     };
@@ -1537,12 +2406,13 @@
         const description = document.getElementById('editDescription').value;
         const date = document.getElementById('editDate').value;
         const time = document.getElementById('editTime').value;
+        const method = (type === 'out') ? document.getElementById('editPaymentMethod').value : null;
 
         if (!amount || isNaN(amount) || !description || !date || !time) return;
 
         const index = transactions.findIndex(t => t.id === id);
         if (index !== -1) {
-            transactions[index] = { id, type, amount, description, date, time };
+            transactions[index] = { id, type, amount, description, date, time, method };
             updateUI();
         }
 
