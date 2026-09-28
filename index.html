@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Mencegah Cache Browser agar perubahan langsung terlihat di HP -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>CYBER VAULT | Keuangan Digital</title>
+    
     <!-- Google Fonts for high-end modern sci-fi aesthetic -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,13 +23,24 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        html, body {
-            touch-action: manipulation;
-            -webkit-text-size-adjust: 100%;
-            overflow-x: hidden;
+        html {
             width: 100%;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            background-color: #020714;
+            color: #ffffff;
+            padding: 16px 12px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
             min-height: 100vh;
             min-height: 100dvh;
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
         }
 
         :root {
@@ -42,20 +58,12 @@
             --glass-blur: 16px;
         }
 
-        body {
-            background-color: var(--bg-cyber-dark);
-            color: var(--text-light);
-            padding: 16px 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
         .tech-bg-container {
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
@@ -88,17 +96,17 @@
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: 480px;
-            margin: auto;
+            max-width: 440px;
+            margin: 0 auto;
             background: rgba(2, 10, 28, var(--glass-alpha));
             backdrop-filter: blur(var(--glass-blur));
             -webkit-backdrop-filter: blur(var(--glass-blur));
             border-radius: 20px;
             border: 1px solid rgba(0, 240, 255, 0.35);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 
-                        0 0 40px rgba(0, 212, 255, 0.22),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.3);
-            padding: 20px 16px;
+            /* Memperbaiki Box-Shadow agar tidak meluap ke samping layar */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            padding: 20px 14px;
             animation: containerAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             transition: background 0.2s ease, backdrop-filter 0.2s ease;
         }
@@ -116,21 +124,21 @@
         h2.title-cyber {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(1.3rem, 5vw, 1.65rem);
+            font-size: clamp(1.2rem, 5vw, 1.55rem);
             letter-spacing: 2px;
             text-transform: uppercase;
             background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #38bdf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
             display: inline-block;
         }
 
         .subtitle-cyber {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 2.5px;
+            letter-spacing: 2px;
             color: #7dd3fc;
             text-transform: uppercase;
             margin-top: 2px;
@@ -251,12 +259,6 @@
             align-items: center;
             justify-content: center;
             gap: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-backup-action:hover {
-            background: rgba(0, 240, 255, 0.15);
-            border-color: #00f0ff;
         }
 
         .backup-info-text {
@@ -279,10 +281,9 @@
             -webkit-backdrop-filter: blur(var(--glass-blur));
             border: 1px solid rgba(0, 240, 255, 0.5);
             border-radius: 16px;
-            padding: 16px;
+            padding: 16px 10px;
             text-align: center;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 180, 255, 0.2);
         }
 
         .card-hero h4 {
@@ -295,7 +296,7 @@
         }
 
         .card-hero p {
-            font-size: clamp(1.3rem, 4.5vw, 1.65rem);
+            font-size: clamp(1.3rem, 4.5vw, 1.6rem);
             font-weight: 900;
             color: #ffffff;
             letter-spacing: -0.5px;
@@ -310,7 +311,7 @@
         }
 
         .card-sub {
-            padding: 12px 10px;
+            padding: 12px 8px;
             border-radius: 14px;
             text-align: center;
             backdrop-filter: blur(var(--glass-blur));
@@ -319,7 +320,7 @@
         }
 
         .card-sub h4 {
-            font-size: 0.66rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             font-weight: 800;
@@ -327,7 +328,7 @@
         }
 
         .card-sub p {
-            font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+            font-size: clamp(0.8rem, 3.5vw, 0.92rem);
             font-weight: 800;
             word-break: break-word;
         }
@@ -351,7 +352,7 @@
             background: rgba(2, 10, 28, calc(var(--glass-alpha) * 0.7));
             backdrop-filter: blur(var(--glass-blur));
             -webkit-backdrop-filter: blur(var(--glass-blur));
-            padding: 16px 14px;
+            padding: 16px 12px;
             border-radius: 16px;
             margin-bottom: 20px;
             border: 1px solid rgba(0, 240, 255, 0.3);
@@ -366,7 +367,6 @@
             width: 100%;
         }
 
-        /* Precision Grid Layout for Date and Time */
         .datetime-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -376,7 +376,7 @@
         }
 
         label {
-            font-size: 0.76rem;
+            font-size: 0.75rem;
             font-weight: 700;
             color: #7dd3fc;
             letter-spacing: 0.4px;
@@ -396,14 +396,12 @@
             min-width: 0;
         }
 
-        /* Fix date & time input truncation on mobile webviews */
         input[type="date"],
         input[type="time"] {
             -webkit-appearance: none;
             appearance: none;
             font-size: 0.8rem;
-            padding: 9px 8px;
-            letter-spacing: -0.3px;
+            padding: 9px 6px;
         }
 
         input[type="date"]::-webkit-calendar-picker-indicator,
@@ -412,8 +410,8 @@
             cursor: pointer;
             margin-left: 2px;
             padding: 0;
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
         }
 
         select option {
@@ -442,11 +440,6 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: all 0.2s ease;
-        }
-
-        button[type="submit"]:active {
-            transform: scale(0.98);
         }
 
         .history-title {
@@ -459,29 +452,16 @@
 
         .history-list {
             list-style: none;
-            max-height: 280px;
+            max-height: 250px;
             overflow-y: auto;
-            padding-right: 4px;
-        }
-
-        /* Scrollbar Styling for History List */
-        .history-list::-webkit-scrollbar {
-            width: 4px;
-        }
-        .history-list::-webkit-scrollbar-track {
-            background: rgba(0, 240, 255, 0.05);
-            border-radius: 4px;
-        }
-        .history-list::-webkit-scrollbar-thumb {
-            background: rgba(0, 240, 255, 0.3);
-            border-radius: 4px;
+            padding-right: 2px;
         }
 
         .history-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 12px;
+            padding: 12px 10px;
             background: rgba(2, 12, 32, calc(var(--glass-alpha) * 0.8 + 0.08));
             backdrop-filter: blur(var(--glass-blur));
             -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -490,12 +470,6 @@
             border-radius: 12px;
             border-left: 4px solid var(--text-muted);
             cursor: pointer;
-            transition: transform 0.15s ease, border-color 0.15s ease;
-        }
-
-        .history-item:hover {
-            transform: translateX(2px);
-            border-color: rgba(0, 240, 255, 0.5);
         }
 
         .history-item.in { border-left-color: var(--pemasukan-green); }
@@ -543,13 +517,13 @@
             font-style: italic;
         }
 
-        /* Modal Overlays */
+        /* Popups / Modals */
         .popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             height: 100dvh;
             background: rgba(1, 4, 12, 0.82);
             backdrop-filter: blur(10px);
@@ -575,26 +549,20 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1.5px solid rgba(0, 240, 255, 0.6);
             border-radius: 22px;
-            padding: 24px 20px;
+            padding: 24px 18px;
             width: 100%;
-            max-width: 360px;
+            max-width: 340px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            animation: popupScale 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes popupScale {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
         }
 
         .popup-icon {
-            width: 56px;
-            height: 56px;
+            width: 54px;
+            height: 54px;
             border-radius: 50%;
             background: rgba(16, 185, 129, 0.25);
             border: 2px solid var(--pemasukan-green);
@@ -627,21 +595,8 @@
             padding: 10px 32px;
             border-radius: 12px;
             font-size: 0.9rem;
-            margin-top: 4px;
+            margin-top: 6px;
             cursor: pointer;
-        }
-
-        /* Screen adaptivity for extra small devices */
-        @media (max-width: 360px) {
-            .container {
-                padding: 16px 10px;
-            }
-            .sub-dashboard, .datetime-group {
-                grid-template-columns: 1fr;
-            }
-            .backup-actions {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
@@ -759,7 +714,7 @@
         <div class="popup-title" style="font-size: 1.2rem;">Hapus Transaksi?</div>
         <div class="popup-subtitle">Tindakan ini tidak dapat dibatalkan.</div>
         <div style="display: flex; gap: 8px; width: 100%; margin-top: 6px;">
-            <button type="button" id="btnCancelDelete" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; flex: 1; padding: 10px; border-radius: 10px; font-weight: 700;">Batal</button>
+            <button type="button" id="btnCancelDelete" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; flex: 1; padding: 10px; border-radius: 10px;">Batal</button>
             <button type="button" id="btnConfirmDelete" style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); border: none; color: #fff; flex: 1; font-weight: 800; border-radius: 10px; padding: 10px;">Hapus</button>
         </div>
     </div>
@@ -767,7 +722,7 @@
 
 <!-- Modal Edit Transaksi -->
 <div class="popup-overlay" id="editModal">
-    <div class="popup-box" style="max-width: 380px; text-align: left; align-items: stretch; gap: 10px; padding: 22px 18px;">
+    <div class="popup-box" style="max-width: 360px; text-align: left; align-items: stretch; gap: 10px; padding: 20px 16px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <h3 style="font-size: 1.1rem; font-weight: 800; color: #fff;">Edit Transaksi</h3>
             <button type="button" id="closeEditModal" style="background:none; border:none; color:#94a3b8; font-size:1.3rem; cursor:pointer; padding:0; width:auto;">✕</button>
@@ -800,7 +755,7 @@
                 </div>
             </div>
             <div style="display: flex; gap: 8px; margin-top: 6px;">
-                <button type="button" id="btnDeleteModal" style="background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.5); color: #fb7185; flex: 1; font-weight: 700; border-radius: 10px; padding: 10px;">Hapus</button>
+                <button type="button" id="btnDeleteModal" style="background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.5); color: #fb7185; flex: 1; padding: 10px; border-radius: 10px;">Hapus</button>
                 <button type="submit" style="flex: 2; margin-top: 0; padding: 10px;">Simpan Perubahan</button>
             </div>
         </form>
@@ -821,7 +776,7 @@
         });
 
         const particles = [];
-        const numParticles = 40;
+        const numParticles = 35;
         for (let i = 0; i < numParticles; i++) {
             particles.push({
                 x: Math.random() * width,
@@ -955,10 +910,10 @@
                 const headPt = getPointOnPath(path.points, pulse.progress);
                 ctx.save();
                 ctx.fillStyle = '#ffffff';
-                ctx.shadowBlur = 10;
+                ctx.shadowBlur = 8;
                 ctx.shadowColor = '#00f0ff';
                 ctx.beginPath();
-                ctx.arc(headPt.x, headPt.y, 2.2, 0, Math.PI * 2);
+                ctx.arc(headPt.x, headPt.y, 2, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.restore();
             });
@@ -1125,7 +1080,6 @@
         performAutoBackup();
     }
 
-    // Export & Import Handlers
     document.getElementById('btnExportBackup').addEventListener('click', function() {
         const now = new Date();
         const dateStr = now.toISOString().slice(0,10);
