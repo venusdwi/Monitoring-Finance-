@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -11,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700;1,9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     
     <style>
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
             font-family: 'Plus Jakarta Sans', sans-serif;
             margin: 0;
@@ -24,6 +23,8 @@
             -webkit-text-size-adjust: 100%;
             overflow-x: hidden;
             width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
         }
 
         :root {
@@ -44,11 +45,10 @@
         body {
             background-color: var(--bg-cyber-dark);
             color: var(--text-light);
-            padding: 16px 10px;
+            padding: 16px 12px;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             position: relative;
         }
 
@@ -56,8 +56,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             z-index: 0;
             overflow: hidden;
             pointer-events: none;
@@ -89,6 +89,7 @@
             z-index: 10;
             width: 100%;
             max-width: 480px;
+            margin: auto;
             background: rgba(2, 10, 28, var(--glass-alpha));
             backdrop-filter: blur(var(--glass-blur));
             -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -115,8 +116,8 @@
         h2.title-cyber {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 1.65rem;
-            letter-spacing: 2.5px;
+            font-size: clamp(1.3rem, 5vw, 1.65rem);
+            letter-spacing: 2px;
             text-transform: uppercase;
             background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #38bdf8 100%);
             -webkit-background-clip: text;
@@ -129,7 +130,7 @@
             font-family: 'Rajdhani', sans-serif;
             font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 3px;
+            letter-spacing: 2.5px;
             color: #7dd3fc;
             text-transform: uppercase;
             margin-top: 2px;
@@ -250,6 +251,12 @@
             align-items: center;
             justify-content: center;
             gap: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-backup-action:hover {
+            background: rgba(0, 240, 255, 0.15);
+            border-color: #00f0ff;
         }
 
         .backup-info-text {
@@ -288,11 +295,12 @@
         }
 
         .card-hero p {
-            font-size: 1.65rem;
+            font-size: clamp(1.3rem, 4.5vw, 1.65rem);
             font-weight: 900;
             color: #ffffff;
             letter-spacing: -0.5px;
             text-shadow: 0 2px 14px rgba(0, 240, 255, 0.8);
+            word-break: break-word;
         }
 
         .sub-dashboard {
@@ -319,7 +327,7 @@
         }
 
         .card-sub p {
-            font-size: 0.95rem;
+            font-size: clamp(0.85rem, 3.5vw, 0.95rem);
             font-weight: 800;
             word-break: break-word;
         }
@@ -394,7 +402,7 @@
             -webkit-appearance: none;
             appearance: none;
             font-size: 0.8rem;
-            padding: 9px 6px;
+            padding: 9px 8px;
             letter-spacing: -0.3px;
         }
 
@@ -434,6 +442,11 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        button[type="submit"]:active {
+            transform: scale(0.98);
         }
 
         .history-title {
@@ -446,9 +459,22 @@
 
         .history-list {
             list-style: none;
-            max-height: 250px;
+            max-height: 280px;
             overflow-y: auto;
-            padding-right: 2px;
+            padding-right: 4px;
+        }
+
+        /* Scrollbar Styling for History List */
+        .history-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .history-list::-webkit-scrollbar-track {
+            background: rgba(0, 240, 255, 0.05);
+            border-radius: 4px;
+        }
+        .history-list::-webkit-scrollbar-thumb {
+            background: rgba(0, 240, 255, 0.3);
+            border-radius: 4px;
         }
 
         .history-item {
@@ -464,6 +490,12 @@
             border-radius: 12px;
             border-left: 4px solid var(--text-muted);
             cursor: pointer;
+            transition: transform 0.15s ease, border-color 0.15s ease;
+        }
+
+        .history-item:hover {
+            transform: translateX(2px);
+            border-color: rgba(0, 240, 255, 0.5);
         }
 
         .history-item.in { border-left-color: var(--pemasukan-green); }
@@ -511,20 +543,22 @@
             font-style: italic;
         }
 
+        /* Modal Overlays */
         .popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
+            height: 100dvh;
             background: rgba(1, 4, 12, 0.82);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             z-index: 100;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            padding-top: 10vh;
+            align-items: center;
+            padding: 16px;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.2s ease-out;
@@ -541,8 +575,8 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1.5px solid rgba(0, 240, 255, 0.6);
             border-radius: 22px;
-            padding: 28px 24px;
-            width: 88%;
+            padding: 24px 20px;
+            width: 100%;
             max-width: 360px;
             text-align: center;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 212, 255, 0.3);
@@ -550,11 +584,17 @@
             flex-direction: column;
             align-items: center;
             gap: 12px;
+            animation: popupScale 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes popupScale {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .popup-icon {
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             background: rgba(16, 185, 129, 0.25);
             border: 2px solid var(--pemasukan-green);
@@ -562,19 +602,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
         }
 
         .popup-title {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 900;
             color: #ffffff;
             text-transform: uppercase;
         }
 
         .popup-subtitle {
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             color: #a5f3fc;
             margin-top: -4px;
         }
@@ -584,11 +624,24 @@
             color: #ffffff;
             font-weight: 800;
             border: none;
-            padding: 12px 36px;
+            padding: 10px 32px;
             border-radius: 12px;
-            font-size: 0.95rem;
-            margin-top: 6px;
+            font-size: 0.9rem;
+            margin-top: 4px;
             cursor: pointer;
+        }
+
+        /* Screen adaptivity for extra small devices */
+        @media (max-width: 360px) {
+            .container {
+                padding: 16px 10px;
+            }
+            .sub-dashboard, .datetime-group {
+                grid-template-columns: 1fr;
+            }
+            .backup-actions {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -703,11 +756,11 @@
 <div class="popup-overlay" id="confirmDeleteModal">
     <div class="popup-box" style="max-width: 320px;">
         <div class="popup-icon" style="background: rgba(244, 63, 94, 0.25); border-color: var(--pengeluaran-red); color: #fb7185;">!</div>
-        <div class="popup-title" style="font-size: 1.3rem;">Hapus Transaksi?</div>
+        <div class="popup-title" style="font-size: 1.2rem;">Hapus Transaksi?</div>
         <div class="popup-subtitle">Tindakan ini tidak dapat dibatalkan.</div>
         <div style="display: flex; gap: 8px; width: 100%; margin-top: 6px;">
-            <button type="button" id="btnCancelDelete" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; flex: 1;">Batal</button>
-            <button type="button" id="btnConfirmDelete" style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); border: none; color: #fff; flex: 1; font-weight: 800; border-radius: 10px;">Hapus</button>
+            <button type="button" id="btnCancelDelete" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; flex: 1; padding: 10px; border-radius: 10px; font-weight: 700;">Batal</button>
+            <button type="button" id="btnConfirmDelete" style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); border: none; color: #fff; flex: 1; font-weight: 800; border-radius: 10px; padding: 10px;">Hapus</button>
         </div>
     </div>
 </div>
@@ -747,8 +800,8 @@
                 </div>
             </div>
             <div style="display: flex; gap: 8px; margin-top: 6px;">
-                <button type="button" id="btnDeleteModal" style="background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.5); color: #fb7185; flex: 1;">Hapus</button>
-                <button type="submit" style="flex: 2; margin-top: 0;">Simpan Perubahan</button>
+                <button type="button" id="btnDeleteModal" style="background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.5); color: #fb7185; flex: 1; font-weight: 700; border-radius: 10px; padding: 10px;">Hapus</button>
+                <button type="submit" style="flex: 2; margin-top: 0; padding: 10px;">Simpan Perubahan</button>
             </div>
         </form>
     </div>
@@ -768,7 +821,7 @@
         });
 
         const particles = [];
-        const numParticles = 50;
+        const numParticles = 40;
         for (let i = 0; i < numParticles; i++) {
             particles.push({
                 x: Math.random() * width,
@@ -776,8 +829,7 @@
                 radius: Math.random() * 1.5 + 0.5,
                 alpha: Math.random() * 0.7 + 0.2,
                 vx: (Math.random() - 0.5) * 0.2,
-                vy: (Math.random() - 0.5) * 0.2,
-                pulseSpeed: Math.random() * 0.03 + 0.01
+                vy: (Math.random() - 0.5) * 0.2
             });
         }
 
@@ -791,9 +843,8 @@
             const numLines = Math.floor(width / 70);
             for (let i = 0; i < numLines; i++) {
                 const startX = (i + 0.5) * (width / numLines);
-                const startY = 0;
                 let currentX = startX;
-                let currentY = startY;
+                let currentY = 0;
                 const pathPoints = [{ x: currentX, y: currentY }];
                 
                 const targetY = height * 0.45;
@@ -812,7 +863,6 @@
 
                 circuitPaths.push({
                     points: pathPoints,
-                    nodeRadius: Math.random() * 2 + 2,
                     color: Math.random() > 0.4 ? '#00f0ff' : '#0077ff'
                 });
             }
@@ -822,7 +872,6 @@
                     pathIdx: pathIdx,
                     progress: Math.random(),
                     speed: Math.random() * 0.003 + 0.0015,
-                    length: 0.06,
                     color: path.color
                 });
             });
@@ -885,7 +934,7 @@
                 if (pts.length < 2) return;
 
                 ctx.save();
-                ctx.strokeStyle = 'rgba(0, 200, 255, 0.25)';
+                ctx.strokeStyle = 'rgba(0, 200, 255, 0.2)';
                 ctx.lineWidth = 1.2;
                 ctx.beginPath();
                 ctx.moveTo(pts[0].x, pts[0].y);
@@ -906,10 +955,10 @@
                 const headPt = getPointOnPath(path.points, pulse.progress);
                 ctx.save();
                 ctx.fillStyle = '#ffffff';
-                ctx.shadowBlur = 12;
+                ctx.shadowBlur = 10;
                 ctx.shadowColor = '#00f0ff';
                 ctx.beginPath();
-                ctx.arc(headPt.x, headPt.y, 2.5, 0, Math.PI * 2);
+                ctx.arc(headPt.x, headPt.y, 2.2, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.restore();
             });
@@ -1298,4 +1347,3 @@
 </script>
 </body>
 </html>
-```
