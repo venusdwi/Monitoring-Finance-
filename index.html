@@ -1,0 +1,1301 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CYBER VAULT | Keuangan Digital</title>
+    <!-- Google Fonts for high-end modern sci-fi aesthetic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700;1,9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        :root {
+            --bg-cyber-dark: #020714;
+            --border-glow: rgba(0, 240, 255, 0.45);
+            --accent-cyan: #00f0ff;
+            --accent-blue: #0077ff;
+            --pemasukan-green: #10b981;
+            --pengeluaran-red: #f43f5e;
+            --text-light: #ffffff;
+            --text-muted: #a5f3fc;
+            
+            /* Dynamic Opacity Variable for Glassmorphism */
+            --glass-alpha: 0.28;
+            --glass-blur: 16px;
+        }
+
+        body {
+            background-color: var(--bg-cyber-dark);
+            color: var(--text-light);
+            padding: 16px 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .tech-bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, #061838 0%, #020817 65%, #01040a 100%);
+        }
+
+        #circuitCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .cyber-vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: radial-gradient(circle at 50% 50%, transparent 30%, rgba(1, 4, 12, 0.65) 100%);
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 480px;
+            background: rgba(2, 10, 28, var(--glass-alpha));
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-radius: 20px;
+            border: 1px solid rgba(0, 240, 255, 0.35);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 
+                        0 0 40px rgba(0, 212, 255, 0.22),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            padding: 20px 16px;
+            animation: containerAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: background 0.2s ease, backdrop-filter 0.2s ease;
+        }
+
+        @keyframes containerAppear {
+            from { opacity: 0; transform: translateY(16px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .header-box {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        h2.title-cyber {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.65rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+            display: inline-block;
+        }
+
+        .subtitle-cyber {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #7dd3fc;
+            text-transform: uppercase;
+            margin-top: 2px;
+            opacity: 0.9;
+        }
+
+        .glass-control-panel {
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            border-radius: 12px;
+            padding: 8px 12px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .glass-control-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #7dd3fc;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .glass-slider-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .glass-range-input {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(0, 240, 255, 0.25);
+            outline: none;
+            cursor: pointer;
+            padding: 0;
+            border: none;
+        }
+
+        .glass-range-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #00f0ff;
+            box-shadow: 0 0 8px #00f0ff;
+            cursor: pointer;
+        }
+
+        .opacity-value-badge {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: #00f0ff;
+            min-width: 32px;
+            text-align: right;
+        }
+
+        .backup-panel {
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 12px;
+            padding: 10px 12px;
+            margin-bottom: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .backup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .backup-title-text {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #a5f3fc;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .backup-status-tag {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #34d399;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            padding: 2px 6px;
+            border-radius: 12px;
+        }
+
+        .backup-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-backup-action {
+            flex: 1;
+            padding: 8px 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            background: rgba(2, 12, 32, 0.6);
+            color: #00f0ff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .backup-info-text {
+            font-size: 0.65rem;
+            color: #64748b;
+            text-align: center;
+        }
+
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card-hero {
+            position: relative;
+            background: rgba(0, 180, 255, calc(var(--glass-alpha) * 0.45 + 0.05));
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid rgba(0, 240, 255, 0.5);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 180, 255, 0.2);
+        }
+
+        .card-hero h4 {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #7dd3fc;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .card-hero p {
+            font-size: 1.65rem;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 14px rgba(0, 240, 255, 0.8);
+        }
+
+        .sub-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .card-sub {
+            padding: 12px 10px;
+            border-radius: 14px;
+            text-align: center;
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            min-width: 0;
+        }
+
+        .card-sub h4 {
+            font-size: 0.66rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .card-sub p {
+            font-size: 0.95rem;
+            font-weight: 800;
+            word-break: break-word;
+        }
+
+        .pemasukan {
+            background: rgba(16, 185, 129, calc(var(--glass-alpha) * 0.45 + 0.05));
+            border: 1px solid rgba(16, 185, 129, 0.55);
+            color: #34d399;
+        }
+
+        .pengeluaran {
+            background: rgba(244, 63, 94, calc(var(--glass-alpha) * 0.45 + 0.05));
+            border: 1px solid rgba(244, 63, 94, 0.55);
+            color: #fb7185;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(2, 10, 28, calc(var(--glass-alpha) * 0.7));
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            padding: 16px 14px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            width: 100%;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+            width: 100%;
+        }
+
+        /* Precision Grid Layout for Date and Time */
+        .datetime-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            width: 100%;
+            min-width: 0;
+        }
+
+        label {
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: #7dd3fc;
+            letter-spacing: 0.4px;
+        }
+
+        input, select, button {
+            padding: 10px 10px;
+            border: 1px solid rgba(0, 240, 255, 0.35);
+            border-radius: 10px;
+            font-size: 0.85rem;
+            outline: none;
+            background: rgba(2, 12, 32, calc(var(--glass-alpha) * 0.8 + 0.1));
+            color: #ffffff;
+            touch-action: manipulation;
+            width: 100%;
+            box-sizing: border-box;
+            min-width: 0;
+        }
+
+        /* Fix date & time input truncation on mobile webviews */
+        input[type="date"],
+        input[type="time"] {
+            -webkit-appearance: none;
+            appearance: none;
+            font-size: 0.8rem;
+            padding: 9px 6px;
+            letter-spacing: -0.3px;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.9) sepia(0.3) saturate(3) hue-rotate(170deg);
+            cursor: pointer;
+            margin-left: 2px;
+            padding: 0;
+            width: 16px;
+            height: 16px;
+        }
+
+        select option {
+            background-color: #030a1a;
+            color: #ffffff;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+            background: rgba(3, 16, 42, 0.65);
+        }
+
+        button[type="submit"] {
+            background: linear-gradient(135deg, rgba(0, 153, 255, 0.85) 0%, rgba(0, 85, 255, 0.85) 100%);
+            color: #ffffff;
+            font-weight: 800;
+            border: 1px solid rgba(0, 240, 255, 0.5);
+            cursor: pointer;
+            margin-top: 4px;
+            padding: 12px;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0, 150, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .history-title {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            font-weight: 800;
+            letter-spacing: 0.4px;
+        }
+
+        .history-list {
+            list-style: none;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 2px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 12px;
+            background: rgba(2, 12, 32, calc(var(--glass-alpha) * 0.8 + 0.08));
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            margin-bottom: 8px;
+            border-radius: 12px;
+            border-left: 4px solid var(--text-muted);
+            cursor: pointer;
+        }
+
+        .history-item.in { border-left-color: var(--pemasukan-green); }
+        .history-item.out { border-left-color: var(--pengeluaran-red); }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+            flex-grow: 1;
+            padding-right: 8px;
+        }
+
+        .item-desc {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-date {
+            font-size: 0.7rem;
+            color: #38bdf8;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .item-amount {
+            font-weight: 800;
+            font-size: 0.88rem;
+            white-space: nowrap;
+        }
+
+        .amount-in { color: #34d399; }
+        .amount-out { color: #fb7185; }
+
+        .empty-state {
+            text-align: center;
+            color: #a5f3fc;
+            font-size: 0.82rem;
+            padding: 20px 0;
+            font-style: italic;
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(1, 4, 12, 0.82);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 10vh;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease-out;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .popup-box {
+            background: rgba(3, 14, 38, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(0, 240, 255, 0.6);
+            border-radius: 22px;
+            padding: 28px 24px;
+            width: 88%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 212, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .popup-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.25);
+            border: 2px solid var(--pemasukan-green);
+            color: #34d399;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .popup-title {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .popup-subtitle {
+            font-size: 0.88rem;
+            color: #a5f3fc;
+            margin-top: -4px;
+        }
+
+        .popup-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            font-weight: 800;
+            border: none;
+            padding: 12px 36px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            margin-top: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="tech-bg-container">
+    <canvas id="circuitCanvas"></canvas>
+    <div class="cyber-vignette"></div>
+</div>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header-box">
+        <h2 class="title-cyber">CYBER VAULT</h2>
+        <div class="subtitle-cyber">FINANCIAL MONITORING SYSTEM</div>
+    </div>
+
+    <!-- Panel Pengatur Transparansi -->
+    <div class="glass-control-panel">
+        <div class="glass-control-label">Transparansi Kaca:</div>
+        <div class="glass-slider-wrapper">
+            <input type="range" id="glassOpacitySlider" class="glass-range-input" min="5" max="85" value="28">
+            <span class="opacity-value-badge" id="opacityValText">28%</span>
+        </div>
+    </div>
+
+    <!-- Panel Backup & Restore -->
+    <div class="backup-panel">
+        <div class="backup-header">
+            <div class="backup-title-text">💾 BACKUP OTOMATIS</div>
+            <div class="backup-status-tag" id="backupStatusText">Auto-Saved</div>
+        </div>
+        <div class="backup-actions">
+            <button type="button" class="btn-backup-action" id="btnExportBackup">⬇️ Unduh Backup</button>
+            <button type="button" class="btn-backup-action" id="btnImportBackup">⬆️ Pulihkan Data</button>
+            <input type="file" id="importFileInput" accept=".json" style="display: none;">
+        </div>
+        <div class="backup-info-text" id="lastBackupTimeText">Sistem otomatis mencadangkan data setiap kali ada perubahan.</div>
+    </div>
+
+    <!-- Ringkasan Saldo -->
+    <div class="dashboard">
+        <div class="card-hero">
+            <h4>SALDO SISA</h4>
+            <p id="totalSaldo">Rp 0</p>
+        </div>
+        
+        <div class="sub-dashboard">
+            <div class="card-sub pemasukan">
+                <h4>PEMASUKAN</h4>
+                <p id="totalPemasukan">Rp 0</p>
+            </div>
+            <div class="card-sub pengeluaran">
+                <h4>PENGELUARAN</h4>
+                <p id="totalPengeluaran">Rp 0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Input Transaksi -->
+    <form id="transactionForm">
+        <div class="form-group">
+            <label for="type">Jenis Transaksi</label>
+            <select id="type" required>
+                <option value="in">Pemasukan (+)</option>
+                <option value="out">Pengeluaran (-)</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="amount">Jumlah (Rp)</label>
+            <input type="text" id="amount" placeholder="Contoh: 500.000" inputmode="numeric" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Keterangan</label>
+            <input type="text" id="description" placeholder="Contoh: Gaji, Makan Siang" required>
+        </div>
+        
+        <!-- Input Tanggal & Jam Terpisah dengan Presisi Grid -->
+        <div class="datetime-group">
+            <div class="form-group">
+                <label for="inputDate">Tanggal Input</label>
+                <input type="date" id="inputDate" required>
+            </div>
+            <div class="form-group">
+                <label for="inputTime">Jam Input</label>
+                <input type="time" id="inputTime" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnSubmit">
+            <span id="btnText">Tambah Transaksi</span>
+        </button>
+    </form>
+
+    <h3 class="history-title">Riwayat Transaksi</h3>
+    <ul class="history-list" id="historyList"></ul>
+</div>
+
+<!-- Modal Pop-up Notifikasi "Selesai" -->
+<div class="popup-overlay" id="popupNotification">
+    <div class="popup-box">
+        <div class="popup-icon" id="popupIcon">✓</div>
+        <div class="popup-title" id="popupTitle">Selesai</div>
+        <div class="popup-subtitle" id="popupSubtitle">Transaksi berhasil dicatat</div>
+        <button type="button" class="popup-btn" id="popupCloseBtn">OK</button>
+    </div>
+</div>
+
+<!-- Modal Confirmation Delete Custom -->
+<div class="popup-overlay" id="confirmDeleteModal">
+    <div class="popup-box" style="max-width: 320px;">
+        <div class="popup-icon" style="background: rgba(244, 63, 94, 0.25); border-color: var(--pengeluaran-red); color: #fb7185;">!</div>
+        <div class="popup-title" style="font-size: 1.3rem;">Hapus Transaksi?</div>
+        <div class="popup-subtitle">Tindakan ini tidak dapat dibatalkan.</div>
+        <div style="display: flex; gap: 8px; width: 100%; margin-top: 6px;">
+            <button type="button" id="btnCancelDelete" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; flex: 1;">Batal</button>
+            <button type="button" id="btnConfirmDelete" style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); border: none; color: #fff; flex: 1; font-weight: 800; border-radius: 10px;">Hapus</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit Transaksi -->
+<div class="popup-overlay" id="editModal">
+    <div class="popup-box" style="max-width: 380px; text-align: left; align-items: stretch; gap: 10px; padding: 22px 18px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-size: 1.1rem; font-weight: 800; color: #fff;">Edit Transaksi</h3>
+            <button type="button" id="closeEditModal" style="background:none; border:none; color:#94a3b8; font-size:1.3rem; cursor:pointer; padding:0; width:auto;">✕</button>
+        </div>
+        <form id="editForm" style="margin-bottom: 0; padding: 0; background: transparent; border: none; box-shadow: none;">
+            <input type="hidden" id="editId">
+            <div class="form-group">
+                <label for="editType">Jenis Transaksi</label>
+                <select id="editType" required>
+                    <option value="in">Pemasukan (+)</option>
+                    <option value="out">Pengeluaran (-)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="editAmount">Jumlah (Rp)</label>
+                <input type="text" id="editAmount" inputmode="numeric" required>
+            </div>
+            <div class="form-group">
+                <label for="editDescription">Keterangan</label>
+                <input type="text" id="editDescription" required>
+            </div>
+            <div class="datetime-group">
+                <div class="form-group">
+                    <label for="editDate">Tanggal Input</label>
+                    <input type="date" id="editDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="editTime">Jam Input</label>
+                    <input type="time" id="editTime" required>
+                </div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 6px;">
+                <button type="button" id="btnDeleteModal" style="background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.5); color: #fb7185; flex: 1;">Hapus</button>
+                <button type="submit" style="flex: 2; margin-top: 0;">Simpan Perubahan</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    (function initTechCircuitBackground() {
+        const canvas = document.getElementById('circuitCanvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            generateCircuitPaths();
+        });
+
+        const particles = [];
+        const numParticles = 50;
+        for (let i = 0; i < numParticles; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 1.5 + 0.5,
+                alpha: Math.random() * 0.7 + 0.2,
+                vx: (Math.random() - 0.5) * 0.2,
+                vy: (Math.random() - 0.5) * 0.2,
+                pulseSpeed: Math.random() * 0.03 + 0.01
+            });
+        }
+
+        let circuitPaths = [];
+        let pulses = [];
+
+        function generateCircuitPaths() {
+            circuitPaths = [];
+            pulses = [];
+
+            const numLines = Math.floor(width / 70);
+            for (let i = 0; i < numLines; i++) {
+                const startX = (i + 0.5) * (width / numLines);
+                const startY = 0;
+                let currentX = startX;
+                let currentY = startY;
+                const pathPoints = [{ x: currentX, y: currentY }];
+                
+                const targetY = height * 0.45;
+                let segments = 3;
+
+                while (currentY < targetY && segments > 0) {
+                    currentY += (targetY - currentY) / segments;
+                    pathPoints.push({ x: currentX, y: currentY });
+
+                    if (segments > 1) {
+                        currentX = Math.max(15, Math.min(width - 15, currentX + (Math.random() - 0.5) * 100));
+                        pathPoints.push({ x: currentX, y: currentY });
+                    }
+                    segments--;
+                }
+
+                circuitPaths.push({
+                    points: pathPoints,
+                    nodeRadius: Math.random() * 2 + 2,
+                    color: Math.random() > 0.4 ? '#00f0ff' : '#0077ff'
+                });
+            }
+
+            circuitPaths.forEach((path, pathIdx) => {
+                pulses.push({
+                    pathIdx: pathIdx,
+                    progress: Math.random(),
+                    speed: Math.random() * 0.003 + 0.0015,
+                    length: 0.06,
+                    color: path.color
+                });
+            });
+        }
+
+        generateCircuitPaths();
+
+        function getPointOnPath(points, progress) {
+            if (!points || points.length < 2) return points[0];
+
+            let totalLength = 0;
+            const lengths = [];
+            for (let i = 0; i < points.length - 1; i++) {
+                const dx = points[i+1].x - points[i].x;
+                const dy = points[i+1].y - points[i].y;
+                const len = Math.sqrt(dx * dx + dy * dy);
+                lengths.push(len);
+                totalLength += len;
+            }
+
+            let targetDist = progress * totalLength;
+            let currentDist = 0;
+
+            for (let i = 0; i < points.length - 1; i++) {
+                if (currentDist + lengths[i] >= targetDist) {
+                    const segProgress = (targetDist - currentDist) / lengths[i];
+                    return {
+                        x: points[i].x + (points[i+1].x - points[i].x) * segProgress,
+                        y: points[i].y + (points[i+1].y - points[i].y) * segProgress
+                    };
+                }
+                currentDist += lengths[i];
+            }
+            return points[points.length - 1];
+        }
+
+        function drawTechBackground() {
+            ctx.clearRect(0, 0, width, height);
+
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0) p.x = width;
+                if (p.x > width) p.x = 0;
+                if (p.y < 0) p.y = height;
+                if (p.y > height) p.y = 0;
+
+                ctx.save();
+                ctx.globalAlpha = p.alpha;
+                ctx.fillStyle = '#00f0ff';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            circuitPaths.forEach(path => {
+                const pts = path.points;
+                if (pts.length < 2) return;
+
+                ctx.save();
+                ctx.strokeStyle = 'rgba(0, 200, 255, 0.25)';
+                ctx.lineWidth = 1.2;
+                ctx.beginPath();
+                ctx.moveTo(pts[0].x, pts[0].y);
+                for (let i = 1; i < pts.length; i++) {
+                    ctx.lineTo(pts[i].x, pts[i].y);
+                }
+                ctx.stroke();
+                ctx.restore();
+            });
+
+            pulses.forEach(pulse => {
+                pulse.progress += pulse.speed;
+                if (pulse.progress > 1) pulse.progress = 0;
+
+                const path = circuitPaths[pulse.pathIdx];
+                if (!path) return;
+
+                const headPt = getPointOnPath(path.points, pulse.progress);
+                ctx.save();
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = '#00f0ff';
+                ctx.beginPath();
+                ctx.arc(headPt.x, headPt.y, 2.5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            requestAnimationFrame(drawTechBackground);
+        }
+
+        drawTechBackground();
+    })();
+
+    const glassOpacitySlider = document.getElementById('glassOpacitySlider');
+    const opacityValText = document.getElementById('opacityValText');
+
+    const savedOpacity = localStorage.getItem('cyber_glass_opacity') || '28';
+    glassOpacitySlider.value = savedOpacity;
+    applyGlassOpacity(savedOpacity);
+
+    function applyGlassOpacity(val) {
+        const numVal = parseInt(val, 10);
+        const alphaFloat = (numVal / 100).toFixed(2);
+        document.documentElement.style.setProperty('--glass-alpha', alphaFloat);
+        
+        let blurAmount = '0px';
+        if (numVal > 5) {
+            blurAmount = Math.max(0, Math.min(20, Math.round((numVal - 5) * 0.25))) + 'px';
+        }
+        document.documentElement.style.setProperty('--glass-blur', blurAmount);
+
+        opacityValText.innerText = val + '%';
+        localStorage.setItem('cyber_glass_opacity', val);
+    }
+
+    glassOpacitySlider.addEventListener('input', function() {
+        applyGlassOpacity(this.value);
+    });
+
+    let transactions = JSON.parse(localStorage.getItem('my_transactions')) || [];
+
+    function formatRupiah(number) {
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
+    }
+
+    const amountInput = document.getElementById('amount');
+    amountInput.addEventListener('input', function() {
+        let rawValue = this.value.replace(/\D/g, '');
+        if (rawValue) {
+            this.value = parseInt(rawValue, 10).toLocaleString('id-ID');
+        } else {
+            this.value = '';
+        }
+    });
+
+    let userHasCustomDateTime = false;
+    const inputDateElem = document.getElementById('inputDate');
+    const inputTimeElem = document.getElementById('inputTime');
+
+    function updateLiveDateTime() {
+        if (userHasCustomDateTime) return;
+
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+
+        inputDateElem.value = `${year}-${month}-${day}`;
+        inputTimeElem.value = `${hours}:${minutes}`;
+    }
+
+    [inputDateElem, inputTimeElem].forEach(elem => {
+        elem.addEventListener('change', () => { userHasCustomDateTime = true; });
+        elem.addEventListener('input', () => { userHasCustomDateTime = true; });
+    });
+
+    setInterval(updateLiveDateTime, 1000);
+
+    function formatDisplayDate(dateStr, timeStr) {
+        if (!dateStr) return '';
+        try {
+            const [year, month, day] = dateStr.split('-');
+            const dateObj = new Date(year, month - 1, day);
+            const days = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
+
+            return `${days[dateObj.getDay()]}, ${day} ${months[dateObj.getMonth()]} ${year} • ${timeStr || '00:00'}`;
+        } catch (e) {
+            return `${dateStr} ${timeStr}`;
+        }
+    }
+
+    function performAutoBackup() {
+        const timestamp = new Date().toLocaleString('id-ID', {
+            day: '2-digit', month: '2-digit', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+
+        const backupData = {
+            app: "CYBER_VAULT",
+            version: "1.0",
+            timestamp: new Date().toISOString(),
+            lastFormattedTime: timestamp,
+            transactions: transactions
+        };
+
+        localStorage.setItem('my_transactions', JSON.stringify(transactions));
+        localStorage.setItem('cyber_vault_auto_backup', JSON.stringify(backupData));
+        localStorage.setItem('cyber_vault_backup_last_time', timestamp);
+
+        const lastBackupTimeText = document.getElementById('lastBackupTimeText');
+        if (lastBackupTimeText) {
+            lastBackupTimeText.innerText = `Backup Terakhir: ${timestamp} WIB`;
+        }
+    }
+
+    const savedLastTime = localStorage.getItem('cyber_vault_backup_last_time');
+    if (savedLastTime) {
+        document.getElementById('lastBackupTimeText').innerText = `Backup Terakhir: ${savedLastTime} WIB`;
+    }
+
+    function updateUI() {
+        const historyList = document.getElementById('historyList');
+        historyList.innerHTML = '';
+
+        if (transactions.length === 0) {
+            historyList.innerHTML = '<li class="empty-state">Belum ada transaksi dicatat</li>';
+        } else {
+            const sortedTransactions = [...transactions].sort((a, b) => {
+                const dateA = new Date(`${a.date}T${a.time}`);
+                const dateB = new Date(`${b.date}T${b.time}`);
+                return dateB - dateA;
+            });
+
+            sortedTransactions.forEach((t) => {
+                const li = document.createElement('li');
+                li.className = `history-item ${t.type}`;
+                li.onclick = function() { openEditModal(t.id); };
+                li.innerHTML = `
+                    <div class="item-info">
+                        <span class="item-desc">${t.description}</span>
+                        <span class="item-date">🕒 ${formatDisplayDate(t.date, t.time)}</span>
+                    </div>
+                    <span class="item-amount ${t.type === 'in' ? 'amount-in' : 'amount-out'}">
+                        ${t.type === 'in' ? '+' : '-'} ${formatRupiah(t.amount)}
+                    </span>
+                `;
+                historyList.appendChild(li);
+            });
+        }
+
+        let totalIncome = 0;
+        let totalExpense = 0;
+        transactions.forEach(t => {
+            if (t.type === 'in') totalIncome += t.amount;
+            else totalExpense += t.amount;
+        });
+
+        const saldo = totalIncome - totalExpense;
+
+        document.getElementById('totalSaldo').innerText = formatRupiah(saldo);
+        document.getElementById('totalPemasukan').innerText = formatRupiah(totalIncome);
+        document.getElementById('totalPengeluaran').innerText = formatRupiah(totalExpense);
+
+        performAutoBackup();
+    }
+
+    // Export & Import Handlers
+    document.getElementById('btnExportBackup').addEventListener('click', function() {
+        const now = new Date();
+        const dateStr = now.toISOString().slice(0,10);
+        const backupData = {
+            app: "CYBER_VAULT",
+            exportDate: now.toISOString(),
+            totalRecords: transactions.length,
+            transactions: transactions
+        };
+
+        const jsonStr = JSON.stringify(backupData, null, 2);
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `CyberVault_Backup_${dateStr}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        showCustomNotification("Berhasil", "File backup (.json) diunduh");
+    });
+
+    const btnImportBackup = document.getElementById('btnImportBackup');
+    const importFileInput = document.getElementById('importFileInput');
+
+    btnImportBackup.addEventListener('click', function() {
+        importFileInput.click();
+    });
+
+    importFileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+            try {
+                const parsed = JSON.parse(evt.target.result);
+                let newTransactions = [];
+
+                if (Array.isArray(parsed)) {
+                    newTransactions = parsed;
+                } else if (parsed && Array.isArray(parsed.transactions)) {
+                    newTransactions = parsed.transactions;
+                } else {
+                    showCustomNotification("Gagal", "Format backup tidak valid");
+                    return;
+                }
+
+                transactions = newTransactions;
+                updateUI();
+                showCustomNotification("Pulih!", `${transactions.length} riwayat dipulihkan`);
+            } catch (err) {
+                showCustomNotification("Error", "File JSON tidak dapat dibaca");
+            }
+        };
+        reader.readAsText(file);
+        this.value = '';
+    });
+
+    const popupNotification = document.getElementById('popupNotification');
+    const popupCloseBtn = document.getElementById('popupCloseBtn');
+
+    function playSuccessSound() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+
+            const masterGain = ctx.createGain();
+            masterGain.gain.setValueAtTime(0.6, ctx.currentTime);
+            masterGain.connect(ctx.destination);
+
+            const now = ctx.currentTime;
+            [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+
+                gain.gain.setValueAtTime(0.01, now + idx * 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.6, now + idx * 0.08 + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.3);
+
+                osc.connect(gain);
+                gain.connect(masterGain);
+
+                osc.start(now + idx * 0.08);
+                osc.stop(now + idx * 0.08 + 0.3);
+            });
+        } catch (e) {}
+    }
+
+    function showCustomNotification(title, subtitle) {
+        document.getElementById('popupTitle').innerText = title || "Selesai";
+        document.getElementById('popupSubtitle').innerText = subtitle || "Transaksi berhasil dicatat";
+        popupNotification.classList.add('active');
+        playSuccessSound();
+    }
+
+    function hidePopupNotification() {
+        popupNotification.classList.remove('active');
+    }
+
+    popupCloseBtn.addEventListener('click', hidePopupNotification);
+    popupNotification.addEventListener('click', function(e) {
+        if (e.target === popupNotification) hidePopupNotification();
+    });
+
+    document.getElementById('transactionForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const type = document.getElementById('type').value;
+        const amountRaw = document.getElementById('amount').value.replace(/\./g, '');
+        const amount = parseFloat(amountRaw);
+        const description = document.getElementById('description').value;
+        const date = document.getElementById('inputDate').value;
+        const time = document.getElementById('inputTime').value;
+
+        if (!amount || isNaN(amount) || !description || !date || !time) return;
+
+        transactions.push({
+            id: Date.now(),
+            type,
+            amount,
+            description,
+            date,
+            time
+        });
+
+        updateUI();
+
+        document.getElementById('amount').value = '';
+        document.getElementById('description').value = '';
+        
+        userHasCustomDateTime = false;
+        updateLiveDateTime();
+
+        showCustomNotification("Selesai", "Transaksi berhasil dicatat & dicadangkan");
+    });
+
+    window.openEditModal = function(id) {
+        const t = transactions.find(item => item.id === id);
+        if (!t) return;
+
+        document.getElementById('editId').value = t.id;
+        document.getElementById('editType').value = t.type;
+        document.getElementById('editAmount').value = parseInt(t.amount, 10).toLocaleString('id-ID');
+        document.getElementById('editDescription').value = t.description;
+        document.getElementById('editDate').value = t.date;
+        document.getElementById('editTime').value = t.time;
+
+        document.getElementById('editModal').classList.add('active');
+    };
+
+    document.getElementById('editAmount').addEventListener('input', function() {
+        let rawValue = this.value.replace(/\D/g, '');
+        if (rawValue) {
+            this.value = parseInt(rawValue, 10).toLocaleString('id-ID');
+        } else {
+            this.value = '';
+        }
+    });
+
+    document.getElementById('closeEditModal').addEventListener('click', function() {
+        document.getElementById('editModal').classList.remove('active');
+    });
+
+    let pendingDeleteId = null;
+    const confirmDeleteModal = document.getElementById('confirmDeleteModal');
+
+    document.getElementById('btnDeleteModal').addEventListener('click', function() {
+        pendingDeleteId = parseInt(document.getElementById('editId').value, 10);
+        if (pendingDeleteId) {
+            confirmDeleteModal.classList.add('active');
+        }
+    });
+
+    document.getElementById('btnCancelDelete').addEventListener('click', function() {
+        confirmDeleteModal.classList.remove('active');
+        pendingDeleteId = null;
+    });
+
+    document.getElementById('btnConfirmDelete').addEventListener('click', function() {
+        if (pendingDeleteId) {
+            transactions = transactions.filter(t => t.id !== pendingDeleteId);
+            updateUI();
+            confirmDeleteModal.classList.remove('active');
+            document.getElementById('editModal').classList.remove('active');
+            pendingDeleteId = null;
+        }
+    });
+
+    document.getElementById('editForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const id = parseInt(document.getElementById('editId').value, 10);
+        const type = document.getElementById('editType').value;
+        const amountRaw = document.getElementById('editAmount').value.replace(/\./g, '');
+        const amount = parseFloat(amountRaw);
+        const description = document.getElementById('editDescription').value;
+        const date = document.getElementById('editDate').value;
+        const time = document.getElementById('editTime').value;
+
+        if (!amount || isNaN(amount) || !description || !date || !time) return;
+
+        const index = transactions.findIndex(t => t.id === id);
+        if (index !== -1) {
+            transactions[index] = { id, type, amount, description, date, time };
+            updateUI();
+        }
+
+        document.getElementById('editModal').classList.remove('active');
+    });
+
+    updateLiveDateTime();
+    updateUI();
+</script>
+</body>
+</html>
+```
