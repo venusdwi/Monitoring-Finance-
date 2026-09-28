@@ -117,7 +117,7 @@
             transition: background 0.2s ease, backdrop-filter 0.2s ease;
         }
 
-        /* TOMBOL INSTAL APLIKASI DI HEADER */
+        /* TOMBOL INSTAL APLIKASI */
         .install-app-btn {
             background: linear-gradient(135deg, rgba(0, 240, 255, 0.2) 0%, rgba(0, 119, 255, 0.2) 100%);
             border: 1px solid rgba(0, 240, 255, 0.6);
@@ -128,7 +128,7 @@
             padding: 8px 14px;
             border-radius: 12px;
             cursor: pointer;
-            display: none; /* Muncul otomatis jika PWA siap diinstal */
+            display: none;
             align-items: center;
             justify-content: center;
             gap: 6px;
@@ -329,7 +329,6 @@
             opacity: 0.95;
         }
 
-        /* PEMUTAR MUSIK DARI FOLDER HP */
         .music-player-panel {
             background: rgba(0, 240, 255, 0.08);
             border: 1px solid rgba(0, 240, 255, 0.3);
@@ -472,7 +471,6 @@
             flex-shrink: 0;
         }
 
-        /* POP-UP MODAL PLAYER MUSIK FULLSCREEN */
         .music-modal-overlay {
             position: fixed;
             top: 0;
@@ -1306,7 +1304,7 @@
 </div>
 
 <div class="container">
-    <!-- Tombol Instal Aplikasi (Otomatis Muncul di Browser) -->
+    <!-- Tombol Instal Aplikasi -->
     <button type="button" class="install-app-btn" id="btnInstallApp">
         ⚡ INSTAL APLIKASI
     </button>
@@ -1510,7 +1508,7 @@
 </div>
 
 <script>
-    /* SCRIPT INSTALASI PWA (PROGRESIVE WEB APP) */
+    /* SCRIPT INSTALASI PWA */
     let deferredPrompt;
     const btnInstallApp = document.getElementById('btnInstallApp');
 
@@ -2130,8 +2128,6 @@
         }
     }
 
-    const GOOGLE_SHEETS_URL = "";
-
     function performAutoBackup() {
         const timestamp = new Date().toLocaleString('id-ID', {
             day: '2-digit', month: '2-digit', year: 'numeric',
@@ -2456,14 +2452,16 @@
     updateLiveDateTime();
     updateUI();
 </script>
-    /* PENDAFTARAN SERVICE WORKER UNTUK PWA */
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-            .then((reg) => console.log('Service Worker terdaftar:', reg.scope))
-            .catch((err) => console.log('Service Worker gagal:', err));
-    });
-}
-    
+
+<!-- PENDAFTARAN SERVICE WORKER UNTUK PWA -->
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then((reg) => console.log('Service Worker terdaftar:', reg.scope))
+                .catch((err) => console.log('Service Worker gagal:', err));
+        });
+    }
+</script>
 </body>
 </html>
