@@ -240,6 +240,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .pin-screen-overlay.active {
@@ -247,7 +248,37 @@
         }
 
         .pin-screen-overlay.hidden {
-            display: none !important;
+            opacity: 0;
+            transform: scale(1.15);
+            pointer-events: none;
+        }
+
+        /* EFEK TRANSISI PEMINDAIAN SCI-FI SAAT PIN BENAR */
+        .cyber-scanner-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.85) 0%, rgba(0, 119, 255, 0.4) 50%, transparent 100%);
+            z-index: 99999995;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .cyber-scanner-flash.active {
+            opacity: 1;
+            visibility: visible;
+            animation: scannerPulseFlash 0.6s forwards ease-in-out;
+        }
+
+        @keyframes scannerPulseFlash {
+            0% { transform: scale(0.2); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(2.2); opacity: 0; visibility: hidden; }
         }
 
         .pin-card {
@@ -418,11 +449,16 @@
             padding: 10px 4px;
             display: none;
             gap: 12px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .container.active {
             display: flex !important;
             flex-direction: column;
+            opacity: 1;
+            transform: scale(1);
         }
 
         .install-app-btn {
@@ -1304,6 +1340,9 @@
     </div>
 </div>
 
+<!-- EFEK TRANSISI PEMINDAIAN SCI-FI SAAT PIN BENAR -->
+<div class="cyber-scanner-flash" id="cyberScannerFlash"></div>
+
 <!-- TAHAP 2: LAYAR KODE AKSES PIN -->
 <div class="pin-screen-overlay" id="pinScreenOverlay">
     <div class="pin-card">
@@ -1585,22 +1624,20 @@
     const mainAppContainer = document.getElementById('mainAppContainer');
     const cyberModalOverlay = document.getElementById('cyberModalOverlay');
     const musicModalOverlay = document.getElementById('musicModalOverlay');
+    const cyberScannerFlash = document.getElementById('cyberScannerFlash');
 
     window.addEventListener('DOMContentLoaded', () => {
         initIndexedDB();
         
-        // CEK STATUS SESI: Jika sebelumnya sudah login & masuk ke halaman dalam
         const isLogged = sessionStorage.getItem('venus_is_logged') === 'true';
         const activeModal = sessionStorage.getItem('venus_active_modal');
 
         if (isLogged) {
-            // Langsung lewati splash screen & layar PIN
             splashScreenOverlay.classList.add('hidden');
             pinScreenOverlay.classList.add('hidden');
             mainAppContainer.classList.add('active');
             updateUI();
 
-            // Buka kembali modal yang terakhir aktif sebelum di-refresh
             if (activeModal === 'cyber') {
                 cyberModalOverlay.classList.add('active');
             } else if (activeModal === 'music') {
@@ -1658,7 +1695,7 @@
         });
     }
 
-    /* ALUR 2 KE ALUR 3: CEK KODE PIN AKSES & BUKA HALAMAN UTAMA */
+    /* ALUR 2 KE ALUR 3: CEK KODE PIN AKSES DENGAN TRANSISI KEREN */
     const CORRECT_PIN = "040698"; 
     let enteredPin = "";
     const pinBoxes = document.querySelectorAll('.pin-box');
@@ -1710,14 +1747,20 @@
     function verifyPin() {
         if (enteredPin === CORRECT_PIN) {
             playSuccessSound();
-            pinScreenOverlay.classList.add('hidden');
-            mainAppContainer.classList.add('active');
             
-            // Simpan status bahwa user sudah login di sesi ini
-            sessionStorage.setItem('venus_is_logged', 'true');
-            sessionStorage.setItem('venus_active_modal', 'none');
+            // Aktifkan Efek Transisi Pemindaian Sci-Fi & Meredupkan Layar PIN
+            cyberScannerFlash.classList.add('active');
+            pinScreenOverlay.classList.add('hidden');
 
-            updateUI();
+            setTimeout(() => {
+                // Tampilkan halaman utama Venus Studio (hanya judul menu luar) dengan animasi smooth
+                mainAppContainer.classList.add('active');
+                updateUI();
+
+                sessionStorage.setItem('venus_is_logged', 'true');
+                sessionStorage.setItem('venus_active_modal', 'none');
+            }, 350);
+
         } else {
             pinErrorMsg.innerText = "PIN Salah! Silakan coba lagi.";
             setTimeout(() => {
@@ -1748,7 +1791,7 @@
         } catch (e) {}
     }
 
-    /* TOGGLE MODAL CYBER VAULT & PEMUTAR MUSIK DENGAN PENYIMPANAN SESI */
+    /* TOGGLE MODAL CYBER VAULT & PEMUTAR MUSIK */
     const toggleAppViewBtn = document.getElementById('toggleAppViewBtn');
     const closeCyberModalBtn = document.getElementById('closeCyberModalBtn');
 
