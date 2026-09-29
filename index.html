@@ -188,7 +188,7 @@
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
             transition: all 0.2s ease;
             text-transform: uppercase;
-            animation: tapPulse 1.5s infinite ease-in-out;
+            display: none; /* Awalnya disembunyikan sampai sound selesai */
         }
 
         .tap-here-btn:active {
@@ -219,7 +219,7 @@
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             z-index: 9999990;
-            display: none; /* Disembunyikan total sebelum tombol diklik */
+            display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -404,7 +404,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 
                         inset 0 1px 1px rgba(255, 255, 255, 0.2);
             padding: 20px 14px;
-            display: none; /* Disembunyikan total sampai PIN benar */
+            display: none;
             animation: containerAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -1068,6 +1068,7 @@
         <div class="splash-welcome-top">WELCOME TO</div>
         <div class="splash-title-large">VENUS STUDIO</div>
         
+        <!-- Tombol Tap Here (Muncul otomatis setelah sound selesai) -->
         <button type="button" class="tap-here-btn" id="btnTapHere">
             TAP HERE
         </button>
@@ -1294,6 +1295,8 @@
         } catch (e) {}
     }
 
+    const btnTapHere = document.getElementById('btnTapHere');
+
     function speakWelcomeGreeting() {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
@@ -1301,18 +1304,44 @@
             utterance.lang = 'en-US';
             utterance.rate = 0.95;
             utterance.pitch = 1.0;
+
+            // Tombol "TAP HERE" muncul otomatis setelah suara selesai dibacakan
+            utterance.onend = function() {
+                if (btnTapHere) {
+                    btnTapHere.style.display = 'block';
+                    btnTapHere.style.animation = 'tapPulse 1.5s infinite ease-in-out';
+                }
+            };
+
+            // Jaga-jaga jika browser memblokir/tidak memicu event onend, tampilkan tombol dalam 3.5 detik
+            setTimeout(() => {
+                if (btnTapHere && btnTapHere.style.display === 'none') {
+                    btnTapHere.style.display = 'block';
+                    btnTapHere.style.animation = 'tapPulse 1.5s infinite ease-in-out';
+                }
+            }, 3500);
+
             window.speechSynthesis.speak(utterance);
+        } else {
+            // Jika browser tidak mendukung speech synthesis, langsung tampilkan tombol
+            if (btnTapHere) {
+                btnTapHere.style.display = 'block';
+                btnTapHere.style.animation = 'tapPulse 1.5s infinite ease-in-out';
+            }
         }
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+        if (btnTapHere) {
+            btnTapHere.style.display = 'none'; // Sembunyikan di awal
+        }
+
         setTimeout(() => {
             speakWelcomeGreeting();
         }, 500);
     });
 
     /* ALUR 1 KE ALUR 2: TOMBOL TAP HERE DIKLIK */
-    const btnTapHere = document.getElementById('btnTapHere');
     const splashScreenOverlay = document.getElementById('splashScreenOverlay');
     const pinScreenOverlay = document.getElementById('pinScreenOverlay');
 
@@ -1320,12 +1349,10 @@
         btnTapHere.addEventListener('click', () => {
             playDramaticTransitionSound();
             
-            // Sembunyikan Splash Screen secara total
             if (splashScreenOverlay) {
                 splashScreenOverlay.classList.add('hidden');
             }
 
-            // Munculkan Layar PIN (Alur 2)
             setTimeout(() => {
                 if (pinScreenOverlay) {
                     pinScreenOverlay.classList.add('active');
@@ -1387,7 +1414,6 @@
     function verifyPin() {
         if (enteredPin === CORRECT_PIN) {
             playSuccessSound();
-            // Sembunyikan Layar PIN dan Tampilkan Web Utama (Alur 3)
             pinScreenOverlay.classList.add('hidden');
             mainAppContainer.classList.add('active');
             updateUI();
