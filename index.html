@@ -1604,7 +1604,7 @@
         setTimeout(() => {
             speakWelcomeGreeting();
         }, 500);
-        initIndexedDB();
+        loadPlaylistFromStorage();
     });
 
     /* ALUR 1 KE ALUR 2: TOMBOL TAP HERE DIKLIK */
@@ -1732,8 +1732,7 @@
     openMusicModalPanel.addEventListener('click', () => musicModalOverlay.classList.add('active'));
     closeMusicModalBtn.addEventListener('click', () => musicModalOverlay.classList.remove('active'));
 
-    /* INDEXEDDB UNTUK MENYIMPAN AUDIO SECARA PERMANEN */
-    let db = null;
+    /* PEMUTAR MUSIK & LOCALSTORAGE BASE64 */
     let playlist = [];
     let currentTrackIndex = -1;
     const bgAudioPlayer = document.getElementById('bgAudioPlayer');
@@ -1755,81 +1754,27 @@
     let audioSourceNode = null;
     let animationId = null;
 
-    function initIndexedDB() {
-        const request = indexedDB.open('VenusStudioMusicDB', 1);
-        request.onerror = function(event) {
-            console.log("Database error: " + event.target.errorCode);
-        };
-        request.onsuccess = function(event) {
-            db = event.target.result;
-            loadPlaylistFromDB();
-        };
-        request.onupgradeneeded = function(event) {
-            const db = event.target.result;
-            if (!db.objectStoreNames.contains('songs')) {
-                db.createObjectStore('songs', { keyPath: 'id', autoIncrement: true });
+    function loadPlaylistFromStorage() {
+        const saved = localStorage.getItem('cyber_playlist_songs');
+        if (saved) {
+            try {
+                playlist = JSON.parse(saved);
+                renderPlaylist();
+                if (playlist.length > 0) {
+                    loadTrack(0);
+                }
+            } catch (e) {
+                playlist = [];
             }
-        };
+        }
     }
 
-    function saveSongToDB(name, blob) {
-        if (!db) return;
-        const transaction = db.transaction(['songs'], 'readwrite');
-        const store = transaction.objectStore('songs');
-        const request = store.add({ name: name, blob: blob, dateAdded: Date.now() });
-
-        request.onsuccess = function(event) {
-            const newId = event.target.result;
-            const fileUrl = URL.createObjectURL(blob);
-            playlist.push({ id: newId, name: name, url: fileUrl });
-            renderPlaylist();
-            if (currentTrackIndex === -1 && playlist.length > 0) {
-                loadTrack(0);
-            }
-        };
-    }
-
-    function loadPlaylistFromDB() {
-        if (!db) return;
-        const transaction = db.transaction(['songs'], 'readonly');
-        const store = transaction.objectStore('songs');
-        const request = store.getAll();
-
-        request.onsuccess = function(event) {
-            const songs = event.target.result;
-            playlist = songs.map(song => ({
-                id: song.id,
-                name: song.name,
-                url: URL.createObjectURL(song.blob)
-            }));
-            renderPlaylist();
-            if (playlist.length > 0) {
-                loadTrack(0);
-            }
-        };
-    }
-
-    function removeSongFromDB(id, index) {
-        if (!db) return;
-        const transaction = db.transaction(['songs'], 'readwrite');
-        const store = transaction.objectStore('songs');
-        store.delete(id);
-
-        transaction.oncomplete = function() {
-            playlist.splice(index, 1);
-            if (currentTrackIndex === index) {
-                bgAudioPlayer.pause();
-                bgAudioPlayer.src = "";
-                modalTrackTitle.innerText = "Belum ada musik dipilih";
-                playPauseSvgIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
-                if (animationId) cancelAnimationFrame(animationId);
-                stabilizerBars.forEach(bar => bar.style.height = '6px');
-                currentTrackIndex = -1;
-            } else if (currentTrackIndex > index) {
-                currentTrackIndex--;
-            }
-            renderPlaylist();
-        };
+    function savePlaylistToStorage() {
+        try {
+            localStorage.setItem('cyber_playlist_songs', JSON.stringify(playlist));
+        } catch (e) {
+            alert('Penyimpanan memori browser penuh! Harap hapus beberapa lagu.');
+        }
     }
 
     function initWebAudioAPI() {
@@ -1869,11 +1814,23 @@
         const files = e.target.files;
         if (!files.length) return;
 
+        let processedCount = 0;
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
             const isAlreadyExists = playlist.some(track => track.name === file.name);
             if (!isAlreadyExists) {
-                saveSongToDB(file.name, file);
+                const reader = new FileReader();
+                reader.onload = function(uploadEvent) {
+                    const base64Data = uploadEvent.target.result;
+                    playlist.push({ name: file.name, url: base64Data });
+                    processedCount++;
+                    savePlaylistToStorage();
+                    renderPlaylist();
+                    if (currentTrackIndex === -1 && playlist.length > 0) {
+                        loadTrack(0);
+                    }
+                };
+                reader.readAsDataURL(file);
             }
         }
         audioFileInput.value = '';
@@ -1985,8 +1942,20 @@
 
     function deleteTrack(event, index) {
         event.stopPropagation();
-        const track = playlist[index];
-        removeSongFromDB(track.id, index);
+        playlist.splice(index, 1);
+        savePlaylistToStorage();
+        if (currentTrackIndex === index) {
+            bgAudioPlayer.pause();
+            bgAudioPlayer.src = "";
+            modalTrackTitle.innerText = "Belum ada musik dipilih";
+            playPauseSvgIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+            if (animationId) cancelAnimationFrame(animationId);
+            stabilizerBars.forEach(bar => bar.style.height = '6px');
+            currentTrackIndex = -1;
+        } else if (currentTrackIndex > index) {
+            currentTrackIndex--;
+        }
+        renderPlaylist();
     }
 
     function formatTime(seconds) {
