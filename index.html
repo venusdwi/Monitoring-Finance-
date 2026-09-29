@@ -132,6 +132,7 @@
             max-width: 340px;
             z-index: 5;
             position: relative;
+            transform: translateY(-30px); /* Digeser ke atas agar lebih pas */
         }
 
         .splash-logo-glow {
@@ -173,8 +174,17 @@
             margin-bottom: 10px;
         }
 
-        .tap-here-btn {
+        /* Wrapper tombol agar ruangnya sudah disiapkan dari awal (tidak bergeser) */
+        .tap-btn-wrapper {
             margin-top: 18px;
+            min-height: 54px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .tap-here-btn {
             background: linear-gradient(135deg, rgba(0, 240, 255, 0.15) 0%, rgba(0, 119, 255, 0.25) 100%);
             border: 1.5px solid rgba(0, 240, 255, 0.7);
             color: #00f0ff;
@@ -186,9 +196,16 @@
             border-radius: 30px;
             cursor: pointer;
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
-            transition: all 0.2s ease;
             text-transform: uppercase;
-            display: none; /* Awalnya disembunyikan sampai sound selesai */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, transform 0.2s ease;
+        }
+
+        .tap-here-btn.show {
+            opacity: 1;
+            visibility: visible;
+            animation: tapPulse 1.5s infinite ease-in-out;
         }
 
         .tap-here-btn:active {
@@ -1068,10 +1085,12 @@
         <div class="splash-welcome-top">WELCOME TO</div>
         <div class="splash-title-large">VENUS STUDIO</div>
         
-        <!-- Tombol Tap Here (Muncul otomatis setelah sound selesai) -->
-        <button type="button" class="tap-here-btn" id="btnTapHere">
-            TAP HERE
-        </button>
+        <!-- Ruang tombol tetap disiapkan agar teks di atasnya tidak bergeser saat tombol muncul -->
+        <div class="tap-btn-wrapper">
+            <button type="button" class="tap-here-btn" id="btnTapHere">
+                TAP HERE
+            </button>
+        </div>
     </div>
 </div>
 
@@ -1305,37 +1324,29 @@
             utterance.rate = 0.95;
             utterance.pitch = 1.0;
 
-            // Tombol "TAP HERE" muncul otomatis setelah suara selesai dibacakan
+            // Tombol "TAP HERE" dimunculkan mulus dengan class 'show' setelah sound selesai
             utterance.onend = function() {
                 if (btnTapHere) {
-                    btnTapHere.style.display = 'block';
-                    btnTapHere.style.animation = 'tapPulse 1.5s infinite ease-in-out';
+                    btnTapHere.classList.add('show');
                 }
             };
 
-            // Jaga-jaga jika browser memblokir/tidak memicu event onend, tampilkan tombol dalam 3.5 detik
+            // Cadangan waktu 3.5 detik jika browser membatasi event onend
             setTimeout(() => {
-                if (btnTapHere && btnTapHere.style.display === 'none') {
-                    btnTapHere.style.display = 'block';
-                    btnTapHere.style.animation = 'tapPulse 1.5s infinite ease-in-out';
+                if (btnTapHere && !btnTapHere.classList.contains('show')) {
+                    btnTapHere.classList.add('show');
                 }
             }, 3500);
 
             window.speechSynthesis.speak(utterance);
         } else {
-            // Jika browser tidak mendukung speech synthesis, langsung tampilkan tombol
             if (btnTapHere) {
-                btnTapHere.style.display = 'block';
-                btnTapHere.style.animation = 'tapPulse 1.5s infinite ease-in-out';
+                btnTapHere.classList.add('show');
             }
         }
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-        if (btnTapHere) {
-            btnTapHere.style.display = 'none'; // Sembunyikan di awal
-        }
-
         setTimeout(() => {
             speakWelcomeGreeting();
         }, 500);
@@ -1533,7 +1544,7 @@
         e.preventDefault();
         const type = document.getElementById('type').value;
         const amount = parseFloat(document.getElementById('amount').value.replace(/\./g, ''));
-        const description = document.getElementById('description').value;
+        const description = document.getElementById('description'].value;
         const date = document.getElementById('inputDate').value;
         const time = document.getElementById('inputTime').value;
         const method = (type === 'out') ? document.getElementById('paymentMethod').value : null;
