@@ -451,7 +451,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Jarak tambahan 2 baris antara Venus Studio dan Cyber Vault */
             gap: 22px; 
             margin-bottom: 12px;
         }
@@ -527,7 +526,193 @@
             text-align: center;
         }
 
-        /* Transisi Smooth untuk Membuka dan Menutup Menu Lengkap */
+        /* TOMBOL PLAYLIST MUSIC DI HALAMAN UTAMA */
+        .music-player-panel {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 16px;
+            border-radius: 16px;
+            background: rgba(2, 10, 28, var(--glass-alpha));
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1.5px solid rgba(0, 240, 255, 0.45);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            width: 100%;
+            margin-bottom: 12px;
+            transition: transform 0.2s ease, filter 0.2s ease, background 0.2s ease;
+        }
+
+        .music-player-panel:active {
+            transform: scale(0.98);
+            filter: brightness(1.2);
+            background: rgba(0, 240, 255, 0.15);
+        }
+
+        .title-music-box {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: clamp(1.2rem, 5vw, 1.5rem);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+            text-align: center;
+        }
+
+        /* MODAL PEMUTAR MUSIK DENGAN TRANSISI SMOOTH */
+        .music-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(2, 7, 20, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 99999999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s ease;
+        }
+
+        .music-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .music-modal-card {
+            background: rgba(3, 14, 38, 0.98);
+            border: 2px solid rgba(0, 240, 255, 0.7);
+            border-radius: 28px;
+            padding: 34px 24px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.35);
+            transform: scale(0.9);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .music-modal-overlay.active .music-modal-card {
+            transform: scale(1);
+        }
+
+        /* TOMBOL SILANG (X) DI SUDUT KANAN ATAS DALAM KOLOM */
+        .close-music-modal {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(0, 240, 255, 0.12);
+            border: 1.5px solid rgba(0, 240, 255, 0.5);
+            color: #00f0ff;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 800;
+            transition: all 0.2s ease;
+        }
+
+        .close-music-modal:active {
+            background: rgba(0, 240, 255, 0.35);
+            transform: scale(0.92);
+        }
+
+        .vinyl-container {
+            width: 155px;
+            height: 155px;
+            border-radius: 50%;
+            background: repeating-radial-gradient(circle, #030c1d 0px, #030c1d 9px, #00f0ff 10px, #020714 11px, #061838 20px);
+            border: 3.5px solid #00f0ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: rotateVinyl 4s linear infinite;
+            animation-play-state: paused;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
+            margin-top: 10px;
+        }
+
+        .vinyl-container.playing {
+            animation-play-state: running !important;
+        }
+
+        .vinyl-center {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%);
+            border: 2px solid #ffffff;
+        }
+
+        @keyframes rotateVinyl {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .playlist-wrapper {
+            width: 100%;
+            max-height: 170px;
+            overflow-y: auto;
+            background: rgba(2, 12, 32, 0.7);
+            border: 1.5px solid rgba(0, 240, 255, 0.3);
+            border-radius: 14px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 240, 255, 0.06);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.92rem;
+        }
+
+        .playlist-item.active-track {
+            background: rgba(0, 240, 255, 0.22);
+            border-color: #00f0ff;
+        }
+
+        .playlist-delete-btn {
+            color: #00f0ff;
+            font-size: 0.85rem;
+            font-weight: 800;
+            cursor: pointer;
+            padding: 4px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            background: rgba(0, 240, 255, 0.12);
+        }
+
+        /* Transisi Smooth untuk Membuka dan Menutup Menu Utama */
         .full-app-content {
             display: flex;
             flex-direction: column;
@@ -552,221 +737,6 @@
             border-width: 1px;
             padding: 16px 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2);
-        }
-
-        .music-player-panel {
-            background: rgba(0, 240, 255, 0.08);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            border-radius: 14px;
-            padding: 8px 10px;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 6px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .music-label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: #7dd3fc;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            min-width: 0;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .cyber-svg-icon {
-            width: 14px;
-            height: 14px;
-            fill: #00f0ff;
-            flex-shrink: 0;
-        }
-
-        .music-controls-group {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-shrink: 0;
-        }
-
-        .btn-music-action {
-            background: rgba(2, 12, 32, 0.8);
-            border: 1px solid rgba(0, 240, 255, 0.4);
-            color: #00f0ff;
-            font-weight: 700;
-            font-size: 0.7rem;
-            padding: 6px 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            height: 34px;
-        }
-
-        .btn-music-skip {
-            background: rgba(2, 12, 32, 0.85);
-            border: 1px solid rgba(0, 240, 255, 0.4);
-            color: #00f0ff;
-            width: 34px;
-            height: 34px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .btn-music-skip svg {
-            width: 14px;
-            height: 14px;
-            fill: #00f0ff;
-        }
-
-        .btn-music-play {
-            background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%);
-            border: none;
-            color: #020714;
-            width: 34px;
-            height: 34px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .btn-music-play svg {
-            width: 14px;
-            height: 14px;
-            fill: #020714;
-        }
-
-        .music-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #020714;
-            z-index: 99999999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 16px;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .music-modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-        }
-
-        .music-modal-card {
-            background: rgba(3, 14, 38, 0.98);
-            border: 1.5px solid rgba(0, 240, 255, 0.6);
-            border-radius: 24px;
-            padding: 26px 20px;
-            width: 100%;
-            max-width: 380px;
-            text-align: center;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .close-music-modal {
-            position: absolute;
-            top: 14px;
-            right: 16px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            color: #7dd3fc;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .vinyl-container {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            background: repeating-radial-gradient(circle, #030c1d 0px, #030c1d 8px, #00f0ff 9px, #020714 10px, #061838 18px);
-            border: 3px solid #00f0ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            animation: rotateVinyl 4s linear infinite;
-            animation-play-state: paused;
-        }
-
-        .vinyl-container.playing {
-            animation-play-state: running !important;
-        }
-
-        .vinyl-center {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%);
-            border: 2px solid #ffffff;
-        }
-
-        @keyframes rotateVinyl {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .playlist-wrapper {
-            width: 100%;
-            max-height: 150px;
-            overflow-y: auto;
-            background: rgba(2, 12, 32, 0.6);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 12px;
-            padding: 6px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .playlist-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(0, 240, 255, 0.05);
-            border: 1px solid rgba(0, 240, 255, 0.15);
-            padding: 8px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .playlist-item.active-track {
-            background: rgba(0, 240, 255, 0.18);
-            border-color: #00f0ff;
-        }
-
-        .playlist-delete-btn {
-            color: #00f0ff;
-            font-size: 0.85rem;
-            font-weight: 800;
-            cursor: pointer;
-            padding: 2px 6px;
-            border-radius: 6px;
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            background: rgba(0, 240, 255, 0.1);
         }
 
         .glass-control-panel {
@@ -1206,17 +1176,18 @@
 <!-- MODAL PEMUTAR MUSIK -->
 <div class="music-modal-overlay" id="musicModalOverlay">
     <div class="music-modal-card">
+        <!-- TOMBOL X DI SUDUT KANAN ATAS DALAM KOLOM DENGAN TRANSISI SMOOTH -->
         <button type="button" class="close-music-modal" id="closeMusicModalBtn">✕</button>
-        <div style="font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 800; color: #00f0ff;">CYBER AUDIO PLAYER</div>
+        <div style="font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900; color: #00f0ff; letter-spacing: 1.5px;">CYBER AUDIO PLAYER</div>
         <div class="vinyl-container" id="vinylRecord"><div class="vinyl-center"></div></div>
-        <div id="modalTrackTitle" style="color:#fff; font-weight:700; font-size:0.9rem;">Belum ada musik dipilih</div>
-        <div id="modalTrackTime" style="color:#00f0ff; font-size:0.8rem;">(00:00)</div>
-        <div style="display: flex; gap: 10px; width: 100%;">
-            <button type="button" class="btn-music-action" id="modalUploadBtn" style="flex: 1;">Unggah Musik</button>
-            <button type="button" class="btn-music-play" id="modalPlayBtn" style="flex: 1; display: none; height: 38px;">Play</button>
+        <div id="modalTrackTitle" style="color:#fff; font-weight:800; font-size:1.05rem;">Belum ada musik dipilih</div>
+        <div id="modalTrackTime" style="color:#00f0ff; font-size:0.9rem; font-weight:700;">(00:00)</div>
+        <div style="display: flex; gap: 12px; width: 100%;">
+            <button type="button" class="btn-music-action" id="modalUploadBtn" style="flex: 1; padding: 12px; font-size: 0.95rem; font-weight: 800; border-radius: 12px; background: linear-gradient(135deg, rgba(0,240,255,0.25), rgba(0,119,255,0.25)); border: 1px solid rgba(0,240,255,0.6); color: #00f0ff; cursor: pointer;">Unggah Musik</button>
+            <button type="button" class="btn-music-play" id="modalPlayBtn" style="flex: 1; display: none; height: 44px; font-weight: 800; border-radius: 12px;">Play</button>
         </div>
         <div class="playlist-wrapper" id="playlistContainer">
-            <div style="font-size: 0.7rem; color: #64748b; font-style: italic; padding: 12px;">Daftar lagu masih kosong.</div>
+            <div style="font-size: 0.8rem; color: #64748b; font-style: italic; padding: 14px;">Daftar lagu masih kosong.</div>
         </div>
     </div>
 </div>
@@ -1243,7 +1214,7 @@
 <div class="container" id="mainAppContainer">
     <button type="button" class="install-app-btn" id="btnInstallApp">⚡ INSTAL APLIKASI</button>
 
-    <!-- Header dengan Tulisan VENUS STUDIO saja, Tanpa Kolom, Tidak Bisa Diklik, serta Kotak CYBER VAULT yang interaktif -->
+    <!-- Header dengan Tulisan VENUS STUDIO & Kotak CYBER VAULT Utama -->
     <div class="header-box">
         <div class="brand-top-header">
             <span class="brand-studio-title">VENUS STUDIO</span>
@@ -1255,23 +1226,14 @@
         </div>
     </div>
 
-    <!-- SEMUA FITUR LENGKAP WEB DENGAN TRANSISI HALUS (SMOOTH) -->
-    <div class="full-app-content" id="fullAppContent">
-        <div class="music-player-panel" id="openMusicModalPanel">
-            <div class="music-label">
-                <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-                <span id="musicTrackName">Pilih Musik</span>
-                <span id="musicTimeText" style="font-size: 0.6rem; color: #38bdf8;">(00:00)</span>
-            </div>
-            <div class="music-controls-group" onclick="event.stopPropagation();">
-                <button type="button" class="btn-music-skip" id="btnPrevMusic"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
-                <button type="button" class="btn-music-skip" id="btnNextMusic"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
-                <button type="button" class="btn-music-play" id="btnPlayMusic" style="display: none;"><span id="musicBtnIcon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></button>
-            </div>
-            <input type="file" id="localAudioInput" accept="audio/*" multiple style="display: none;">
-            <audio id="bgAudioPlayer" style="display: none;"></audio>
-        </div>
+    <!-- TOMBOL PLAYLIST MUSIC DI HALAMAN UTAMA -->
+    <div class="music-player-panel" id="openMusicModalPanel" title="Ketuk untuk membuka Playlist Music">
+        <h2 class="title-music-box">PLAYLIST MUSIC</h2>
+        <audio id="bgAudioPlayer" style="display: none;"></audio>
+    </div>
 
+    <!-- SEMUA HALAMAN MENU KEUANGAN -->
+    <div class="full-app-content" id="fullAppContent">
         <div class="glass-control-panel">
             <div style="font-size: 0.72rem; font-weight: 700; color: #7dd3fc;">Transparansi Kaca:</div>
             <div class="glass-slider-wrapper">
@@ -1538,9 +1500,18 @@
     /* FITUR KLIK HANYA PADA KOTAK CYBER VAULT UNTUK MEMBUKA/MENUTUP MENU */
     const toggleAppViewBtn = document.getElementById('toggleAppViewBtn');
     const fullAppContent = document.getElementById('fullAppContent');
+    const openMusicModalPanel = document.getElementById('openMusicModalPanel');
+    const musicModalOverlay = document.getElementById('musicModalOverlay');
+    const closeMusicModalBtn = document.getElementById('closeMusicModalBtn');
 
     toggleAppViewBtn.addEventListener('click', () => {
-        fullAppContent.classList.toggle('show');
+        const isShown = fullAppContent.classList.toggle('show');
+        
+        if (isShown) {
+            openMusicModalPanel.style.display = 'none';
+        } else {
+            openMusicModalPanel.style.display = 'flex';
+        }
     });
 
     /* SCRIPT PENDUKUNG APLIKASI KEUANGAN */
@@ -1550,9 +1521,6 @@
         paymentMethodGroup.style.display = (typeSelect.value === 'out') ? 'flex' : 'none';
     });
 
-    const openMusicModalPanel = document.getElementById('openMusicModalPanel');
-    const musicModalOverlay = document.getElementById('musicModalOverlay');
-    const closeMusicModalBtn = document.getElementById('closeMusicModalBtn');
     openMusicModalPanel.addEventListener('click', () => musicModalOverlay.classList.add('active'));
     closeMusicModalBtn.addEventListener('click', () => musicModalOverlay.classList.remove('active'));
 
