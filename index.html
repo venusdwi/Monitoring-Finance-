@@ -174,7 +174,6 @@
             text-shadow: 0 0 30px rgba(0, 240, 255, 0.85);
         }
 
-        /* Wrapper tombol dengan tinggi tetap agar ruangnya sudah disiapkan tanpa bertabrakan */
         .tap-btn-wrapper {
             margin-top: 24px;
             min-height: 52px;
@@ -224,7 +223,7 @@
             100% { transform: translateY(-8px); box-shadow: 0 0 40px rgba(0, 240, 255, 0.9); }
         }
 
-        /* TAHAP 2: LAYAR KODE AKSES PIN (DISEMBUNYIKAN DI AWAL) */
+        /* TAHAP 2: LAYAR KODE AKSES PIN */
         .pin-screen-overlay {
             position: fixed;
             top: 0;
@@ -406,33 +405,24 @@
             pointer-events: none;
         }
 
-        /* TAHAP 3: KONTEN UTAMA WEB (DISEMBUNYIKAN SEBELUM PIN BENAR) */
+        /* TAHAP 3: KONTEN UTAMA WEB */
         .container {
             position: relative;
             z-index: 10;
             width: 100%;
             max-width: 440px;
             margin: 0 auto;
-            background: rgba(2, 10, 28, var(--glass-alpha));
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            border-radius: 20px;
-            border: 1px solid rgba(0, 240, 255, 0.35);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 
-                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
-            padding: 20px 14px;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 10px 4px;
             display: none;
-            animation: containerAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            gap: 12px;
         }
 
         .container.active {
             display: flex !important;
             flex-direction: column;
-        }
-
-        @keyframes containerAppear {
-            from { opacity: 0; transform: translateY(16px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .install-app-btn {
@@ -457,31 +447,83 @@
 
         .header-box {
             text-align: center;
-            margin-bottom: 18px;
+            width: 100%;
+        }
+
+        /* Lebar kotak judul disamakan penuh (100%) agar sama persis dengan panel bawah */
+        .clickable-header-wrapper {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 16px;
+            border-radius: 16px;
+            background: rgba(2, 10, 28, var(--glass-alpha));
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1.5px solid rgba(0, 240, 255, 0.45);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            width: 100%;
+            transition: transform 0.2s ease, filter 0.2s ease, background 0.2s ease;
+        }
+
+        .clickable-header-wrapper:active {
+            transform: scale(0.98);
+            filter: brightness(1.2);
+            background: rgba(0, 240, 255, 0.15);
         }
 
         h2.title-cyber {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(1.8rem, 7vw, 2.3rem);
+            font-size: clamp(1.5rem, 6vw, 2rem);
             letter-spacing: 3px;
             text-transform: uppercase;
             background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #38bdf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
-            display: inline-block;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+            text-align: center;
         }
 
         .subtitle-cyber {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 0.88rem;
+            font-size: 0.8rem;
             font-weight: 800;
             letter-spacing: 2.5px;
             color: #7dd3fc;
             text-transform: uppercase;
-            margin-top: 4px;
+            margin-top: 2px;
             opacity: 0.95;
+            text-align: center;
+        }
+
+        /* Transisi Smooth untuk Membuka dan Menutup Menu Lengkap */
+        .full-app-content {
+            display: flex;
+            flex-direction: column;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            visibility: hidden;
+            background: rgba(2, 10, 28, var(--glass-alpha));
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-radius: 20px;
+            border: 0px solid rgba(0, 240, 255, 0.35);
+            box-shadow: none;
+            padding: 0 10px;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, visibility 0.4s ease, border-width 0.4s ease, padding 0.4s ease;
+        }
+
+        .full-app-content.show {
+            max-height: 2500px;
+            opacity: 1;
+            visibility: visible;
+            border-width: 1px;
+            padding: 16px 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2);
         }
 
         .music-player-panel {
@@ -1085,7 +1127,6 @@
         <div class="splash-welcome-top">WELCOME TO</div>
         <div class="splash-title-large">VENUS STUDIO</div>
         
-        <!-- Ruang tombol dengan margin yang aman agar tidak bertabrakan dengan tulisan -->
         <div class="tap-btn-wrapper">
             <button type="button" class="tap-here-btn" id="btnTapHere">
                 TAP HERE
@@ -1094,7 +1135,7 @@
     </div>
 </div>
 
-<!-- TAHAP 2: LAYAR KODE AKSES PIN (DISEMBUNYIKAN DI AWAL) -->
+<!-- TAHAP 2: LAYAR KODE AKSES PIN -->
 <div class="pin-screen-overlay" id="pinScreenOverlay">
     <div class="pin-card">
         <div class="pin-icon-box">🔒</div>
@@ -1170,111 +1211,117 @@
     </div>
 </div>
 
-<!-- TAHAP 3: KONTEN UTAMA APLIKASI KEUANGAN (TERSEMBUNYI HINGGA PIN BENAR) -->
+<!-- TAHAP 3: KONTEN UTAMA WEB -->
 <div class="container" id="mainAppContainer">
     <button type="button" class="install-app-btn" id="btnInstallApp">⚡ INSTAL APLIKASI</button>
 
+    <!-- Header Judul CYBER VAULT yang lebarnya memenuhi penuh sama seperti panel bawah -->
     <div class="header-box">
-        <h2 class="title-cyber">CYBER VAULT</h2>
-        <div class="subtitle-cyber">FINANCIAL MONITORING SYSTEM</div>
-    </div>
-
-    <div class="music-player-panel" id="openMusicModalPanel">
-        <div class="music-label">
-            <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-            <span id="musicTrackName">Pilih Musik</span>
-            <span id="musicTimeText" style="font-size: 0.6rem; color: #38bdf8;">(00:00)</span>
-        </div>
-        <div class="music-controls-group" onclick="event.stopPropagation();">
-            <button type="button" class="btn-music-skip" id="btnPrevMusic"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
-            <button type="button" class="btn-music-skip" id="btnNextMusic"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
-            <button type="button" class="btn-music-play" id="btnPlayMusic" style="display: none;"><span id="musicBtnIcon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></button>
-        </div>
-        <input type="file" id="localAudioInput" accept="audio/*" multiple style="display: none;">
-        <audio id="bgAudioPlayer" style="display: none;"></audio>
-    </div>
-
-    <div class="glass-control-panel">
-        <div style="font-size: 0.72rem; font-weight: 700; color: #7dd3fc;">Transparansi Kaca:</div>
-        <div class="glass-slider-wrapper">
-            <input type="range" id="glassOpacitySlider" class="glass-range-input" min="5" max="85" value="28">
-            <span class="opacity-value-badge" id="opacityValText">28%</span>
+        <div class="clickable-header-wrapper" id="toggleAppViewBtn" title="Ketuk untuk membuka menu lengkap">
+            <h2 class="title-cyber">CYBER VAULT</h2>
+            <div class="subtitle-cyber">FINANCIAL MONITORING SYSTEM</div>
         </div>
     </div>
 
-    <div class="backup-panel">
-        <div class="backup-header">
-            <span style="font-size: 0.72rem; font-weight: 700; color: #a5f3fc;">BACKUP OTOMATIS</span>
-            <span class="backup-status-tag" id="backupStatusText">Auto-Saved</span>
-        </div>
-        <div class="backup-actions">
-            <button type="button" class="btn-backup-action" id="btnExportBackup">Unduh Backup</button>
-            <button type="button" class="btn-backup-action" id="btnImportBackup">Pulihkan Data</button>
-            <input type="file" id="importFileInput" accept=".json" style="display: none;">
-        </div>
-        <div style="font-size: 0.65rem; color: #64748b; text-align: center;" id="lastBackupTimeText">Sistem otomatis mencadangkan data.</div>
-    </div>
-
-    <div class="dashboard">
-        <div class="card-hero">
-            <h4>SALDO SISA</h4>
-            <p id="totalSaldo">Rp 0</p>
-        </div>
-        <div class="sub-dashboard">
-            <div class="card-sub pemasukan">
-                <h4>PEMASUKAN</h4>
-                <p id="totalPemasukan">Rp 0</p>
+    <!-- SEMUA FITUR LENGKAP WEB DENGAN TRANSISI HALUS (SMOOTH) -->
+    <div class="full-app-content" id="fullAppContent">
+        <div class="music-player-panel" id="openMusicModalPanel">
+            <div class="music-label">
+                <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                <span id="musicTrackName">Pilih Musik</span>
+                <span id="musicTimeText" style="font-size: 0.6rem; color: #38bdf8;">(00:00)</span>
             </div>
-            <div class="card-sub pengeluaran">
-                <h4>PENGELUARAN</h4>
-                <p id="totalPengeluaran">Rp 0</p>
+            <div class="music-controls-group" onclick="event.stopPropagation();">
+                <button type="button" class="btn-music-skip" id="btnPrevMusic"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+                <button type="button" class="btn-music-skip" id="btnNextMusic"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+                <button type="button" class="btn-music-play" id="btnPlayMusic" style="display: none;"><span id="musicBtnIcon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></button>
+            </div>
+            <input type="file" id="localAudioInput" accept="audio/*" multiple style="display: none;">
+            <audio id="bgAudioPlayer" style="display: none;"></audio>
+        </div>
+
+        <div class="glass-control-panel">
+            <div style="font-size: 0.72rem; font-weight: 700; color: #7dd3fc;">Transparansi Kaca:</div>
+            <div class="glass-slider-wrapper">
+                <input type="range" id="glassOpacitySlider" class="glass-range-input" min="5" max="85" value="28">
+                <span class="opacity-value-badge" id="opacityValText">28%</span>
             </div>
         </div>
-    </div>
 
-    <form id="transactionForm">
-        <div class="form-group">
-            <label for="type">Jenis Transaksi</label>
-            <select id="type" required>
-                <option value="in">Pemasukan (+)</option>
-                <option value="out">Pengeluaran (-)</option>
-            </select>
+        <div class="backup-panel">
+            <div class="backup-header">
+                <span style="font-size: 0.72rem; font-weight: 700; color: #a5f3fc;">BACKUP OTOMATIS</span>
+                <span class="backup-status-tag" id="backupStatusText">Auto-Saved</span>
+            </div>
+            <div class="backup-actions">
+                <button type="button" class="btn-backup-action" id="btnExportBackup">Unduh Backup</button>
+                <button type="button" class="btn-backup-action" id="btnImportBackup">Pulihkan Data</button>
+                <input type="file" id="importFileInput" accept=".json" style="display: none;">
+            </div>
+            <div style="font-size: 0.65rem; color: #64748b; text-align: center;" id="lastBackupTimeText">Sistem otomatis mencadangkan data.</div>
         </div>
-        <div class="form-group">
-            <label for="amount">Jumlah (Rp)</label>
-            <input type="text" id="amount" placeholder="Contoh: 500.000" inputmode="numeric" required>
+
+        <div class="dashboard">
+            <div class="card-hero">
+                <h4>SALDO SISA</h4>
+                <p id="totalSaldo">Rp 0</p>
+            </div>
+            <div class="sub-dashboard">
+                <div class="card-sub pemasukan">
+                    <h4>PEMASUKAN</h4>
+                    <p id="totalPemasukan">Rp 0</p>
+                </div>
+                <div class="card-sub pengeluaran">
+                    <h4>PENGELUARAN</h4>
+                    <p id="totalPengeluaran">Rp 0</p>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="description">Keterangan</label>
-            <input type="text" id="description" placeholder="Contoh: Gaji, Makan Siang" required>
-        </div>
-        <div class="datetime-group">
+
+        <form id="transactionForm">
             <div class="form-group">
-                <label for="inputDate">Tanggal Input</label>
-                <input type="date" id="inputDate" required>
+                <label for="type">Jenis Transaksi</label>
+                <select id="type" required>
+                    <option value="in">Pemasukan (+)</option>
+                    <option value="out">Pengeluaran (-)</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="inputTime">Jam Input</label>
-                <input type="time" id="inputTime" required>
+                <label for="amount">Jumlah (Rp)</label>
+                <input type="text" id="amount" placeholder="Contoh: 500.000" inputmode="numeric" required>
             </div>
-        </div>
-        <div class="form-group" id="paymentMethodGroup" style="display: none;">
-            <label for="paymentMethod">Metode Pembayaran Pengeluaran</label>
-            <select id="paymentMethod">
-                <option value="CASH">💵 CASH (Tunai)</option>
-                <option value="TRANSFER">🏦 TRANSFER BANK</option>
-                <option value="QRIS">📱 QRIS (E-Wallet)</option>
-            </select>
-        </div>
-        <button type="submit" id="btnSubmit"><span id="btnText">Tambah Transaksi</span></button>
-    </form>
+            <div class="form-group">
+                <label for="description">Keterangan</label>
+                <input type="text" id="description" placeholder="Contoh: Gaji, Makan Siang" required>
+            </div>
+            <div class="datetime-group">
+                <div class="form-group">
+                    <label for="inputDate">Tanggal Input</label>
+                    <input type="date" id="inputDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputTime">Jam Input</label>
+                    <input type="time" id="inputTime" required>
+                </div>
+            </div>
+            <div class="form-group" id="paymentMethodGroup" style="display: none;">
+                <label for="paymentMethod">Metode Pembayaran Pengeluaran</label>
+                <select id="paymentMethod">
+                    <option value="CASH">💵 CASH (Tunai)</option>
+                    <option value="TRANSFER">🏦 TRANSFER BANK</option>
+                    <option value="QRIS">📱 QRIS (E-Wallet)</option>
+                </select>
+            </div>
+            <button type="submit" id="btnSubmit"><span id="btnText">Tambah Transaksi</span></button>
+        </form>
 
-    <div class="history-title-wrapper" id="openFilterModalBtn">
-        <h3 class="history-title">Riwayat Transaksi</h3>
-        <span class="filter-badge-indicator" id="filterBadgeIndicator">Semua Data</span>
+        <div class="history-title-wrapper" id="openFilterModalBtn">
+            <h3 class="history-title">Riwayat Transaksi</h3>
+            <span class="filter-badge-indicator" id="filterBadgeIndicator">Semua Data</span>
+        </div>
+        
+        <ul class="history-list" id="historyList"></ul>
     </div>
-    
-    <ul class="history-list" id="historyList"></ul>
 </div>
 
 <!-- MODAL NOTIFIKASI -->
@@ -1370,7 +1417,7 @@
         });
     }
 
-    /* ALUR 2 KE ALUR 3: CEK KODE PIN AKSES & BUKA WEB UTAMA */
+    /* ALUR 2 KE ALUR 3: CEK KODE PIN AKSES & BUKA HALAMAN UTAMA */
     const CORRECT_PIN = "040698"; 
     let enteredPin = "";
     const pinBoxes = document.querySelectorAll('.pin-box');
@@ -1455,6 +1502,14 @@
             });
         } catch (e) {}
     }
+
+    /* FITUR KLIK JUDUL CYBER VAULT DENGAN TRANSISI BUKA-TUTUP HALUS */
+    const toggleAppViewBtn = document.getElementById('toggleAppViewBtn');
+    const fullAppContent = document.getElementById('fullAppContent');
+
+    toggleAppViewBtn.addEventListener('click', () => {
+        fullAppContent.classList.toggle('show');
+    });
 
     /* SCRIPT PENDUKUNG APLIKASI KEUANGAN */
     const typeSelect = document.getElementById('type');
