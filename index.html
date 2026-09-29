@@ -561,7 +561,8 @@
             text-align: center;
         }
 
-        /* MODAL PEMUTAR MUSIK LAPANG & RAPI */
+        /* MODAL / POP-UP HALAMAN CYBER VAULT & PEMUTAR MUSIK */
+        .cyber-modal-overlay,
         .music-modal-overlay {
             position: fixed;
             top: 0;
@@ -583,12 +584,14 @@
             transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s ease;
         }
 
+        .cyber-modal-overlay.active,
         .music-modal-overlay.active {
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
         }
 
+        .cyber-modal-card,
         .music-modal-card {
             background: rgba(3, 14, 38, 0.98);
             border: 2px solid rgba(0, 240, 255, 0.75);
@@ -609,10 +612,12 @@
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
+        .cyber-modal-overlay.active .cyber-modal-card,
         .music-modal-overlay.active .music-modal-card {
             transform: scale(1);
         }
 
+        .close-cyber-modal,
         .close-music-modal {
             position: absolute;
             top: 14px;
@@ -633,6 +638,7 @@
             z-index: 10;
         }
 
+        .close-cyber-modal:active,
         .close-music-modal:active {
             background: rgba(0, 240, 255, 0.35);
             transform: scale(0.92);
@@ -884,30 +890,23 @@
             filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.8));
         }
 
+        /* KONTEN CYBER VAULT DI DALAM POP-UP */
         .full-app-content {
             display: flex;
             flex-direction: column;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            visibility: hidden;
+            width: 100%;
+            flex-grow: 1;
+            overflow-y: auto;
             background: rgba(2, 10, 28, var(--glass-alpha));
             backdrop-filter: blur(var(--glass-blur));
             -webkit-backdrop-filter: blur(var(--glass-blur));
-            border-radius: 20px;
-            border: 0px solid rgba(0, 240, 255, 0.35);
-            box-shadow: none;
-            padding: 0 10px;
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, visibility 0.4s ease, border-width 0.4s ease, padding 0.4s ease;
-        }
-
-        .full-app-content.show {
-            max-height: 2500px;
-            opacity: 1;
-            visibility: visible;
-            border-width: 1px;
-            padding: 16px 10px;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 240, 255, 0.35);
+            padding: 12px 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            text-align: left;
+            gap: 12px;
+            margin-top: 10px;
         }
 
         .glass-control-panel {
@@ -915,11 +914,11 @@
             border: 1px solid rgba(0, 240, 255, 0.25);
             border-radius: 12px;
             padding: 8px 12px;
-            margin-bottom: 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
+            flex-shrink: 0;
         }
 
         .glass-slider-wrapper {
@@ -961,10 +960,10 @@
             border: 1px solid rgba(0, 240, 255, 0.2);
             border-radius: 12px;
             padding: 10px 12px;
-            margin-bottom: 18px;
             display: flex;
             flex-direction: column;
             gap: 8px;
+            flex-shrink: 0;
         }
 
         .backup-header {
@@ -1007,7 +1006,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-bottom: 20px;
+            flex-shrink: 0;
         }
 
         .card-hero {
@@ -1077,8 +1076,8 @@
             background: rgba(2, 10, 28, calc(var(--glass-alpha) * 0.7));
             padding: 16px 12px;
             border-radius: 16px;
-            margin-bottom: 20px;
             border: 1px solid rgba(0, 240, 255, 0.3);
+            flex-shrink: 0;
         }
 
         .form-group {
@@ -1128,12 +1127,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             cursor: pointer;
             padding: 6px 8px;
             border-radius: 8px;
             background: rgba(0, 240, 255, 0.05);
             border: 1px solid rgba(0, 240, 255, 0.2);
+            flex-shrink: 0;
         }
 
         .history-title {
@@ -1408,6 +1408,97 @@
     </div>
 </div>
 
+<!-- MODAL POP-UP CYBER VAULT -->
+<div class="cyber-modal-overlay" id="cyberModalOverlay">
+    <div class="cyber-modal-card">
+        <button type="button" class="close-cyber-modal" id="closeCyberModalBtn">✕</button>
+        <div style="font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 900; color: #00f0ff; letter-spacing: 1.5px; flex-shrink: 0;">CYBER VAULT SYSTEM</div>
+
+        <div class="full-app-content" id="fullAppContent">
+            <div class="glass-control-panel">
+                <div style="font-size: 0.72rem; font-weight: 700; color: #7dd3fc;">Transparansi Kaca:</div>
+                <div class="glass-slider-wrapper">
+                    <input type="range" id="glassOpacitySlider" class="glass-range-input" min="5" max="85" value="28">
+                    <span class="opacity-value-badge" id="opacityValText">28%</span>
+                </div>
+            </div>
+
+            <div class="backup-panel">
+                <div class="backup-header">
+                    <span style="font-size: 0.72rem; font-weight: 700; color: #a5f3fc;">BACKUP KEUANGAN</span>
+                    <span class="backup-status-tag" id="backupStatusText">Auto-Saved</span>
+                </div>
+                <div class="backup-actions">
+                    <button type="button" class="btn-backup-action" id="btnExportBackup">Unduh Backup</button>
+                    <button type="button" class="btn-backup-action" id="btnImportBackup">Pulihkan Data</button>
+                    <input type="file" id="importFileInput" accept=".json" style="display: none;">
+                </div>
+            </div>
+
+            <div class="dashboard">
+                <div class="card-hero">
+                    <h4>SALDO SISA</h4>
+                    <p id="totalSaldo">Rp 0</p>
+                </div>
+                <div class="sub-dashboard">
+                    <div class="card-sub pemasukan">
+                        <h4>PEMASUKAN</h4>
+                        <p id="totalPemasukan">Rp 0</p>
+                    </div>
+                    <div class="card-sub pengeluaran">
+                        <h4>PENGELUARAN</h4>
+                        <p id="totalPengeluaran">Rp 0</p>
+                    </div>
+                </div>
+            </div>
+
+            <form id="transactionForm">
+                <div class="form-group">
+                    <label for="type">Jenis Transaksi</label>
+                    <select id="type" required>
+                        <option value="in">Pemasukan (+)</option>
+                        <option value="out">Pengeluaran (-)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Jumlah (Rp)</label>
+                    <input type="text" id="amount" placeholder="Contoh: 500.000" inputmode="numeric" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Keterangan</label>
+                    <input type="text" id="description" placeholder="Contoh: Gaji, Makan Siang" required>
+                </div>
+                <div class="datetime-group">
+                    <div class="form-group">
+                        <label for="inputDate">Tanggal Input</label>
+                        <input type="date" id="inputDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTime">Jam Input</label>
+                        <input type="time" id="inputTime" required>
+                    </div>
+                </div>
+                <div class="form-group" id="paymentMethodGroup" style="display: none;">
+                    <label for="paymentMethod">Metode Pembayaran Pengeluaran</label>
+                    <select id="paymentMethod">
+                        <option value="CASH">💵 CASH (Tunai)</option>
+                        <option value="TRANSFER">🏦 TRANSFER BANK</option>
+                        <option value="QRIS">📱 QRIS (E-Wallet)</option>
+                    </select>
+                </div>
+                <button type="submit" id="btnSubmit"><span id="btnText">Tambah Transaksi</span></button>
+            </form>
+
+            <div class="history-title-wrapper" id="openFilterModalBtn">
+                <h3 class="history-title">Riwayat Transaksi</h3>
+                <span class="filter-badge-indicator" id="filterBadgeIndicator">Semua Data</span>
+            </div>
+            
+            <ul class="history-list" id="historyList"></ul>
+        </div>
+    </div>
+</div>
+
 <!-- AUDIO ELEMENT UTAMA -->
 <audio id="bgAudioPlayer" crossorigin="anonymous" style="display: none;"></audio>
 
@@ -1449,90 +1540,6 @@
     <div class="music-player-panel" id="openMusicModalPanel" title="Ketuk untuk membuka Playlist Music">
         <h2 class="title-music-box">PLAYLIST MUSIC</h2>
     </div>
-
-    <!-- SEMUA HALAMAN MENU KEUANGAN -->
-    <div class="full-app-content" id="fullAppContent">
-        <div class="glass-control-panel">
-            <div style="font-size: 0.72rem; font-weight: 700; color: #7dd3fc;">Transparansi Kaca:</div>
-            <div class="glass-slider-wrapper">
-                <input type="range" id="glassOpacitySlider" class="glass-range-input" min="5" max="85" value="28">
-                <span class="opacity-value-badge" id="opacityValText">28%</span>
-            </div>
-        </div>
-
-        <div class="backup-panel">
-            <div class="backup-header">
-                <span style="font-size: 0.72rem; font-weight: 700; color: #a5f3fc;">BACKUP KEUANGAN</span>
-                <span class="backup-status-tag" id="backupStatusText">Auto-Saved</span>
-            </div>
-            <div class="backup-actions">
-                <button type="button" class="btn-backup-action" id="btnExportBackup">Unduh Backup</button>
-                <button type="button" class="btn-backup-action" id="btnImportBackup">Pulihkan Data</button>
-                <input type="file" id="importFileInput" accept=".json" style="display: none;">
-            </div>
-        </div>
-
-        <div class="dashboard">
-            <div class="card-hero">
-                <h4>SALDO SISA</h4>
-                <p id="totalSaldo">Rp 0</p>
-            </div>
-            <div class="sub-dashboard">
-                <div class="card-sub pemasukan">
-                    <h4>PEMASUKAN</h4>
-                    <p id="totalPemasukan">Rp 0</p>
-                </div>
-                <div class="card-sub pengeluaran">
-                    <h4>PENGELUARAN</h4>
-                    <p id="totalPengeluaran">Rp 0</p>
-                </div>
-            </div>
-        </div>
-
-        <form id="transactionForm">
-            <div class="form-group">
-                <label for="type">Jenis Transaksi</label>
-                <select id="type" required>
-                    <option value="in">Pemasukan (+)</option>
-                    <option value="out">Pengeluaran (-)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="amount">Jumlah (Rp)</label>
-                <input type="text" id="amount" placeholder="Contoh: 500.000" inputmode="numeric" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Keterangan</label>
-                <input type="text" id="description" placeholder="Contoh: Gaji, Makan Siang" required>
-            </div>
-            <div class="datetime-group">
-                <div class="form-group">
-                    <label for="inputDate">Tanggal Input</label>
-                    <input type="date" id="inputDate" required>
-                </div>
-                <div class="form-group">
-                    <label for="inputTime">Jam Input</label>
-                    <input type="time" id="inputTime" required>
-                </div>
-            </div>
-            <div class="form-group" id="paymentMethodGroup" style="display: none;">
-                <label for="paymentMethod">Metode Pembayaran Pengeluaran</label>
-                <select id="paymentMethod">
-                    <option value="CASH">💵 CASH (Tunai)</option>
-                    <option value="TRANSFER">🏦 TRANSFER BANK</option>
-                    <option value="QRIS">📱 QRIS (E-Wallet)</option>
-                </select>
-            </div>
-            <button type="submit" id="btnSubmit"><span id="btnText">Tambah Transaksi</span></button>
-        </form>
-
-        <div class="history-title-wrapper" id="openFilterModalBtn">
-            <h3 class="history-title">Riwayat Transaksi</h3>
-            <span class="filter-badge-indicator" id="filterBadgeIndicator">Semua Data</span>
-        </div>
-        
-        <ul class="history-list" id="historyList"></ul>
-    </div>
 </div>
 
 <!-- MODAL NOTIFIKASI -->
@@ -1573,6 +1580,38 @@
     }
 
     const btnTapHere = document.getElementById('btnTapHere');
+    const splashScreenOverlay = document.getElementById('splashScreenOverlay');
+    const pinScreenOverlay = document.getElementById('pinScreenOverlay');
+    const mainAppContainer = document.getElementById('mainAppContainer');
+    const cyberModalOverlay = document.getElementById('cyberModalOverlay');
+    const musicModalOverlay = document.getElementById('musicModalOverlay');
+
+    window.addEventListener('DOMContentLoaded', () => {
+        initIndexedDB();
+        
+        // CEK STATUS SESI: Jika sebelumnya sudah login & masuk ke halaman dalam
+        const isLogged = sessionStorage.getItem('venus_is_logged') === 'true';
+        const activeModal = sessionStorage.getItem('venus_active_modal');
+
+        if (isLogged) {
+            // Langsung lewati splash screen & layar PIN
+            splashScreenOverlay.classList.add('hidden');
+            pinScreenOverlay.classList.add('hidden');
+            mainAppContainer.classList.add('active');
+            updateUI();
+
+            // Buka kembali modal yang terakhir aktif sebelum di-refresh
+            if (activeModal === 'cyber') {
+                cyberModalOverlay.classList.add('active');
+            } else if (activeModal === 'music') {
+                musicModalOverlay.classList.add('active');
+            }
+        } else {
+            setTimeout(() => {
+                speakWelcomeGreeting();
+            }, 500);
+        }
+    });
 
     function speakWelcomeGreeting() {
         if ('speechSynthesis' in window) {
@@ -1602,17 +1641,7 @@
         }
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-            speakWelcomeGreeting();
-        }, 500);
-        initIndexedDB();
-    });
-
     /* ALUR 1 KE ALUR 2: TOMBOL TAP HERE DIKLIK */
-    const splashScreenOverlay = document.getElementById('splashScreenOverlay');
-    const pinScreenOverlay = document.getElementById('pinScreenOverlay');
-
     if (btnTapHere) {
         btnTapHere.addEventListener('click', () => {
             playDramaticTransitionSound();
@@ -1634,7 +1663,6 @@
     let enteredPin = "";
     const pinBoxes = document.querySelectorAll('.pin-box');
     const pinErrorMsg = document.getElementById('pinErrorMsg');
-    const mainAppContainer = document.getElementById('mainAppContainer');
 
     function updatePinDisplay() {
         pinBoxes.forEach((box, index) => {
@@ -1684,6 +1712,11 @@
             playSuccessSound();
             pinScreenOverlay.classList.add('hidden');
             mainAppContainer.classList.add('active');
+            
+            // Simpan status bahwa user sudah login di sesi ini
+            sessionStorage.setItem('venus_is_logged', 'true');
+            sessionStorage.setItem('venus_active_modal', 'none');
+
             updateUI();
         } else {
             pinErrorMsg.innerText = "PIN Salah! Silakan coba lagi.";
@@ -1715,24 +1748,33 @@
         } catch (e) {}
     }
 
-    /* TOGGLE MENU UTAMA KEUANGAN */
+    /* TOGGLE MODAL CYBER VAULT & PEMUTAR MUSIK DENGAN PENYIMPANAN SESI */
     const toggleAppViewBtn = document.getElementById('toggleAppViewBtn');
-    const fullAppContent = document.getElementById('fullAppContent');
+    const closeCyberModalBtn = document.getElementById('closeCyberModalBtn');
+
     const openMusicModalPanel = document.getElementById('openMusicModalPanel');
-    const musicModalOverlay = document.getElementById('musicModalOverlay');
     const closeMusicModalBtn = document.getElementById('closeMusicModalBtn');
 
     toggleAppViewBtn.addEventListener('click', () => {
-        const isShown = fullAppContent.classList.toggle('show');
-        if (isShown) {
-            openMusicModalPanel.style.display = 'none';
-        } else {
-            openMusicModalPanel.style.display = 'flex';
-        }
+        cyberModalOverlay.classList.add('active');
+        sessionStorage.setItem('venus_active_modal', 'cyber');
+        updateUI();
     });
 
-    openMusicModalPanel.addEventListener('click', () => musicModalOverlay.classList.add('active'));
-    closeMusicModalBtn.addEventListener('click', () => musicModalOverlay.classList.remove('active'));
+    closeCyberModalBtn.addEventListener('click', () => {
+        cyberModalOverlay.classList.remove('active');
+        sessionStorage.setItem('venus_active_modal', 'none');
+    });
+
+    openMusicModalPanel.addEventListener('click', () => {
+        musicModalOverlay.classList.add('active');
+        sessionStorage.setItem('venus_active_modal', 'music');
+    });
+
+    closeMusicModalBtn.addEventListener('click', () => {
+        musicModalOverlay.classList.remove('active');
+        sessionStorage.setItem('venus_active_modal', 'none');
+    });
 
     /* INDEXEDDB UNTUK MENYIMPAN AUDIO & FITUR BACKUP/RESTORE MUSIK */
     let db = null;
@@ -1849,7 +1891,6 @@
                 return;
             }
 
-            // Konversi Blob ke Base64 agar bisa disimpan dalam file JSON backup
             let processed = 0;
             const exportData = [];
 
@@ -1888,7 +1929,6 @@
 
                 let count = 0;
                 importedSongs.forEach(item => {
-                    // Konversi Base64 kembali ke Blob
                     fetch(item.dataUrl)
                         .then(res => res.blob())
                         .then(blob => {
