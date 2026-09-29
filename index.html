@@ -448,9 +448,37 @@
         .header-box {
             text-align: center;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Jarak tambahan 2 baris antara Venus Studio dan Cyber Vault */
+            gap: 22px; 
+            margin-bottom: 12px;
         }
 
-        /* Lebar kotak judul disamakan penuh (100%) agar sama persis dengan panel bawah */
+        /* Branding Venus Studio Teks Saja, Tanpa Kolom, Tanpa Fungsi Klik */
+        .brand-top-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            user-select: none;
+            padding: 4px 10px;
+            background: transparent;
+            border: none;
+        }
+
+        .brand-studio-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 900;
+            letter-spacing: 5px;
+            color: #00f0ff;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.85);
+        }
+
+        /* Kotak Cyber Vault Interaktif (Tombol Utama Toggle Menu) */
         .clickable-header-wrapper {
             cursor: pointer;
             display: flex;
@@ -477,8 +505,8 @@
         h2.title-cyber {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(1.5rem, 6vw, 2rem);
-            letter-spacing: 3px;
+            font-size: clamp(1.4rem, 5.5vw, 1.8rem);
+            letter-spacing: 2px;
             text-transform: uppercase;
             background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #38bdf8 100%);
             -webkit-background-clip: text;
@@ -489,9 +517,9 @@
 
         .subtitle-cyber {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 800;
-            letter-spacing: 2.5px;
+            letter-spacing: 2px;
             color: #7dd3fc;
             text-transform: uppercase;
             margin-top: 2px;
@@ -1215,8 +1243,12 @@
 <div class="container" id="mainAppContainer">
     <button type="button" class="install-app-btn" id="btnInstallApp">⚡ INSTAL APLIKASI</button>
 
-    <!-- Header Judul CYBER VAULT yang lebarnya memenuhi penuh sama seperti panel bawah -->
+    <!-- Header dengan Tulisan VENUS STUDIO saja, Tanpa Kolom, Tidak Bisa Diklik, serta Kotak CYBER VAULT yang interaktif -->
     <div class="header-box">
+        <div class="brand-top-header">
+            <span class="brand-studio-title">VENUS STUDIO</span>
+        </div>
+
         <div class="clickable-header-wrapper" id="toggleAppViewBtn" title="Ketuk untuk membuka menu lengkap">
             <h2 class="title-cyber">CYBER VAULT</h2>
             <div class="subtitle-cyber">FINANCIAL MONITORING SYSTEM</div>
@@ -1503,7 +1535,7 @@
         } catch (e) {}
     }
 
-    /* FITUR KLIK JUDUL CYBER VAULT DENGAN TRANSISI BUKA-TUTUP HALUS */
+    /* FITUR KLIK HANYA PADA KOTAK CYBER VAULT UNTUK MEMBUKA/MENUTUP MENU */
     const toggleAppViewBtn = document.getElementById('toggleAppViewBtn');
     const fullAppContent = document.getElementById('fullAppContent');
 
