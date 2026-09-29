@@ -128,11 +128,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            width: 100%;
             max-width: 340px;
             z-index: 5;
             position: relative;
-            transform: translateY(-30px); /* Digeser ke atas agar lebih pas */
+            transform: translateY(-25px);
         }
 
         .splash-logo-glow {
@@ -148,7 +148,7 @@
             color: var(--accent-cyan);
             box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
             animation: logoFloat 2s infinite alternate ease-in-out;
-            margin-bottom: 6px;
+            margin-bottom: 12px;
         }
 
         .splash-welcome-top {
@@ -159,6 +159,7 @@
             color: #7dd3fc;
             text-transform: uppercase;
             opacity: 0.85;
+            margin-bottom: 4px;
         }
 
         .splash-title-large {
@@ -171,13 +172,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 30px rgba(0, 240, 255, 0.85);
-            margin-bottom: 10px;
         }
 
-        /* Wrapper tombol agar ruangnya sudah disiapkan dari awal (tidak bergeser) */
+        /* Wrapper tombol dengan tinggi tetap agar ruangnya sudah disiapkan tanpa bertabrakan */
         .tap-btn-wrapper {
-            margin-top: 18px;
-            min-height: 54px; 
+            margin-top: 24px;
+            min-height: 52px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1085,7 +1085,7 @@
         <div class="splash-welcome-top">WELCOME TO</div>
         <div class="splash-title-large">VENUS STUDIO</div>
         
-        <!-- Ruang tombol tetap disiapkan agar teks di atasnya tidak bergeser saat tombol muncul -->
+        <!-- Ruang tombol dengan margin yang aman agar tidak bertabrakan dengan tulisan -->
         <div class="tap-btn-wrapper">
             <button type="button" class="tap-here-btn" id="btnTapHere">
                 TAP HERE
@@ -1324,14 +1324,12 @@
             utterance.rate = 0.95;
             utterance.pitch = 1.0;
 
-            // Tombol "TAP HERE" dimunculkan mulus dengan class 'show' setelah sound selesai
             utterance.onend = function() {
                 if (btnTapHere) {
                     btnTapHere.classList.add('show');
                 }
             };
 
-            // Cadangan waktu 3.5 detik jika browser membatasi event onend
             setTimeout(() => {
                 if (btnTapHere && !btnTapHere.classList.contains('show')) {
                     btnTapHere.classList.add('show');
@@ -1544,7 +1542,7 @@
         e.preventDefault();
         const type = document.getElementById('type').value;
         const amount = parseFloat(document.getElementById('amount').value.replace(/\./g, ''));
-        const description = document.getElementById('description'].value;
+        const description = document.getElementById('description').value;
         const date = document.getElementById('inputDate').value;
         const time = document.getElementById('inputTime').value;
         const method = (type === 'out') ? document.getElementById('paymentMethod').value : null;
