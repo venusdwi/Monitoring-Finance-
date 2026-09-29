@@ -253,7 +253,6 @@
             pointer-events: none;
         }
 
-        /* EFEK TRANSISI PEMINDAIAN SCI-FI SAAT PIN BENAR */
         .cyber-scanner-flash {
             position: fixed;
             top: 0;
@@ -627,7 +626,6 @@
             pointer-events: auto;
         }
 
-        .cyber-modal-card,
         .music-modal-card {
             background: rgba(3, 14, 38, 0.98);
             border: 2px solid rgba(0, 240, 255, 0.75);
@@ -644,6 +642,26 @@
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 0 50px rgba(0, 240, 255, 0.4);
+            transform: scale(0.9);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .cyber-modal-card {
+            background: rgba(3, 14, 38, 0.98);
+            border: none !important;
+            border-radius: 26px;
+            padding: 20px 16px 24px 16px;
+            width: 100%;
+            max-width: 410px;
+            height: 96vh;
+            height: 96dvh;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: none !important;
             transform: scale(0.9);
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -680,7 +698,7 @@
             transform: scale(0.92);
         }
 
-        /* AUDIO STABILIZER: GARIS BAWAH TRANSPARAN & SELEBAR BATANG */
+        /* AUDIO STABILIZER */
         .audio-stabilizer-container {
             width: 100% !important;
             max-width: 260px !important;
@@ -719,7 +737,6 @@
             transition: height 0.05s ease;
         }
 
-        /* JUDUL LAGU DIGESER SEDIKIT KE BAWAH */
         .track-title-display-box {
             width: 100% !important;
             background: transparent !important;
@@ -744,7 +761,6 @@
             text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
         }
 
-        /* GARIS PROGRESS BERSIH & SEJAJAR DENGAN TEKS WAKTU */
         .music-progress-container {
             width: 100% !important;
             display: flex !important;
@@ -808,7 +824,6 @@
             padding: 0 2px !important;
         }
 
-        /* TOMBOL KONTROL DIPERBESAR */
         .music-controls-row {
             display: flex;
             align-items: center;
@@ -861,7 +876,6 @@
             height: 26px;
         }
 
-        /* PLAYLIST */
         .playlist-wrapper {
             width: 100%;
             flex-grow: 1;
@@ -896,7 +910,6 @@
             border-color: #00f0ff;
         }
 
-        /* TOMBOL HAPUS DIPERSEMPIT SEUKURAN TEKS HAPUS */
         .playlist-delete-btn {
             color: #fb7185;
             font-size: 0.7rem;
@@ -926,60 +939,101 @@
             filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.8));
         }
 
-        /* KONTEN CYBER VAULT DI DALAM POP-UP */
+        /* KONTEN UTAMA DENGAN JARAK PROPORSIONAL */
         .full-app-content {
             display: flex;
             flex-direction: column;
             width: 100%;
             flex-grow: 1;
             overflow-y: auto;
-            background: rgba(2, 10, 28, var(--glass-alpha));
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            border-radius: 16px;
-            border: 1px solid rgba(0, 240, 255, 0.35);
-            padding: 12px 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            background: transparent !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border-radius: 0 !important;
+            border: none !important;
+            padding: 6px 4px 150px 4px !important;
+            box-shadow: none !important;
             text-align: left;
-            gap: 12px;
+            gap: 20px;
             margin-top: 10px;
+            scroll-behavior: smooth;
         }
 
+        /* MENGHILANGKAN KOTAK PEMBUNGKUS (BORDER & BACKGROUND) */
+        .glass-control-panel,
+        .backup-panel,
+        form {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 4px 0 !important;
+        }
+
+        /* SLIDER TRANSPARANSI KACA: GARIS TIPIS DENGAN TITIK BULAT */
         .glass-control-panel {
-            background: rgba(0, 240, 255, 0.08);
-            border: 1px solid rgba(0, 240, 255, 0.25);
-            border-radius: 12px;
-            padding: 8px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: 12px;
             flex-shrink: 0;
         }
 
         .glass-slider-wrapper {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             flex-grow: 1;
         }
 
         .glass-range-input {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 6px;
-            border-radius: 3px;
-            background: rgba(0, 240, 255, 0.25);
-            outline: none;
+            -webkit-appearance: none !important;
+            appearance: none !important;
+            width: 100% !important;
+            height: 2px !important;
+            border-radius: 1px !important;
+            background: rgba(0, 240, 255, 0.35) !important;
+            outline: none !important;
+            border: none !important;
+            box-shadow: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .glass-range-input::-webkit-slider-runnable-track {
+            background: rgba(0, 240, 255, 0.35) !important;
+            height: 2px !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        .glass-range-input::-moz-range-track {
+            background: rgba(0, 240, 255, 0.35) !important;
+            height: 2px !important;
+            border: none !important;
+            box-shadow: none !important;
         }
 
         .glass-range-input::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #00f0ff;
-            cursor: pointer;
+            -webkit-appearance: none !important;
+            appearance: none !important;
+            width: 14px !important;
+            height: 14px !important;
+            border-radius: 50% !important;
+            background: #00f0ff !important;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.9) !important;
+            cursor: pointer !important;
+            margin-top: -6px !important;
+            border: none !important;
+        }
+
+        .glass-range-input::-moz-range-thumb {
+            width: 14px !important;
+            height: 14px !important;
+            border-radius: 50% !important;
+            background: #00f0ff !important;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.9) !important;
+            cursor: pointer !important;
+            border: none !important;
         }
 
         .opacity-value-badge {
@@ -991,45 +1045,35 @@
             text-align: right;
         }
 
-        .backup-panel {
-            background: rgba(0, 240, 255, 0.05);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 12px;
-            padding: 10px 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            flex-shrink: 0;
-        }
-
         .backup-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 8px;
         }
 
         .backup-status-tag {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 700;
             color: #34d399;
             background: rgba(16, 185, 129, 0.15);
             border: 1px solid rgba(16, 185, 129, 0.35);
-            padding: 2px 6px;
+            padding: 3px 8px;
             border-radius: 12px;
         }
 
         .backup-actions {
             display: flex;
-            gap: 8px;
+            gap: 10px;
         }
 
         .btn-backup-action {
             flex: 1;
-            padding: 8px 6px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            border-radius: 8px;
-            border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 12px 10px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 240, 255, 0.35);
             background: rgba(2, 12, 32, 0.6);
             color: #00f0ff;
             cursor: pointer;
@@ -1041,7 +1085,7 @@
         .dashboard {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             flex-shrink: 0;
         }
 
@@ -1049,12 +1093,12 @@
             background: rgba(0, 180, 255, calc(var(--glass-alpha) * 0.45 + 0.05));
             border: 1px solid rgba(0, 240, 255, 0.5);
             border-radius: 16px;
-            padding: 16px 10px;
+            padding: 16px 12px;
             text-align: center;
         }
 
         .card-hero h4 {
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #7dd3fc;
@@ -1063,7 +1107,7 @@
         }
 
         .card-hero p {
-            font-size: clamp(1.3rem, 4.5vw, 1.6rem);
+            font-size: clamp(1.4rem, 5vw, 1.8rem);
             font-weight: 900;
             color: #ffffff;
             text-shadow: 0 2px 14px rgba(0, 240, 255, 0.8);
@@ -1072,24 +1116,24 @@
         .sub-dashboard {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
         }
 
         .card-sub {
-            padding: 12px 8px;
+            padding: 14px 10px;
             border-radius: 14px;
             text-align: center;
         }
 
         .card-sub h4 {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             font-weight: 800;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .card-sub p {
-            font-size: clamp(0.8rem, 3.5vw, 0.92rem);
+            font-size: clamp(0.85rem, 3.8vw, 1rem);
             font-weight: 800;
         }
 
@@ -1105,107 +1149,152 @@
             color: #fb7185;
         }
 
+        /* FORM DENGAN JARAK ANTAR KOLOM YANG LEBIH PROPORSIONAL DAN TIDAK MEPET */
         form {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            background: rgba(2, 10, 28, calc(var(--glass-alpha) * 0.7));
-            padding: 16px 12px;
-            border-radius: 16px;
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            flex-shrink: 0;
+            gap: 14px;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
 
         .datetime-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 12px;
         }
 
         label {
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.88rem;
+            font-weight: 800;
             color: #7dd3fc;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
         }
 
-        input, select, button {
-            padding: 10px;
-            border: 1px solid rgba(0, 240, 255, 0.35);
-            border-radius: 10px;
-            font-size: 0.85rem;
+        input, select {
+            padding: 15px 16px;
+            border: 1.5px solid rgba(0, 240, 255, 0.45);
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
             outline: none;
-            background: rgba(2, 12, 32, 0.8);
+            background: rgba(2, 12, 32, 0.85);
             color: #ffffff;
             width: 100%;
         }
 
+        input:focus, select:focus {
+            border-color: #00f0ff;
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+        }
+
+        /* TOMBOL TAMBAH TRANSAKSI DIBUAT LEBAR PENUH & CENTER DI TENGAH */
         button[type="submit"] {
-            background: linear-gradient(135deg, rgba(0, 153, 255, 0.85) 0%, rgba(0, 85, 255, 0.85) 100%);
+            background: linear-gradient(135deg, rgba(0, 153, 255, 0.9) 0%, rgba(0, 85, 255, 0.9) 100%);
             color: #ffffff;
-            font-weight: 800;
-            border: 1px solid rgba(0, 240, 255, 0.5);
+            font-size: 1.05rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            border: 1.5px solid rgba(0, 240, 255, 0.7);
             cursor: pointer;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 16px 20px;
+            border-radius: 14px;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 119, 255, 0.4);
+            transition: all 0.2s ease;
+            margin-top: 6px;
+        }
+
+        button[type="submit"]:active {
+            transform: scale(0.98);
+            filter: brightness(1.2);
+        }
+
+        .btn-spinner {
+            width: 22px;
+            height: 22px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spinLoading 0.8s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spinLoading {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .history-section-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-shrink: 0;
+            margin-top: 10px;
         }
 
         .history-title-wrapper {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
             cursor: pointer;
-            padding: 6px 8px;
-            border-radius: 8px;
-            background: rgba(0, 240, 255, 0.05);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            flex-shrink: 0;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: rgba(0, 240, 255, 0.06);
+            border: 1.5px solid rgba(0, 240, 255, 0.25);
         }
 
         .history-title {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             color: #fff;
-            font-weight: 800;
+            font-weight: 900;
             margin: 0;
+            letter-spacing: 0.5px;
         }
 
         .filter-badge-indicator {
-            font-size: 0.68rem;
-            font-weight: 700;
+            font-size: 0.78rem;
+            font-weight: 800;
             color: #00f0ff;
             background: rgba(0, 240, 255, 0.15);
-            padding: 2px 8px;
-            border-radius: 10px;
+            padding: 5px 12px;
+            border-radius: 12px;
             border: 1px solid rgba(0, 240, 255, 0.4);
         }
 
         .history-list {
             list-style: none;
-            max-height: 250px;
-            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
         }
 
         .history-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 10px;
-            background: rgba(2, 12, 32, 0.8);
-            border: 1px solid rgba(0, 212, 255, 0.25);
-            margin-bottom: 8px;
-            border-radius: 12px;
-            border-left: 4px solid #a5f3fc;
+            padding: 15px 14px;
+            background: rgba(2, 12, 32, 0.85);
+            border: 1.5px solid rgba(0, 212, 255, 0.3);
+            border-radius: 14px;
+            border-left: 5px solid #a5f3fc;
             cursor: pointer;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        .history-item:active {
+            transform: scale(0.98);
+            background: rgba(0, 240, 255, 0.12);
         }
 
         .history-item.in { border-left-color: var(--pemasukan-green); }
@@ -1214,35 +1303,36 @@
         .item-info {
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 4px;
             flex-grow: 1;
         }
 
         .item-desc {
-            font-weight: 700;
-            font-size: 0.85rem;
+            font-weight: 800;
+            font-size: 1rem;
             color: #fff;
         }
 
         .item-date {
-            font-size: 0.7rem;
+            font-size: 0.78rem;
+            font-weight: 700;
             color: #38bdf8;
         }
 
         .item-method-badge {
-            font-size: 0.62rem;
+            font-size: 0.7rem;
             font-weight: 800;
             color: #fb7185;
             background: rgba(244, 63, 94, 0.15);
             border: 1px solid rgba(244, 63, 94, 0.35);
-            padding: 1px 6px;
+            padding: 2px 8px;
             border-radius: 6px;
-            margin-left: 4px;
+            margin-left: 6px;
         }
 
         .item-amount {
-            font-weight: 800;
-            font-size: 0.88rem;
+            font-weight: 900;
+            font-size: 1.02rem;
         }
 
         .amount-in { color: #34d399; }
@@ -1389,7 +1479,6 @@
         <button type="button" class="close-music-modal" id="closeMusicModalBtn">✕</button>
         <div style="font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 900; color: #00f0ff; letter-spacing: 1.5px;">CYBER AUDIO PLAYER</div>
         
-        <!-- AUDIO STABILIZER: GARIS BAWAH TRANSPARAN & SELEBAR BATANG -->
         <div class="audio-stabilizer-container" id="audioStabilizerBox">
             <div class="stabilizer-bars-wrapper" id="stabilizerBarsWrapper">
                 <div class="stabilizer-bar"></div><div class="stabilizer-bar"></div><div class="stabilizer-bar"></div>
@@ -1403,13 +1492,11 @@
             </div>
         </div>
         
-        <!-- JUDUL LAGU DIGESER SEDIKIT KE BAWAH -->
         <div class="track-title-display-box">
             <svg class="cyber-icon" viewBox="0 0 24 24" style="width: 14px; height: 14px; flex-shrink: 0;"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
             <span class="track-title-text" id="modalTrackTitle">Belum ada musik dipilih</span>
         </div>
         
-        <!-- GARIS PROGRESS BERSIH & SEJAJAR DENGAN TEKS WAKTU -->
         <div class="music-progress-container">
             <input type="range" id="musicProgressBar" class="music-progress-bar" value="0" min="0" max="100" step="0.1">
             <div class="music-time-info">
@@ -1418,7 +1505,6 @@
             </div>
         </div>
 
-        <!-- TOMBOL KONTROL DIPERBESAR -->
         <div class="music-controls-row">
             <button type="button" class="ctrl-btn small" id="prevTrackBtn" title="Previous">
                 <svg class="cyber-icon" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
@@ -1431,7 +1517,6 @@
             </button>
         </div>
 
-        <!-- TOMBOL ADD MUSIC & EXPORT/IMPORT PLAYLIST -->
         <div style="display: flex; gap: 6px; width: 100%;">
             <button type="button" id="modalUploadBtn" style="flex: 2; padding: 10px; font-size: 0.8rem; font-weight: 800; border-radius: 12px; background: linear-gradient(135deg, rgba(0,240,255,0.25), rgba(0,119,255,0.25)); border: 1px solid rgba(0,240,255,0.6); color: #00f0ff; cursor: pointer;">Add music</button>
             <button type="button" id="btnExportMusic" style="flex: 1; padding: 10px; font-size: 0.72rem; font-weight: 800; border-radius: 12px; background: rgba(16,185,129,0.2); border: 1px solid rgba(16,185,129,0.6); color: #34d399; cursor: pointer;" title="Simpan Playlist ke File">Backup Musik</button>
@@ -1440,7 +1525,6 @@
             <input type="file" id="importMusicFileInput" accept=".json" style="display: none;">
         </div>
 
-        <!-- PLAYLIST -->
         <div class="playlist-wrapper" id="playlistContainer">
             <div style="font-size: 0.78rem; color: #64748b; font-style: italic; padding: 10px; text-align: center;">Daftar lagu masih kosong.</div>
         </div>
@@ -1454,8 +1538,9 @@
         <div style="font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 900; color: #00f0ff; letter-spacing: 1.5px; flex-shrink: 0;">CYBER VAULT SYSTEM</div>
 
         <div class="full-app-content" id="fullAppContent">
+            <!-- SLIDER TRANSPARANSI KACA: GARIS TIPIS DENGAN TITIK BULAT -->
             <div class="glass-control-panel">
-                <div style="font-size: 0.72rem; font-weight: 700; color: #7dd3fc;">Transparansi Kaca:</div>
+                <div style="font-size: 0.82rem; font-weight: 800; color: #7dd3fc;">Transparansi Kaca:</div>
                 <div class="glass-slider-wrapper">
                     <input type="range" id="glassOpacitySlider" class="glass-range-input" min="5" max="85" value="28">
                     <span class="opacity-value-badge" id="opacityValText">28%</span>
@@ -1464,7 +1549,7 @@
 
             <div class="backup-panel">
                 <div class="backup-header">
-                    <span style="font-size: 0.72rem; font-weight: 700; color: #a5f3fc;">BACKUP KEUANGAN</span>
+                    <span style="font-size: 0.82rem; font-weight: 800; color: #a5f3fc;">BACKUP KEUANGAN</span>
                     <span class="backup-status-tag" id="backupStatusText">Auto-Saved</span>
                 </div>
                 <div class="backup-actions">
@@ -1528,18 +1613,70 @@
                 <button type="submit" id="btnSubmit"><span id="btnText">Tambah Transaksi</span></button>
             </form>
 
-            <div class="history-title-wrapper" id="openFilterModalBtn">
-                <h3 class="history-title">Riwayat Transaksi</h3>
-                <span class="filter-badge-indicator" id="filterBadgeIndicator">Semua Data</span>
+            <div class="history-section-wrapper">
+                <div class="history-title-wrapper" id="openFilterModalBtn">
+                    <h3 class="history-title">Riwayat Transaksi</h3>
+                    <span class="filter-badge-indicator" id="filterBadgeIndicator">Semua Data</span>
+                </div>
+                <ul class="history-list" id="historyList"></ul>
             </div>
-            
-            <ul class="history-list" id="historyList"></ul>
         </div>
     </div>
 </div>
 
 <!-- AUDIO ELEMENT UTAMA -->
 <audio id="bgAudioPlayer" crossorigin="anonymous" style="display: none;"></audio>
+
+<!-- MODAL DETAIL / EDIT / HAPUS TRANSAKSI -->
+<div class="popup-overlay" id="detailTransactionModal">
+    <div class="popup-box" style="max-width: 380px; text-align: left; align-items: stretch; gap: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900; color: #00f0ff;">DETAIL TRANSAKSI</div>
+            <button type="button" id="closeDetailModalBtn" style="background:none; border:none; color:#94a3b8; font-size:1.5rem; cursor:pointer;">✕</button>
+        </div>
+        
+        <input type="hidden" id="editTxId">
+        
+        <div class="form-group">
+            <label>Jenis Transaksi</label>
+            <select id="editType">
+                <option value="in">Pemasukan (+)</option>
+                <option value="out">Pengeluaran (-)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Jumlah (Rp)</label>
+            <input type="text" id="editAmount" inputmode="numeric">
+        </div>
+        <div class="form-group">
+            <label>Keterangan</label>
+            <input type="text" id="editDescription">
+        </div>
+        <div class="datetime-group">
+            <div class="form-group">
+                <label>Tanggal</label>
+                <input type="date" id="editDate">
+            </div>
+            <div class="form-group">
+                <label>Jam</label>
+                <input type="time" id="editTime">
+            </div>
+        </div>
+        <div class="form-group" id="editMethodGroup" style="display: none;">
+            <label>Metode Pembayaran</label>
+            <select id="editMethod">
+                <option value="CASH">💵 CASH (Tunai)</option>
+                <option value="TRANSFER">🏦 TRANSFER BANK</option>
+                <option value="QRIS">📱 QRIS (E-Wallet)</option>
+            </select>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 6px;">
+            <button type="button" id="btnDeleteTransaction" style="background: rgba(244, 63, 94, 0.2); border: 1.5px solid rgba(244, 63, 94, 0.6); color: #fb7185; flex: 1; padding: 12px; border-radius: 12px; font-weight: 800; cursor:pointer;">Hapus</button>
+            <button type="button" id="btnUpdateTransaction" style="background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%); border: none; color: #020714; flex: 2; padding: 12px; border-radius: 12px; font-weight: 900; cursor:pointer;">Simpan Perubahan</button>
+        </div>
+    </div>
+</div>
 
 <!-- MODAL FILTER -->
 <div class="popup-overlay" id="filterModalOverlay">
@@ -1553,7 +1690,7 @@
             <input type="month" id="filterMonthInput" style="font-size: 1.05rem; padding: 12px;">
         </div>
         <div style="display: flex; gap: 12px;">
-            <button type="button" id="btnResetFilter" style="background: rgba(244, 63, 94, 0.2); border: 1.5px solid rgba(244, 63, 94, 0.6); color: #fb7185; flex: 1; padding: 12px; border-radius: 12px; font-weight: 800; cursor:pointer;">Reset</button>
+            <button type="button" id="btnResetFilter" style="background: rgba(244, 63, 94, 0.2); border: 1.5px solid rgba(244, 63, 94, 0.6); color: #fb7185; flex: 1; padding: 12px; border-radius: 12px; font-weight: 800; cursor:pointer;" title="Tampilkan Semua Data">Semua Data</button>
             <button type="button" id="btnApplyFilter" style="background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%); border: none; color: #020714; flex: 2; padding: 12px; border-radius: 12px; font-weight: 900; cursor:pointer;">Terapkan</button>
         </div>
     </div>
@@ -1563,7 +1700,6 @@
 <div class="container" id="mainAppContainer">
     <button type="button" class="install-app-btn" id="btnInstallApp">⚡ INSTAL APLIKASI</button>
 
-    <!-- Header dengan Tulisan VENUS STUDIO & Kotak CYBER VAULT Utama -->
     <div class="header-box">
         <div class="brand-top-header">
             <span class="brand-studio-title">VENUS STUDIO</span>
@@ -1575,24 +1711,22 @@
         </div>
     </div>
 
-    <!-- TOMBOL PLAYLIST MUSIC DI HALAMAN UTAMA -->
     <div class="music-player-panel" id="openMusicModalPanel" title="Ketuk untuk membuka Playlist Music">
         <h2 class="title-music-box">PLAYLIST MUSIC</h2>
     </div>
 </div>
 
-<!-- MODAL NOTIFIKASI -->
+<!-- MODAL NOTIFIKASI TRANSAKSI BERHASIL & SUARA -->
 <div class="popup-overlay" id="popupNotification">
     <div class="popup-box">
         <div class="popup-icon" id="popupIcon">✓</div>
-        <div class="popup-title" id="popupTitle">Selesai</div>
+        <div class="popup-title" id="popupTitle">Berhasil!</div>
         <div class="popup-subtitle" id="popupSubtitle">Transaksi berhasil dicatat</div>
         <button type="button" class="popup-btn" id="popupCloseBtn">OK</button>
     </div>
 </div>
 
 <script>
-    /* AUDIO TRANSISI & VOICE GREETING OTOMATIS */
     function playDramaticTransitionSound() {
         try {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -1618,6 +1752,32 @@
         } catch (e) {}
     }
 
+    function playCashSound() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+            if (ctx.state === 'suspended') ctx.resume();
+
+            const now = ctx.currentTime;
+            [987.77, 1318.51, 1567.98].forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+                
+                gain.gain.setValueAtTime(0.01, now + idx * 0.08);
+                gain.gain.linearRampToValueAtTime(0.3, now + idx * 0.08 + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.4);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now + idx * 0.08);
+                osc.stop(now + idx * 0.08 + 0.4);
+            });
+        } catch (e) {}
+    }
+
     const btnTapHere = document.getElementById('btnTapHere');
     const splashScreenOverlay = document.getElementById('splashScreenOverlay');
     const pinScreenOverlay = document.getElementById('pinScreenOverlay');
@@ -1629,6 +1789,13 @@
     window.addEventListener('DOMContentLoaded', () => {
         initIndexedDB();
         
+        const savedOpacity = localStorage.getItem('cyber_glass_opacity');
+        if (savedOpacity) {
+            document.documentElement.style.setProperty('--glass-alpha', (savedOpacity / 100).toFixed(2));
+            document.getElementById('glassOpacitySlider').value = savedOpacity;
+            document.getElementById('opacityValText').innerText = savedOpacity + '%';
+        }
+
         const isLogged = sessionStorage.getItem('venus_is_logged') === 'true';
         const activeModal = sessionStorage.getItem('venus_active_modal');
 
@@ -1678,15 +1845,12 @@
         }
     }
 
-    /* ALUR 1 KE ALUR 2: TOMBOL TAP HERE DIKLIK */
     if (btnTapHere) {
         btnTapHere.addEventListener('click', () => {
             playDramaticTransitionSound();
-            
             if (splashScreenOverlay) {
                 splashScreenOverlay.classList.add('hidden');
             }
-
             setTimeout(() => {
                 if (pinScreenOverlay) {
                     pinScreenOverlay.classList.add('active');
@@ -1695,7 +1859,6 @@
         });
     }
 
-    /* ALUR 2 KE ALUR 3: CEK KODE PIN AKSES DENGAN TRANSISI KEREN */
     const CORRECT_PIN = "040698"; 
     let enteredPin = "";
     const pinBoxes = document.querySelectorAll('.pin-box');
@@ -1747,16 +1910,12 @@
     function verifyPin() {
         if (enteredPin === CORRECT_PIN) {
             playSuccessSound();
-            
-            // Aktifkan Efek Transisi Pemindaian Sci-Fi & Meredupkan Layar PIN
             cyberScannerFlash.classList.add('active');
             pinScreenOverlay.classList.add('hidden');
 
             setTimeout(() => {
-                // Tampilkan halaman utama Venus Studio (hanya judul menu luar) dengan animasi smooth
                 mainAppContainer.classList.add('active');
                 updateUI();
-
                 sessionStorage.setItem('venus_is_logged', 'true');
                 sessionStorage.setItem('venus_active_modal', 'none');
             }, 350);
@@ -1791,7 +1950,6 @@
         } catch (e) {}
     }
 
-    /* TOGGLE MODAL CYBER VAULT & PEMUTAR MUSIK */
     const toggleAppViewBtn = document.getElementById('toggleAppViewBtn');
     const closeCyberModalBtn = document.getElementById('closeCyberModalBtn');
 
@@ -1819,7 +1977,6 @@
         sessionStorage.setItem('venus_active_modal', 'none');
     });
 
-    /* INDEXEDDB UNTUK MENYIMPAN AUDIO & FITUR BACKUP/RESTORE MUSIK */
     let db = null;
     let playlist = [];
     let currentTrackIndex = -1;
@@ -1920,7 +2077,6 @@
         };
     }
 
-    /* FITUR BACKUP & PULIHLAH PLAYLIST MUSIK */
     document.getElementById('btnExportMusic').addEventListener('click', () => {
         if (!db) return;
         const transaction = db.transaction(['songs'], 'readonly');
@@ -2154,11 +2310,16 @@
         return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     }
 
-    /* SCRIPT KEUANGAN LAINNYA */
     const typeSelect = document.getElementById('type');
     const paymentMethodGroup = document.getElementById('paymentMethodGroup');
     typeSelect.addEventListener('change', () => {
         paymentMethodGroup.style.display = (typeSelect.value === 'out') ? 'flex' : 'none';
+    });
+
+    const editTypeSelect = document.getElementById('editType');
+    const editMethodGroup = document.getElementById('editMethodGroup');
+    editTypeSelect.addEventListener('change', () => {
+        editMethodGroup.style.display = (editTypeSelect.value === 'out') ? 'flex' : 'none';
     });
 
     const glassOpacitySlider = document.getElementById('glassOpacitySlider');
@@ -2170,23 +2331,33 @@
     });
 
     let transactions = JSON.parse(localStorage.getItem('my_transactions')) || [];
-    let currentFilterMonth = "";
+    
+    // DEFAULT OTOMATIS REAL-TIME BULAN & TAHUN SEKARANG
+    const currentRealTimeYM = new Date().toISOString().slice(0, 7);
+    let currentFilterMonth = currentRealTimeYM;
 
     const openFilterModalBtn = document.getElementById('openFilterModalBtn');
     const filterModalOverlay = document.getElementById('filterModalOverlay');
     const closeFilterModalBtn = document.getElementById('closeFilterModalBtn');
-    openFilterModalBtn.addEventListener('click', () => filterModalOverlay.classList.add('active'));
+    const filterBadgeIndicator = document.getElementById('filterBadgeIndicator');
+    const filterMonthInput = document.getElementById('filterMonthInput');
+
+    openFilterModalBtn.addEventListener('click', () => {
+        filterMonthInput.value = currentFilterMonth;
+        filterModalOverlay.classList.add('active');
+    });
+
     closeFilterModalBtn.addEventListener('click', () => filterModalOverlay.classList.remove('active'));
 
     document.getElementById('btnApplyFilter').addEventListener('click', () => {
-        currentFilterMonth = document.getElementById('filterMonthInput').value;
+        currentFilterMonth = filterMonthInput.value;
         filterModalOverlay.classList.remove('active');
         updateUI();
     });
 
     document.getElementById('btnResetFilter').addEventListener('click', () => {
-        currentFilterMonth = "";
-        document.getElementById('filterMonthInput').value = "";
+        currentFilterMonth = ""; // Kosongkan untuk menampilkan SEMUA DATA
+        filterMonthInput.value = "";
         filterModalOverlay.classList.remove('active');
         updateUI();
     });
@@ -2200,13 +2371,27 @@
         this.value = rawValue ? parseInt(rawValue, 10).toLocaleString('id-ID') : '';
     });
 
+    document.getElementById('editAmount').addEventListener('input', function() {
+        let rawValue = this.value.replace(/\D/g, '');
+        this.value = rawValue ? parseInt(rawValue, 10).toLocaleString('id-ID') : '';
+    });
+
+    function formatMonthName(yearMonthStr) {
+        if (!yearMonthStr) return "Semua Data";
+        const [year, month] = yearMonthStr.split('-');
+        const dateObj = new Date(year, month - 1, 1);
+        return dateObj.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+    }
+
     function updateUI() {
         const historyList = document.getElementById('historyList');
         historyList.innerHTML = '';
         let filtered = currentFilterMonth ? transactions.filter(t => t.date && t.date.startsWith(currentFilterMonth)) : transactions;
 
+        filterBadgeIndicator.innerText = formatMonthName(currentFilterMonth);
+
         if (filtered.length === 0) {
-            historyList.innerHTML = '<li style="text-align:center; color:#a5f3fc; font-size:0.82rem; padding:20px 0;">Tidak ada transaksi</li>';
+            historyList.innerHTML = '<li style="text-align:center; color:#a5f3fc; font-size:0.9rem; padding:20px 0;">Tidak ada transaksi</li>';
         } else {
             filtered.sort((a, b) => new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`)).forEach(t => {
                 const li = document.createElement('li');
@@ -2218,6 +2403,7 @@
                     </div>
                     <span class="item-amount ${t.type === 'in' ? 'amount-in' : 'amount-out'}">${t.type === 'in' ? '+' : '-'} ${formatRupiah(t.amount)}</span>
                 `;
+                li.addEventListener('click', () => openDetailModal(t.id));
                 historyList.appendChild(li);
             });
         }
@@ -2230,7 +2416,91 @@
         localStorage.setItem('my_transactions', JSON.stringify(transactions));
     }
 
-    document.getElementById('transactionForm').addEventListener('submit', function(e) {
+    /* LOGIKA MODAL DETAIL / EDIT / HAPUS TRANSAKSI */
+    const detailTransactionModal = document.getElementById('detailTransactionModal');
+    const closeDetailModalBtn = document.getElementById('closeDetailModalBtn');
+    const editTxId = document.getElementById('editTxId');
+    const editType = document.getElementById('editType');
+    const editAmount = document.getElementById('editAmount');
+    const editDescription = document.getElementById('editDescription');
+    const editDate = document.getElementById('editDate');
+    const editTime = document.getElementById('editTime');
+    const editMethod = document.getElementById('editMethod');
+
+    function openDetailModal(id) {
+        const tx = transactions.find(t => t.id === id);
+        if (!tx) return;
+
+        editTxId.value = tx.id;
+        editType.value = tx.type;
+        editAmount.value = tx.amount.toLocaleString('id-ID');
+        editDescription.value = tx.description;
+        editDate.value = tx.date;
+        editTime.value = tx.time;
+        
+        if (tx.type === 'out' && tx.method) {
+            editMethodGroup.style.display = 'flex';
+            editMethod.value = tx.method;
+        } else {
+            editMethodGroup.style.display = 'none';
+        }
+
+        detailTransactionModal.classList.add('active');
+    }
+
+    closeDetailModalBtn.addEventListener('click', () => {
+        detailTransactionModal.classList.remove('active');
+    });
+
+    document.getElementById('btnUpdateTransaction').addEventListener('click', () => {
+        const id = parseInt(editTxId.value);
+        const type = editType.value;
+        const amount = parseFloat(editAmount.value.replace(/\./g, ''));
+        const description = editDescription.value;
+        const date = editDate.value;
+        const time = editTime.value;
+        const method = (type === 'out') ? editMethod.value : null;
+
+        if (!amount || isNaN(amount) || !description || !date || !time) {
+            alert('Semua kolom harus diisi dengan benar!');
+            return;
+        }
+
+        const index = transactions.findIndex(t => t.id === id);
+        if (index !== -1) {
+            transactions[index] = { id, type, amount, description, date, time, method };
+            updateUI();
+            detailTransactionModal.classList.remove('active');
+            playCashSound();
+        }
+    });
+
+    document.getElementById('btnDeleteTransaction').addEventListener('click', () => {
+        const id = parseInt(editTxId.value);
+        if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
+            transactions = transactions.filter(t => t.id !== id);
+            updateUI();
+            detailTransactionModal.classList.remove('active');
+        }
+    });
+
+    const transactionForm = document.getElementById('transactionForm');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const btnText = document.getElementById('btnText');
+    const popupNotification = document.getElementById('popupNotification');
+    const popupTitle = document.getElementById('popupTitle');
+    const popupSubtitle = document.getElementById('popupSubtitle');
+
+    const formInputs = transactionForm.querySelectorAll('input, select');
+    formInputs.forEach(element => {
+        element.addEventListener('focus', function() {
+            setTimeout(() => {
+                this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        });
+    });
+
+    transactionForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const type = document.getElementById('type').value;
         const amount = parseFloat(document.getElementById('amount').value.replace(/\./g, ''));
@@ -2241,14 +2511,36 @@
 
         if (!amount || isNaN(amount) || !description || !date || !time) return;
 
-        transactions.push({ id: Date.now(), type, amount, description, date, time, method });
-        updateUI();
-        this.reset();
-        document.getElementById('popupNotification').classList.add('active');
+        btnSubmit.disabled = true;
+        btnText.innerHTML = '<span class="btn-spinner"></span> Memproses...';
+
+        setTimeout(() => {
+            transactions.push({ id: Date.now(), type, amount, description, date, time, method });
+            updateUI();
+            transactionForm.reset();
+            
+            const freshNow = new Date();
+            document.getElementById('inputDate').value = freshNow.toISOString().slice(0,10);
+            document.getElementById('inputTime').value = String(freshNow.getHours()).padStart(2,'0') + ':' + String(freshNow.getMinutes()).padStart(2,'0');
+
+            btnSubmit.disabled = false;
+            btnText.innerText = 'Tambah Transaksi';
+
+            playCashSound();
+
+            if (type === 'in') {
+                popupTitle.innerText = "Pemasukan Masuk!";
+                popupSubtitle.innerText = `Berhasil mencatat ${description} (+${formatRupiah(amount)})`;
+            } else {
+                popupTitle.innerText = "Pengeluaran Dicatat!";
+                popupSubtitle.innerText = `Berhasil mencatat ${description} (-${formatRupiah(amount)})`;
+            }
+            popupNotification.classList.add('active');
+        }, 500);
     });
 
     document.getElementById('popupCloseBtn').addEventListener('click', () => {
-        document.getElementById('popupNotification').classList.remove('active');
+        popupNotification.classList.remove('active');
     });
 
     const now = new Date();
