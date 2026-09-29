@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#020714">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Cyber Vault">
+    <meta name="apple-mobile-web-app-title" content="VENUS STUDIO">
     <link rel="manifest" href="manifest.json">
 
     <!-- Mencegah Cache Browser -->
@@ -63,6 +63,137 @@
             
             --glass-alpha: 0.28;
             --glass-blur: 16px;
+        }
+
+        /* SPLASH SCREEN CUSTOM ANIMASI LATAR BELAKANG */
+        .splash-screen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            height: 100dvh;
+            background: radial-gradient(circle at 50% 50%, #061838 0%, #020714 70%, #01040a 100%);
+            z-index: 9999999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .splash-screen-overlay.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Gelombang Radar Animasi di Background Splash */
+        .splash-radar-wave {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+            animation: radarExpand 4s infinite linear;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .splash-radar-wave:nth-child(2) {
+            animation-delay: 2s;
+        }
+
+        @keyframes radarExpand {
+            0% { transform: scale(0.3); opacity: 1; }
+            100% { transform: scale(2.8); opacity: 0; }
+        }
+
+        .splash-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            max-width: 340px;
+            z-index: 5;
+            position: relative;
+        }
+
+        .splash-logo-glow {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: rgba(0, 240, 255, 0.1);
+            border: 2px solid var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--accent-cyan);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+            animation: logoFloat 2s infinite alternate ease-in-out;
+            margin-bottom: 6px;
+        }
+
+        .splash-welcome-top {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 5px;
+            color: #7dd3fc;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+
+        .splash-title-large {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 8vw, 2.8rem);
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 240, 255, 0.85);
+            margin-bottom: 10px;
+        }
+
+        .tap-here-btn {
+            margin-top: 18px;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15) 0%, rgba(0, 119, 255, 0.25) 100%);
+            border: 1.5px solid rgba(0, 240, 255, 0.7);
+            color: #00f0ff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            padding: 12px 32px;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            animation: tapPulse 1.5s infinite ease-in-out;
+        }
+
+        .tap-here-btn:active {
+            transform: scale(0.95);
+            background: rgba(0, 240, 255, 0.35);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.8);
+        }
+
+        @keyframes tapPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 240, 255, 0.6); }
+        }
+
+        @keyframes logoFloat {
+            0% { transform: translateY(0); box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+            100% { transform: translateY(-8px); box-shadow: 0 0 40px rgba(0, 240, 255, 0.9); }
         }
 
         .tech-bg-container {
@@ -1206,6 +1337,23 @@
 </head>
 <body>
 
+<!-- SPLASH SCREEN PEMBUKA DENGAN ANIMASI LATAR RADAR & PARTIKEL -->
+<div class="splash-screen-overlay" id="splashScreenOverlay">
+    <div class="splash-radar-wave"></div>
+    <div class="splash-radar-wave"></div>
+    
+    <div class="splash-content">
+        <div class="splash-logo-glow">⚡</div>
+        <div class="splash-welcome-top">WELCOME TO</div>
+        <div class="splash-title-large">VENUS STUDIO</div>
+        
+        <!-- Tombol Tap Here -->
+        <button type="button" class="tap-here-btn" id="btnTapHere">
+            TAP HERE
+        </button>
+    </div>
+</div>
+
 <!-- SCREEN LOCK PIN AKSES -->
 <div class="pin-screen-overlay" id="pinScreenOverlay">
     <div class="pin-card">
@@ -1508,6 +1656,81 @@
 </div>
 
 <script>
+    /* 
+      SEAMLESS DRAMATIC/ELEGANT AUDIO ENGINE:
+      Menghasilkan efek transisi suara sci-fi sinematik yang mengalir langsung saat "TAP HERE" ditekan 
+      menuju layar input PIN keamanan.
+    */
+    function playDramaticTransitionSound() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+
+            const now = ctx.currentTime;
+            
+            // 1. Efek swoosh / warp sinematik awal
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(150, now);
+            osc.frequency.exponentialRampToValueAtTime(800, now + 0.4);
+
+            gain.gain.setValueAtTime(0.01, now);
+            gain.gain.linearRampToValueAtTime(0.35, now + 0.2);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.6);
+
+            // 2. Efek nada elegan/chime penyambung ke keypad PIN
+            [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+                const subOsc = ctx.createOscillator();
+                const subGain = ctx.createGain();
+                subOsc.type = 'triangle';
+                subOsc.frequency.setValueAtTime(freq, now + 0.4 + (idx * 0.08));
+
+                subGain.gain.setValueAtTime(0.01, now + 0.4 + (idx * 0.08));
+                subGain.gain.exponentialRampToValueAtTime(0.4, now + 0.4 + (idx * 0.08) + 0.02);
+                subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4 + (idx * 0.08) + 0.35);
+
+                subOsc.connect(subGain);
+                subGain.connect(ctx.destination);
+
+                subOsc.start(now + 0.4 + (idx * 0.08));
+                subOsc.stop(now + 0.4 + (idx * 0.08) + 0.35);
+            });
+        } catch (e) {}
+    }
+
+    function speakWelcomeGreeting() {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance("Welcome to Venus Studio. Tap here to login.");
+            utterance.lang = 'en-US';
+            utterance.rate = 0.95;
+            utterance.pitch = 1.0;
+            window.speechSynthesis.speak(utterance);
+        }
+    }
+
+    /* LOGIKA KLIK TOMBOL TAP HERE UNTUK MASUK KE SECURITY ACCESS (PIN) */
+    const btnTapHere = document.getElementById('btnTapHere');
+    const splashScreenOverlay = document.getElementById('splashScreenOverlay');
+
+    if (btnTapHere) {
+        btnTapHere.addEventListener('click', () => {
+            speakWelcomeGreeting(); 
+            playDramaticTransitionSound(); // Sound effect dramatis & elegan mengalir ke layar PIN
+            
+            if (splashScreenOverlay) {
+                splashScreenOverlay.classList.add('fade-out');
+            }
+        });
+    }
+
     /* SCRIPT INSTALASI PWA */
     let deferredPrompt;
     const btnInstallApp = document.getElementById('btnInstallApp');
@@ -1530,10 +1753,10 @@
 
     window.addEventListener('appinstalled', () => {
         btnInstallApp.style.display = 'none';
-        showCustomNotification("Terinstal", "Cyber Vault berhasil diinstal di perangkat Anda!");
+        showCustomNotification("Terinstal", "Venus Studio berhasil diinstal di perangkat Anda!");
     });
 
-    /* LOGIKA PIN AKSES & KEYPAD ON-SCREEN */
+    /* LOGIKA PIN AKSES & KEYPAD ON-SCREEN (TANPA DELAY) */
     const CORRECT_PIN = "040698"; 
     let enteredPin = "";
 
@@ -1592,7 +1815,7 @@
             pinErrorMsg.innerText = "PIN Salah! Silakan coba lagi.";
             setTimeout(() => {
                 clearAllPin();
-            }, 600);
+            }, 300);
         }
     }
 
@@ -2135,7 +2358,7 @@
         });
 
         const backupData = {
-            app: "CYBER_VAULT",
+            app: "VENUS_STUDIO",
             version: "1.0",
             timestamp: new Date().toISOString(),
             lastFormattedTime: timestamp,
@@ -2218,7 +2441,7 @@
         const now = new Date();
         const dateStr = now.toISOString().slice(0,10);
         const backupData = {
-            app: "CYBER_VAULT",
+            app: "VENUS_STUDIO",
             exportDate: now.toISOString(),
             totalRecords: transactions.length,
             transactions: transactions
@@ -2230,7 +2453,7 @@
 
         const a = document.createElement('a');
         a.href = url;
-        a.download = `CyberVault_Backup_${dateStr}.json`;
+        a.download = `VenusStudio_Backup_${dateStr}.json`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
