@@ -65,51 +65,62 @@
             --glass-blur: 16px;
         }
 
-        /* SPLASH SCREEN CUSTOM ANIMASI LATAR BELAKANG */
+        /* TAHAP 1: SPLASH SCREEN FULL LAYAR */
         .splash-screen-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             height: 100dvh;
-            background: radial-gradient(circle at 50% 50%, #061838 0%, #020714 70%, #01040a 100%);
-            z-index: 9999999;
+            background: linear-gradient(rgba(2, 7, 20, 0.88), rgba(2, 7, 20, 0.96)), url('bg-splash.jpg') no-repeat center center;
+            background-size: cover;
+            z-index: 99999999;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
             overflow: hidden;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
 
-        .splash-screen-overlay.fade-out {
+        .splash-screen-overlay.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
+            display: none !important;
         }
 
-        /* Gelombang Radar Animasi di Background Splash */
-        .splash-radar-wave {
+        .splash-pulse-line {
             position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            border: 1.5px solid rgba(0, 240, 255, 0.3);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
-            animation: radarExpand 4s infinite linear;
+            top: 0;
+            left: -100%;
+            width: 300%;
+            height: 100%;
             pointer-events: none;
             z-index: 1;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.15) 0%, transparent 60%);
+            animation: pulseGlowMove 6s infinite linear;
         }
 
-        .splash-radar-wave:nth-child(2) {
-            animation-delay: 2s;
+        @keyframes pulseGlowMove {
+            0% { transform: translateX(0) scale(1); opacity: 0.6; }
+            50% { transform: translateX(15%) scale(1.08); opacity: 1; }
+            100% { transform: translateX(0) scale(1); opacity: 0.6; }
         }
 
-        @keyframes radarExpand {
-            0% { transform: scale(0.3); opacity: 1; }
-            100% { transform: scale(2.8); opacity: 0; }
+        .splash-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(white 1px, transparent 0);
+            background-size: 40px 40px;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 1;
         }
 
         .splash-content {
@@ -196,120 +207,42 @@
             100% { transform: translateY(-8px); box-shadow: 0 0 40px rgba(0, 240, 255, 0.9); }
         }
 
-        .tech-bg-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
-            background: radial-gradient(circle at 50% 50%, #061838 0%, #020817 65%, #01040a 100%);
-        }
-
-        #circuitCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .cyber-vignette {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            background: radial-gradient(circle at 50% 50%, transparent 30%, rgba(1, 4, 12, 0.65) 100%);
-            pointer-events: none;
-        }
-
-        .container {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 440px;
-            margin: 0 auto;
-            background: rgba(2, 10, 28, var(--glass-alpha));
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            border-radius: 20px;
-            border: 1px solid rgba(0, 240, 255, 0.35);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 
-                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
-            padding: 20px 14px;
-            animation: containerAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            transition: background 0.2s ease, backdrop-filter 0.2s ease;
-        }
-
-        /* TOMBOL INSTAL APLIKASI */
-        .install-app-btn {
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.2) 0%, rgba(0, 119, 255, 0.2) 100%);
-            border: 1px solid rgba(0, 240, 255, 0.6);
-            color: #00f0ff;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 800;
-            padding: 8px 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            margin: 0 auto 14px auto;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-            transition: all 0.2s ease;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .install-app-btn:active {
-            transform: scale(0.95);
-            background: rgba(0, 240, 255, 0.4);
-        }
-
-        /* LAYAR LOCK SCREEN PIN */
+        /* TAHAP 2: LAYAR KODE AKSES PIN (DISEMBUNYIKAN DI AWAL) */
         .pin-screen-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             height: 100dvh;
-            background: rgba(2, 7, 20, 0.95);
+            background: rgba(2, 7, 20, 0.98);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            z-index: 999999;
-            display: flex;
+            z-index: 9999990;
+            display: none; /* Disembunyikan total sebelum tombol diklik */
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
 
-        .pin-screen-overlay.unlocked {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+        .pin-screen-overlay.active {
+            display: flex !important;
+        }
+
+        .pin-screen-overlay.hidden {
+            display: none !important;
         }
 
         .pin-card {
             width: 100%;
             max-width: 360px;
-            background: rgba(3, 14, 38, 0.85);
+            background: rgba(3, 14, 38, 0.95);
             border: 1.5px solid rgba(0, 240, 255, 0.5);
             border-radius: 24px;
             padding: 28px 20px;
             text-align: center;
-            box-shadow: 0 0 40px rgba(0, 240, 255, 0.25);
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -365,8 +298,6 @@
             align-items: center;
             justify-content: center;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-            transition: all 0.2s ease;
-            cursor: pointer;
         }
 
         .pin-box.active {
@@ -385,7 +316,6 @@
             font-size: 0.75rem;
             font-weight: 700;
             min-height: 18px;
-            letter-spacing: 0.5px;
         }
 
         .on-screen-keypad {
@@ -418,7 +348,6 @@
             background: rgba(0, 240, 255, 0.3);
             border-color: #00f0ff;
             transform: scale(0.95);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
         }
 
         .keypad-btn.action-btn {
@@ -426,9 +355,87 @@
             color: #7dd3fc;
         }
 
+        .tech-bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, #061838 0%, #020817 65%, #01040a 100%);
+        }
+
+        #circuitCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .cyber-vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: radial-gradient(circle at 50% 50%, transparent 30%, rgba(1, 4, 12, 0.65) 100%);
+            pointer-events: none;
+        }
+
+        /* TAHAP 3: KONTEN UTAMA WEB (DISEMBUNYIKAN SEBELUM PIN BENAR) */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+            background: rgba(2, 10, 28, var(--glass-alpha));
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-radius: 20px;
+            border: 1px solid rgba(0, 240, 255, 0.35);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            padding: 20px 14px;
+            display: none; /* Disembunyikan total sampai PIN benar */
+            animation: containerAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .container.active {
+            display: flex !important;
+            flex-direction: column;
+        }
+
         @keyframes containerAppear {
             from { opacity: 0; transform: translateY(16px) scale(0.98); }
             to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .install-app-btn {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.2) 0%, rgba(0, 119, 255, 0.2) 100%);
+            border: 1px solid rgba(0, 240, 255, 0.6);
+            color: #00f0ff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 8px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin: 0 auto 14px auto;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .header-box {
@@ -471,15 +478,7 @@
             justify-content: space-between;
             gap: 6px;
             cursor: pointer;
-            transition: all 0.25s ease;
-            overflow: hidden;
             width: 100%;
-        }
-
-        .music-player-panel:hover {
-            background: rgba(0, 240, 255, 0.15);
-            border-color: rgba(0, 240, 255, 0.6);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
         }
 
         .music-label {
@@ -498,14 +497,7 @@
             width: 14px;
             height: 14px;
             fill: #00f0ff;
-            filter: drop-shadow(0 0 4px #00f0ff);
             flex-shrink: 0;
-        }
-
-        .music-label span#musicTrackName {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .music-controls-group {
@@ -524,17 +516,7 @@
             padding: 6px 8px;
             border-radius: 8px;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            white-space: nowrap;
-            transition: all 0.2s ease;
             height: 34px;
-        }
-
-        .btn-music-action:active {
-            transform: scale(0.95);
         }
 
         .btn-music-skip {
@@ -548,21 +530,13 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s ease;
-            box-shadow: 0 0 6px rgba(0, 240, 255, 0.2);
             flex-shrink: 0;
-        }
-
-        .btn-music-skip:active {
-            transform: scale(0.92);
-            background: rgba(0, 240, 255, 0.2);
         }
 
         .btn-music-skip svg {
             width: 14px;
             height: 14px;
             fill: #00f0ff;
-            display: block;
         }
 
         .btn-music-play {
@@ -576,30 +550,13 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
-            transition: all 0.2s ease;
             flex-shrink: 0;
-        }
-
-        .btn-music-play:active {
-            transform: scale(0.95);
-        }
-
-        .btn-music-play span#musicBtnIcon,
-        .btn-music-play span#modalPlayIcon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 14px;
-            height: 14px;
         }
 
         .btn-music-play svg {
             width: 14px;
             height: 14px;
             fill: #020714;
-            display: block;
-            flex-shrink: 0;
         }
 
         .music-modal-overlay {
@@ -608,9 +565,8 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            height: 100dvh;
             background: #020714;
-            z-index: 99999;
+            z-index: 99999999;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -618,8 +574,7 @@
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            overflow-y: auto;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.3s ease;
         }
 
         .music-modal-overlay.active {
@@ -635,22 +590,12 @@
             padding: 26px 20px;
             width: 100%;
             max-width: 380px;
-            max-height: 90vh;
-            overflow-y: auto;
             text-align: center;
-            box-shadow: 0 0 70px rgba(0, 240, 255, 0.4);
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 16px;
-            margin: auto;
-            transform: translateY(20px) scale(0.95);
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-        }
-
-        .music-modal-overlay.active .music-modal-card {
-            transform: translateY(0) scale(1);
         }
 
         .close-music-modal {
@@ -660,53 +605,24 @@
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(0, 240, 255, 0.3);
             color: #7dd3fc;
-            font-size: 1.1rem;
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .close-music-modal:active {
-            transform: scale(0.9);
-            background: rgba(244, 63, 94, 0.2);
-            color: #fb7185;
         }
 
         .vinyl-container {
             width: 130px;
             height: 130px;
             border-radius: 50%;
-            background: repeating-radial-gradient(
-                circle,
-                #030c1d 0px,
-                #030c1d 8px,
-                #00f0ff 9px,
-                #020714 10px,
-                #061838 18px
-            );
+            background: repeating-radial-gradient(circle, #030c1d 0px, #030c1d 8px, #00f0ff 9px, #020714 10px, #061838 18px);
             border: 3px solid #00f0ff;
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.9);
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            margin: 6px 0;
             animation: rotateVinyl 4s linear infinite;
             animation-play-state: paused;
-        }
-
-        .vinyl-container::after {
-            content: '';
-            position: absolute;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 2px dashed rgba(0, 240, 255, 0.6);
         }
 
         .vinyl-container.playing {
@@ -719,35 +635,11 @@
             border-radius: 50%;
             background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%);
             border: 2px solid #ffffff;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.9);
-            z-index: 2;
         }
 
         @keyframes rotateVinyl {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
-        }
-
-        .modal-track-title {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: #ffffff;
-            max-width: 90%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .modal-track-time {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #00f0ff;
-            margin-top: -10px;
         }
 
         .playlist-wrapper {
@@ -772,27 +664,11 @@
             padding: 8px 10px;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.15s ease;
         }
 
-        .playlist-item:hover, .playlist-item.active-track {
+        .playlist-item.active-track {
             background: rgba(0, 240, 255, 0.18);
             border-color: #00f0ff;
-        }
-
-        .playlist-item-name {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-align: left;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            flex: 1;
-            padding-right: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .playlist-delete-btn {
@@ -804,18 +680,6 @@
             border-radius: 6px;
             border: 1px solid rgba(0, 240, 255, 0.3);
             background: rgba(0, 240, 255, 0.1);
-            transition: all 0.15s ease;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .playlist-delete-btn:hover, .playlist-delete-btn:active {
-            background: rgba(0, 240, 255, 0.3);
-            border-color: #00f0ff;
-            box-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
-            color: #ffffff;
         }
 
         .glass-control-panel {
@@ -830,14 +694,6 @@
             gap: 10px;
         }
 
-        .glass-control-label {
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: #7dd3fc;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-        }
-
         .glass-slider-wrapper {
             display: flex;
             align-items: center;
@@ -847,25 +703,19 @@
 
         .glass-range-input {
             -webkit-appearance: none;
-            appearance: none;
             width: 100%;
             height: 6px;
             border-radius: 3px;
             background: rgba(0, 240, 255, 0.25);
             outline: none;
-            cursor: pointer;
-            padding: 0;
-            border: none;
         }
 
         .glass-range-input::-webkit-slider-thumb {
             -webkit-appearance: none;
-            appearance: none;
             width: 16px;
             height: 16px;
             border-radius: 50%;
             background: #00f0ff;
-            box-shadow: 0 0 8px #00f0ff;
             cursor: pointer;
         }
 
@@ -893,14 +743,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .backup-title-text {
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: #a5f3fc;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
         }
 
         .backup-status-tag {
@@ -931,13 +773,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
-        }
-
-        .backup-info-text {
-            font-size: 0.65rem;
-            color: #64748b;
-            text-align: center;
         }
 
         .dashboard {
@@ -948,15 +783,11 @@
         }
 
         .card-hero {
-            position: relative;
             background: rgba(0, 180, 255, calc(var(--glass-alpha) * 0.45 + 0.05));
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
             border: 1px solid rgba(0, 240, 255, 0.5);
             border-radius: 16px;
             padding: 16px 10px;
             text-align: center;
-            overflow: hidden;
         }
 
         .card-hero h4 {
@@ -972,9 +803,7 @@
             font-size: clamp(1.3rem, 4.5vw, 1.6rem);
             font-weight: 900;
             color: #ffffff;
-            letter-spacing: -0.5px;
             text-shadow: 0 2px 14px rgba(0, 240, 255, 0.8);
-            word-break: break-word;
         }
 
         .sub-dashboard {
@@ -987,15 +816,11 @@
             padding: 12px 8px;
             border-radius: 14px;
             text-align: center;
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            min-width: 0;
         }
 
         .card-sub h4 {
             font-size: 0.65rem;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
             font-weight: 800;
             margin-bottom: 4px;
         }
@@ -1003,7 +828,6 @@
         .card-sub p {
             font-size: clamp(0.8rem, 3.5vw, 0.92rem);
             font-weight: 800;
-            word-break: break-word;
         }
 
         .pemasukan {
@@ -1023,81 +847,39 @@
             flex-direction: column;
             gap: 12px;
             background: rgba(2, 10, 28, calc(var(--glass-alpha) * 0.7));
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
             padding: 16px 12px;
             border-radius: 16px;
             margin-bottom: 20px;
             border: 1px solid rgba(0, 240, 255, 0.3);
-            width: 100%;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
             gap: 6px;
-            min-width: 0;
-            width: 100%;
         }
 
         .datetime-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
-            width: 100%;
-            min-width: 0;
         }
 
         label {
             font-size: 0.75rem;
             font-weight: 700;
             color: #7dd3fc;
-            letter-spacing: 0.4px;
         }
 
         input, select, button {
-            padding: 10px 10px;
+            padding: 10px;
             border: 1px solid rgba(0, 240, 255, 0.35);
             border-radius: 10px;
             font-size: 0.85rem;
             outline: none;
-            background: rgba(2, 12, 32, calc(var(--glass-alpha) * 0.8 + 0.1));
+            background: rgba(2, 12, 32, 0.8);
             color: #ffffff;
-            touch-action: manipulation;
             width: 100%;
-            box-sizing: border-box;
-            min-width: 0;
-        }
-
-        input[type="date"],
-        input[type="time"],
-        input[type="month"] {
-            -webkit-appearance: none;
-            appearance: none;
-            font-size: 0.85rem;
-            padding: 10px;
-        }
-
-        input[type="date"]::-webkit-calendar-picker-indicator,
-        input[type="time"]::-webkit-calendar-picker-indicator,
-        input[type="month"]::-webkit-calendar-picker-indicator {
-            filter: invert(0.9) sepia(0.3) saturate(3) hue-rotate(170deg);
-            cursor: pointer;
-            margin-left: 2px;
-            padding: 0;
-            width: 16px;
-            height: 16px;
-        }
-
-        select option {
-            background-color: #030a1a;
-            color: #ffffff;
-        }
-
-        input:focus, select:focus {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
-            background: rgba(3, 16, 42, 0.65);
         }
 
         button[type="submit"] {
@@ -1106,37 +888,12 @@
             font-weight: 800;
             border: 1px solid rgba(0, 240, 255, 0.5);
             cursor: pointer;
-            margin-top: 4px;
             padding: 12px;
-            font-size: 0.9rem;
             border-radius: 10px;
-            box-shadow: 0 4px 16px rgba(0, 150, 255, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        @keyframes cyberSpinner {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .spinner-icon {
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top: 2px solid #00f0ff;
-            border-radius: 50%;
-            animation: cyberSpinner 0.8s linear infinite;
-            display: inline-block;
-        }
-
-        button[type="submit"]:disabled {
-            opacity: 0.75;
-            cursor: not-allowed;
-            background: linear-gradient(135deg, rgba(0, 100, 180, 0.8) 0%, rgba(0, 50, 150, 0.8) 100%);
         }
 
         .history-title-wrapper {
@@ -1149,19 +906,12 @@
             border-radius: 8px;
             background: rgba(0, 240, 255, 0.05);
             border: 1px solid rgba(0, 240, 255, 0.2);
-            transition: all 0.2s ease;
-        }
-
-        .history-title-wrapper:hover {
-            background: rgba(0, 240, 255, 0.12);
-            border-color: rgba(0, 240, 255, 0.5);
         }
 
         .history-title {
             font-size: 0.95rem;
-            color: var(--text-light);
+            color: #fff;
             font-weight: 800;
-            letter-spacing: 0.4px;
             margin: 0;
         }
 
@@ -1179,7 +929,6 @@
             list-style: none;
             max-height: 250px;
             overflow-y: auto;
-            padding-right: 2px;
         }
 
         .history-item {
@@ -1187,13 +936,11 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 10px;
-            background: rgba(2, 12, 32, calc(var(--glass-alpha) * 0.8 + 0.08));
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
+            background: rgba(2, 12, 32, 0.8);
             border: 1px solid rgba(0, 212, 255, 0.25);
             margin-bottom: 8px;
             border-radius: 12px;
-            border-left: 4px solid var(--text-muted);
+            border-left: 4px solid #a5f3fc;
             cursor: pointer;
         }
 
@@ -1204,25 +951,18 @@
             display: flex;
             flex-direction: column;
             gap: 2px;
-            min-width: 0;
             flex-grow: 1;
-            padding-right: 8px;
         }
 
         .item-desc {
             font-weight: 700;
             font-size: 0.85rem;
-            color: #ffffff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            color: #fff;
         }
 
         .item-date {
             font-size: 0.7rem;
             color: #38bdf8;
-            font-weight: 600;
-            white-space: nowrap;
         }
 
         .item-method-badge {
@@ -1239,31 +979,20 @@
         .item-amount {
             font-weight: 800;
             font-size: 0.88rem;
-            white-space: nowrap;
         }
 
         .amount-in { color: #34d399; }
         .amount-out { color: #fb7185; }
 
-        .empty-state {
-            text-align: center;
-            color: #a5f3fc;
-            font-size: 0.82rem;
-            padding: 20px 0;
-            font-style: italic;
-        }
-
         .popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            height: 100dvh;
-            background: rgba(1, 4, 12, 0.82);
+            width: 100vw;
+            height: 100vh;
+            background: rgba(1, 4, 12, 0.85);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 100;
+            z-index: 99999999;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -1280,15 +1009,12 @@
 
         .popup-box {
             background: rgba(3, 14, 38, 0.95);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             border: 1.5px solid rgba(0, 240, 255, 0.6);
             border-radius: 22px;
             padding: 24px 18px;
             width: 100%;
             max-width: 340px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1306,55 +1032,49 @@
             align-items: center;
             justify-content: center;
             font-size: 1.8rem;
-            font-weight: bold;
         }
 
         .popup-title {
             font-size: 1.4rem;
             font-weight: 900;
-            color: #ffffff;
-            text-transform: uppercase;
+            color: #fff;
         }
 
         .popup-subtitle {
             font-size: 0.85rem;
             color: #a5f3fc;
-            margin-top: -4px;
         }
 
         .popup-btn {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: #ffffff;
+            color: #fff;
             font-weight: 800;
             border: none;
             padding: 10px 32px;
             border-radius: 12px;
-            font-size: 0.9rem;
-            margin-top: 6px;
             cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<!-- SPLASH SCREEN PEMBUKA DENGAN ANIMASI LATAR RADAR & PARTIKEL -->
-<div class="splash-screen-overlay" id="splashScreenOverlay">
-    <div class="splash-radar-wave"></div>
-    <div class="splash-radar-wave"></div>
-    
+<!-- TAHAP 1: SPLASH SCREEN FULL LAYAR -->
+<div class="splash-screen-overlay active" id="splashScreenOverlay">
+    <div class="splash-particles"></div>
+    <div class="splash-pulse-line"></div>
+
     <div class="splash-content">
         <div class="splash-logo-glow">⚡</div>
         <div class="splash-welcome-top">WELCOME TO</div>
         <div class="splash-title-large">VENUS STUDIO</div>
         
-        <!-- Tombol Tap Here -->
         <button type="button" class="tap-here-btn" id="btnTapHere">
             TAP HERE
         </button>
     </div>
 </div>
 
-<!-- SCREEN LOCK PIN AKSES -->
+<!-- TAHAP 2: LAYAR KODE AKSES PIN (DISEMBUNYIKAN DI AWAL) -->
 <div class="pin-screen-overlay" id="pinScreenOverlay">
     <div class="pin-card">
         <div class="pin-icon-box">🔒</div>
@@ -1394,129 +1114,92 @@
     <div class="cyber-vignette"></div>
 </div>
 
-<!-- POP-UP MODAL PLAYER MUSIK FULLSCREEN -->
+<!-- MODAL PEMUTAR MUSIK -->
 <div class="music-modal-overlay" id="musicModalOverlay">
     <div class="music-modal-card">
         <button type="button" class="close-music-modal" id="closeMusicModalBtn">✕</button>
-        
-        <div style="font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 800; color: #00f0ff; letter-spacing: 1px;">CYBER AUDIO PLAYER</div>
-        
-        <div class="vinyl-container" id="vinylRecord">
-            <div class="vinyl-center"></div>
-        </div>
-
-        <div class="modal-track-title" id="modalTrackTitle">
-            <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-            Belum ada musik dipilih
-        </div>
-        <div class="modal-track-time" id="modalTrackTime">(00:00)</div>
-
+        <div style="font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 800; color: #00f0ff;">CYBER AUDIO PLAYER</div>
+        <div class="vinyl-container" id="vinylRecord"><div class="vinyl-center"></div></div>
+        <div id="modalTrackTitle" style="color:#fff; font-weight:700; font-size:0.9rem;">Belum ada musik dipilih</div>
+        <div id="modalTrackTime" style="color:#00f0ff; font-size:0.8rem;">(00:00)</div>
         <div style="display: flex; gap: 10px; width: 100%;">
-            <button type="button" class="btn-music-action" id="modalUploadBtn" style="flex: 1;">
-                Unggah Musik
-            </button>
-            <button type="button" class="btn-music-play" id="modalPlayBtn" title="Play/Pause" style="flex: 1; display: none; width: auto; height: 38px;">
-                <span id="modalPlayIcon">
-                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </span>
-                <span id="modalPlayText" style="font-size: 0.75rem; font-weight: 800; margin-left: 4px;">Play</span>
-            </button>
+            <button type="button" class="btn-music-action" id="modalUploadBtn" style="flex: 1;">Unggah Musik</button>
+            <button type="button" class="btn-music-play" id="modalPlayBtn" style="flex: 1; display: none; height: 38px;">Play</button>
         </div>
-
-        <div style="width: 100%; text-align: left; font-size: 0.75rem; font-weight: 800; color: #7dd3fc; margin-top: 4px;">PLAYLIST DARI FOLDER:</div>
         <div class="playlist-wrapper" id="playlistContainer">
-            <div style="font-size: 0.7rem; color: #64748b; font-style: italic; padding: 12px;">Daftar lagu masih kosong. Klik Unggah Musik.</div>
+            <div style="font-size: 0.7rem; color: #64748b; font-style: italic; padding: 12px;">Daftar lagu masih kosong.</div>
         </div>
     </div>
 </div>
 
-<!-- POP-UP MODAL FILTER RIWAYAT -->
+<!-- MODAL FILTER -->
 <div class="popup-overlay" id="filterModalOverlay">
-    <div class="popup-box" style="max-width: 410px; width: 92%; text-align: left; align-items: stretch; gap: 20px; padding: 32px 24px; border-width: 2px;">
+    <div class="popup-box" style="max-width: 410px; text-align: left; align-items: stretch; gap: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-family: 'Orbitron', sans-serif; font-size: 1.15rem; font-weight: 900; color: #00f0ff; letter-spacing: 1.5px;">FILTER RIWAYAT</div>
-            <button type="button" id="closeFilterModalBtn" style="background:none; border:none; color:#94a3b8; font-size:1.6rem; cursor:pointer; padding:4px; width:auto; line-height:1;">✕</button>
+            <div style="font-family: 'Orbitron', sans-serif; font-size: 1.15rem; font-weight: 900; color: #00f0ff;">FILTER RIWAYAT</div>
+            <button type="button" id="closeFilterModalBtn" style="background:none; border:none; color:#94a3b8; font-size:1.6rem; cursor:pointer;">✕</button>
         </div>
-        <div style="font-size: 0.92rem; color: #a5f3fc; line-height: 1.4;">Pilih Bulan dan Tahun untuk menyortir riwayat transaksi:</div>
-        
         <div class="form-group" style="gap: 8px;">
-            <label for="filterMonthInput" style="font-size: 0.85rem; letter-spacing: 0.5px;">Pilih Bulan & Tahun</label>
-            <input type="month" id="filterMonthInput" style="font-size: 1.05rem; padding: 14px 12px; border-radius: 12px;">
+            <label for="filterMonthInput">Pilih Bulan & Tahun</label>
+            <input type="month" id="filterMonthInput" style="font-size: 1.05rem; padding: 12px;">
         </div>
-
-        <div style="display: flex; gap: 12px; margin-top: 8px;">
-            <button type="button" id="btnResetFilter" style="background: rgba(244, 63, 94, 0.2); border: 1.5px solid rgba(244, 63, 94, 0.6); color: #fb7185; flex: 1; padding: 14px; border-radius: 14px; font-size: 0.95rem; font-weight: 800; cursor: pointer;">Reset</button>
-            <button type="button" id="btnApplyFilter" style="background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%); border: none; color: #020714; flex: 2; padding: 14px; border-radius: 14px; font-size: 0.95rem; font-weight: 900; cursor: pointer; box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);">Terapkan Filter</button>
+        <div style="display: flex; gap: 12px;">
+            <button type="button" id="btnResetFilter" style="background: rgba(244, 63, 94, 0.2); border: 1.5px solid rgba(244, 63, 94, 0.6); color: #fb7185; flex: 1; padding: 12px; border-radius: 12px; font-weight: 800; cursor:pointer;">Reset</button>
+            <button type="button" id="btnApplyFilter" style="background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%); border: none; color: #020714; flex: 2; padding: 12px; border-radius: 12px; font-weight: 900; cursor:pointer;">Terapkan</button>
         </div>
     </div>
 </div>
 
-<div class="container">
-    <!-- Tombol Instal Aplikasi -->
-    <button type="button" class="install-app-btn" id="btnInstallApp">
-        ⚡ INSTAL APLIKASI
-    </button>
+<!-- TAHAP 3: KONTEN UTAMA APLIKASI KEUANGAN (TERSEMBUNYI HINGGA PIN BENAR) -->
+<div class="container" id="mainAppContainer">
+    <button type="button" class="install-app-btn" id="btnInstallApp">⚡ INSTAL APLIKASI</button>
 
-    <!-- Header -->
     <div class="header-box">
         <h2 class="title-cyber">CYBER VAULT</h2>
         <div class="subtitle-cyber">FINANCIAL MONITORING SYSTEM</div>
     </div>
 
-    <!-- PEMUTAR MUSIK RINGKAS -->
     <div class="music-player-panel" id="openMusicModalPanel">
         <div class="music-label">
             <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
             <span id="musicTrackName">Pilih Musik</span>
-            <span id="musicTimeText" style="font-size: 0.6rem; color: #38bdf8; flex-shrink: 0;">(00:00)</span>
+            <span id="musicTimeText" style="font-size: 0.6rem; color: #38bdf8;">(00:00)</span>
         </div>
         <div class="music-controls-group" onclick="event.stopPropagation();">
-            <button type="button" class="btn-music-skip" id="btnPrevMusic" title="Sebelumnya">
-                <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-            </button>
-            <button type="button" class="btn-music-skip" id="btnNextMusic" title="Selanjutnya">
-                <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-            </button>
-            <button type="button" class="btn-music-play" id="btnPlayMusic" title="Play/Pause" style="display: none;">
-                <span id="musicBtnIcon">
-                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </span>
-            </button>
+            <button type="button" class="btn-music-skip" id="btnPrevMusic"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+            <button type="button" class="btn-music-skip" id="btnNextMusic"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+            <button type="button" class="btn-music-play" id="btnPlayMusic" style="display: none;"><span id="musicBtnIcon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></button>
         </div>
         <input type="file" id="localAudioInput" accept="audio/*" multiple style="display: none;">
         <audio id="bgAudioPlayer" style="display: none;"></audio>
     </div>
 
-    <!-- Panel Pengatur Transparansi -->
     <div class="glass-control-panel">
-        <div class="glass-control-label">Transparansi Kaca:</div>
+        <div style="font-size: 0.72rem; font-weight: 700; color: #7dd3fc;">Transparansi Kaca:</div>
         <div class="glass-slider-wrapper">
             <input type="range" id="glassOpacitySlider" class="glass-range-input" min="5" max="85" value="28">
             <span class="opacity-value-badge" id="opacityValText">28%</span>
         </div>
     </div>
 
-    <!-- Panel Backup & Restore -->
     <div class="backup-panel">
         <div class="backup-header">
-            <div class="backup-title-text">BACKUP OTOMATIS</div>
-            <div class="backup-status-tag" id="backupStatusText">Auto-Saved</div>
+            <span style="font-size: 0.72rem; font-weight: 700; color: #a5f3fc;">BACKUP OTOMATIS</span>
+            <span class="backup-status-tag" id="backupStatusText">Auto-Saved</span>
         </div>
         <div class="backup-actions">
             <button type="button" class="btn-backup-action" id="btnExportBackup">Unduh Backup</button>
             <button type="button" class="btn-backup-action" id="btnImportBackup">Pulihkan Data</button>
             <input type="file" id="importFileInput" accept=".json" style="display: none;">
         </div>
-        <div class="backup-info-text" id="lastBackupTimeText">Sistem otomatis mencadangkan data setiap kali ada perubahan.</div>
+        <div style="font-size: 0.65rem; color: #64748b; text-align: center;" id="lastBackupTimeText">Sistem otomatis mencadangkan data.</div>
     </div>
 
-    <!-- Ringkasan Saldo -->
     <div class="dashboard">
         <div class="card-hero">
             <h4>SALDO SISA</h4>
             <p id="totalSaldo">Rp 0</p>
         </div>
-        
         <div class="sub-dashboard">
             <div class="card-sub pemasukan">
                 <h4>PEMASUKAN</h4>
@@ -1529,7 +1212,6 @@
         </div>
     </div>
 
-    <!-- Form Input Transaksi -->
     <form id="transactionForm">
         <div class="form-group">
             <label for="type">Jenis Transaksi</label>
@@ -1538,17 +1220,14 @@
                 <option value="out">Pengeluaran (-)</option>
             </select>
         </div>
-        
         <div class="form-group">
             <label for="amount">Jumlah (Rp)</label>
             <input type="text" id="amount" placeholder="Contoh: 500.000" inputmode="numeric" required>
         </div>
-        
         <div class="form-group">
             <label for="description">Keterangan</label>
             <input type="text" id="description" placeholder="Contoh: Gaji, Makan Siang" required>
         </div>
-        
         <div class="datetime-group">
             <div class="form-group">
                 <label for="inputDate">Tanggal Input</label>
@@ -1559,7 +1238,6 @@
                 <input type="time" id="inputTime" required>
             </div>
         </div>
-
         <div class="form-group" id="paymentMethodGroup" style="display: none;">
             <label for="paymentMethod">Metode Pembayaran Pengeluaran</label>
             <select id="paymentMethod">
@@ -1568,13 +1246,10 @@
                 <option value="QRIS">📱 QRIS (E-Wallet)</option>
             </select>
         </div>
-
-        <button type="submit" id="btnSubmit">
-            <span id="btnText">Tambah Transaksi</span>
-        </button>
+        <button type="submit" id="btnSubmit"><span id="btnText">Tambah Transaksi</span></button>
     </form>
 
-    <div class="history-title-wrapper" id="openFilterModalBtn" title="Klik untuk filter berdasarkan Bulan & Tahun">
+    <div class="history-title-wrapper" id="openFilterModalBtn">
         <h3 class="history-title">Riwayat Transaksi</h3>
         <span class="filter-badge-indicator" id="filterBadgeIndicator">Semua Data</span>
     </div>
@@ -1582,7 +1257,7 @@
     <ul class="history-list" id="historyList"></ul>
 </div>
 
-<!-- Modal Pop-up Notifikasi -->
+<!-- MODAL NOTIFIKASI -->
 <div class="popup-overlay" id="popupNotification">
     <div class="popup-box">
         <div class="popup-icon" id="popupIcon">✓</div>
@@ -1592,84 +1267,16 @@
     </div>
 </div>
 
-<!-- Modal Confirmation Delete Custom -->
-<div class="popup-overlay" id="confirmDeleteModal">
-    <div class="popup-box" style="max-width: 320px;">
-        <div class="popup-icon" style="background: rgba(244, 63, 94, 0.25); border-color: var(--pengeluaran-red); color: #fb7185;">!</div>
-        <div class="popup-title" style="font-size: 1.2rem;">Hapus Transaksi?</div>
-        <div class="popup-subtitle">Tindakan ini tidak dapat dibatalkan.</div>
-        <div style="display: flex; gap: 8px; width: 100%; margin-top: 6px;">
-            <button type="button" id="btnCancelDelete" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; flex: 1; padding: 10px; border-radius: 10px;">Batal</button>
-            <button type="button" id="btnConfirmDelete" style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); border: none; color: #fff; flex: 1; font-weight: 800; border-radius: 10px; padding: 10px;">Hapus</button>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Edit Transaksi -->
-<div class="popup-overlay" id="editModal">
-    <div class="popup-box" style="max-width: 360px; text-align: left; align-items: stretch; gap: 10px; padding: 20px 16px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h3 style="font-size: 1.1rem; font-weight: 800; color: #fff;">Edit Transaksi</h3>
-            <button type="button" id="closeEditModal" style="background:none; border:none; color:#94a3b8; font-size:1.3rem; cursor:pointer; padding:0; width:auto;">✕</button>
-        </div>
-        <form id="editForm" style="margin-bottom: 0; padding: 0; background: transparent; border: none; box-shadow: none;">
-            <input type="hidden" id="editId">
-            <div class="form-group">
-                <label for="editType">Jenis Transaksi</label>
-                <select id="editType" required>
-                    <option value="in">Pemasukan (+)</option>
-                    <option value="out">Pengeluaran (-)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="editAmount">Jumlah (Rp)</label>
-                <input type="text" id="editAmount" inputmode="numeric" required>
-            </div>
-            <div class="form-group">
-                <label for="editDescription">Keterangan</label>
-                <input type="text" id="editDescription" required>
-            </div>
-            <div class="datetime-group">
-                <div class="form-group">
-                    <label for="editDate">Tanggal Input</label>
-                    <input type="date" id="editDate" required>
-                </div>
-                <div class="form-group">
-                    <label for="editTime">Jam Input</label>
-                    <input type="time" id="editTime" required>
-                </div>
-            </div>
-            <div class="form-group" id="editPaymentMethodGroup" style="display: none;">
-                <label for="editPaymentMethod">Metode Pembayaran Pengeluaran</label>
-                <select id="editPaymentMethod">
-                    <option value="CASH">💵 CASH (Tunai)</option>
-                    <option value="TRANSFER">🏦 TRANSFER BANK</option>
-                    <option value="QRIS">📱 QRIS (E-Wallet)</option>
-                </select>
-            </div>
-            <div style="display: flex; gap: 8px; margin-top: 6px;">
-                <button type="button" id="btnDeleteModal" style="background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.5); color: #fb7185; flex: 1; padding: 10px; border-radius: 10px;">Hapus</button>
-                <button type="submit" style="flex: 2; margin-top: 0; padding: 10px;">Simpan Perubahan</button>
-            </div>
-        </form>
-    </div>
-</div>
-
 <script>
-    /* 
-      SEAMLESS DRAMATIC/ELEGANT AUDIO ENGINE:
-      Menghasilkan efek transisi suara sci-fi sinematik yang mengalir langsung saat "TAP HERE" ditekan 
-      menuju layar input PIN keamanan.
-    */
+    /* AUDIO TRANSISI & VOICE GREETING OTOMATIS */
     function playDramaticTransitionSound() {
         try {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             if (!AudioContext) return;
             const ctx = new AudioContext();
+            if (ctx.state === 'suspended') ctx.resume();
 
             const now = ctx.currentTime;
-            
-            // 1. Efek swoosh / warp sinematik awal
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
             osc.type = 'sawtooth';
@@ -1684,31 +1291,13 @@
             gain.connect(ctx.destination);
             osc.start(now);
             osc.stop(now + 0.6);
-
-            // 2. Efek nada elegan/chime penyambung ke keypad PIN
-            [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
-                const subOsc = ctx.createOscillator();
-                const subGain = ctx.createGain();
-                subOsc.type = 'triangle';
-                subOsc.frequency.setValueAtTime(freq, now + 0.4 + (idx * 0.08));
-
-                subGain.gain.setValueAtTime(0.01, now + 0.4 + (idx * 0.08));
-                subGain.gain.exponentialRampToValueAtTime(0.4, now + 0.4 + (idx * 0.08) + 0.02);
-                subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4 + (idx * 0.08) + 0.35);
-
-                subOsc.connect(subGain);
-                subGain.connect(ctx.destination);
-
-                subOsc.start(now + 0.4 + (idx * 0.08));
-                subOsc.stop(now + 0.4 + (idx * 0.08) + 0.35);
-            });
         } catch (e) {}
     }
 
     function speakWelcomeGreeting() {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance("Welcome to Venus Studio. Tap here to login.");
+            const utterance = new SpeechSynthesisUtterance("Welcome to Venus Studio, tap here to login.");
             utterance.lang = 'en-US';
             utterance.rate = 0.95;
             utterance.pitch = 1.0;
@@ -1716,53 +1305,41 @@
         }
     }
 
-    /* LOGIKA KLIK TOMBOL TAP HERE UNTUK MASUK KE SECURITY ACCESS (PIN) */
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            speakWelcomeGreeting();
+        }, 500);
+    });
+
+    /* ALUR 1 KE ALUR 2: TOMBOL TAP HERE DIKLIK */
     const btnTapHere = document.getElementById('btnTapHere');
     const splashScreenOverlay = document.getElementById('splashScreenOverlay');
+    const pinScreenOverlay = document.getElementById('pinScreenOverlay');
 
     if (btnTapHere) {
         btnTapHere.addEventListener('click', () => {
-            speakWelcomeGreeting(); 
-            playDramaticTransitionSound(); // Sound effect dramatis & elegan mengalir ke layar PIN
+            playDramaticTransitionSound();
             
+            // Sembunyikan Splash Screen secara total
             if (splashScreenOverlay) {
-                splashScreenOverlay.classList.add('fade-out');
+                splashScreenOverlay.classList.add('hidden');
             }
+
+            // Munculkan Layar PIN (Alur 2)
+            setTimeout(() => {
+                if (pinScreenOverlay) {
+                    pinScreenOverlay.classList.add('active');
+                }
+            }, 200);
         });
     }
 
-    /* SCRIPT INSTALASI PWA */
-    let deferredPrompt;
-    const btnInstallApp = document.getElementById('btnInstallApp');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        btnInstallApp.style.display = 'flex';
-    });
-
-    btnInstallApp.addEventListener('click', async () => {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-            btnInstallApp.style.display = 'none';
-        }
-        deferredPrompt = null;
-    });
-
-    window.addEventListener('appinstalled', () => {
-        btnInstallApp.style.display = 'none';
-        showCustomNotification("Terinstal", "Venus Studio berhasil diinstal di perangkat Anda!");
-    });
-
-    /* LOGIKA PIN AKSES & KEYPAD ON-SCREEN (TANPA DELAY) */
+    /* ALUR 2 KE ALUR 3: CEK KODE PIN AKSES & BUKA WEB UTAMA */
     const CORRECT_PIN = "040698"; 
     let enteredPin = "";
-
     const pinBoxes = document.querySelectorAll('.pin-box');
     const pinErrorMsg = document.getElementById('pinErrorMsg');
-    const pinScreenOverlay = document.getElementById('pinScreenOverlay');
+    const mainAppContainer = document.getElementById('mainAppContainer');
 
     function updatePinDisplay() {
         pinBoxes.forEach((box, index) => {
@@ -1809,8 +1386,11 @@
 
     function verifyPin() {
         if (enteredPin === CORRECT_PIN) {
-            pinScreenOverlay.classList.add('unlocked');
             playSuccessSound();
+            // Sembunyikan Layar PIN dan Tampilkan Web Utama (Alur 3)
+            pinScreenOverlay.classList.add('hidden');
+            mainAppContainer.classList.add('active');
+            updateUI();
         } else {
             pinErrorMsg.innerText = "PIN Salah! Silakan coba lagi.";
             setTimeout(() => {
@@ -1819,444 +1399,47 @@
         }
     }
 
-    /* KONTROL INPUT METODE PEMBAYARAN */
+    function playSuccessSound() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+            const now = ctx.currentTime;
+            [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+                gain.gain.setValueAtTime(0.01, now + idx * 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.4, now + idx * 0.08 + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.3);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now + idx * 0.08);
+                osc.stop(now + idx * 0.08 + 0.3);
+            });
+        } catch (e) {}
+    }
+
+    /* SCRIPT PENDUKUNG APLIKASI KEUANGAN */
     const typeSelect = document.getElementById('type');
     const paymentMethodGroup = document.getElementById('paymentMethodGroup');
+    typeSelect.addEventListener('change', () => {
+        paymentMethodGroup.style.display = (typeSelect.value === 'out') ? 'flex' : 'none';
+    });
 
-    function togglePaymentMethodVisibility() {
-        if (typeSelect.value === 'out') {
-            paymentMethodGroup.style.display = 'flex';
-        } else {
-            paymentMethodGroup.style.display = 'none';
-        }
-    }
-
-    typeSelect.addEventListener('change', togglePaymentMethodVisibility);
-    togglePaymentMethodVisibility();
-
-    const editTypeSelect = document.getElementById('editType');
-    const editPaymentMethodGroup = document.getElementById('editPaymentMethodGroup');
-
-    function toggleEditPaymentMethodVisibility() {
-        if (editTypeSelect.value === 'out') {
-            editPaymentMethodGroup.style.display = 'flex';
-        } else {
-            editPaymentMethodGroup.style.display = 'none';
-        }
-    }
-
-    editTypeSelect.addEventListener('change', toggleEditPaymentMethodVisibility);
-
-    /* SISTEM PEMUTAR MUSIK */
     const openMusicModalPanel = document.getElementById('openMusicModalPanel');
     const musicModalOverlay = document.getElementById('musicModalOverlay');
     const closeMusicModalBtn = document.getElementById('closeMusicModalBtn');
-    
-    const localAudioInput = document.getElementById('localAudioInput');
-    const modalUploadBtn = document.getElementById('modalUploadBtn');
-    
-    const bgAudioPlayer = document.getElementById('bgAudioPlayer');
-    const btnPlayMusic = document.getElementById('btnPlayMusic');
-    const modalPlayBtn = document.getElementById('modalPlayBtn');
-    const btnPrevMusic = document.getElementById('btnPrevMusic');
-    const btnNextMusic = document.getElementById('btnNextMusic');
-    
-    const musicTrackName = document.getElementById('musicTrackName');
-    const musicTimeText = document.getElementById('musicTimeText');
-    const modalTrackTitle = document.getElementById('modalTrackTitle');
-    const modalTrackTime = document.getElementById('modalTrackTime');
-    const vinylRecord = document.getElementById('vinylRecord');
-    const playlistContainer = document.getElementById('playlistContainer');
-
-    let playlist = [];
-    let currentTrackIndex = -1;
-    let audioTimer = null;
-
-    const playSvgIcon = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
-    const pauseSvgIcon = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
-
-    openMusicModalPanel.addEventListener('click', () => {
-        musicModalOverlay.classList.add('active');
-    });
-
-    closeMusicModalBtn.addEventListener('click', () => {
-        musicModalOverlay.classList.remove('active');
-    });
-
-    musicModalOverlay.addEventListener('click', (e) => {
-        if (e.target === musicModalOverlay) {
-            musicModalOverlay.classList.remove('active');
-        }
-    });
-
-    modalUploadBtn.addEventListener('click', () => {
-        localAudioInput.click();
-    });
-
-    localAudioInput.addEventListener('change', function(e) {
-        const files = Array.from(e.target.files);
-        if (files.length === 0) return;
-
-        files.forEach(file => {
-            const url = URL.createObjectURL(file);
-            playlist.push({
-                name: file.name,
-                url: url
-            });
-        });
-
-        renderPlaylist();
-
-        if (currentTrackIndex === -1) {
-            playTrack(playlist.length - files.length);
-        }
-        this.value = '';
-    });
-
-    function renderPlaylist() {
-        playlistContainer.innerHTML = '';
-        if (playlist.length === 0) {
-            playlistContainer.innerHTML = '<div style="font-size: 0.7rem; color: #64748b; font-style: italic; padding: 12px;">Daftar lagu masih kosong. Klik Unggah Musik.</div>';
-            return;
-        }
-
-        playlist.forEach((track, index) => {
-            const item = document.createElement('div');
-            item.className = `playlist-item ${index === currentTrackIndex ? 'active-track' : ''}`;
-            item.onclick = () => playTrack(index);
-
-            item.innerHTML = `
-                <span class="playlist-item-name">
-                    <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-                    ${track.name}
-                </span>
-                <span class="playlist-delete-btn" onclick="deleteTrack(event, ${index})">✕</span>
-            `;
-            playlistContainer.appendChild(item);
-        });
-    }
-
-    function playTrack(index) {
-        if (index < 0 || index >= playlist.length) return;
-
-        currentTrackIndex = index;
-        const track = playlist[index];
-
-        bgAudioPlayer.src = track.url;
-        bgAudioPlayer.play().then(() => {
-            updatePlayStateUI(true);
-        }).catch(() => {
-            updatePlayStateUI(false);
-        });
-
-        const cleanName = track.name.length > 8 ? track.name.substring(0, 5) + "..." : track.name;
-        musicTrackName.innerText = cleanName;
-        
-        modalTrackTitle.innerHTML = `
-            <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-            ${track.name}
-        `;
-
-        btnPlayMusic.style.display = 'inline-flex';
-        modalPlayBtn.style.display = 'inline-flex';
-
-        startTimer();
-        renderPlaylist();
-    }
-
-    btnPrevMusic.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (playlist.length === 0) return;
-        let newIndex = currentTrackIndex - 1;
-        if (newIndex < 0) newIndex = playlist.length - 1;
-        playTrack(newIndex);
-    });
-
-    btnNextMusic.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (playlist.length === 0) return;
-        let newIndex = currentTrackIndex + 1;
-        if (newIndex >= playlist.length) newIndex = 0;
-        playTrack(newIndex);
-    });
-
-    function deleteTrack(e, index) {
-        e.stopPropagation();
-        playlist.splice(index, 1);
-
-        if (index === currentTrackIndex) {
-            stopAudio();
-            if (playlist.length > 0) {
-                playTrack(Math.min(index, playlist.length - 1));
-            } else {
-                currentTrackIndex = -1;
-                musicTrackName.innerText = "Pilih Musik";
-                modalTrackTitle.innerHTML = `
-                    <svg class="cyber-svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-                    Belum ada musik dipilih
-                `;
-                btnPlayMusic.style.display = 'none';
-                modalPlayBtn.style.display = 'none';
-            }
-        } else if (index < currentTrackIndex) {
-            currentTrackIndex--;
-        }
-
-        renderPlaylist();
-    }
-
-    function togglePlayPause() {
-        if (!bgAudioPlayer.src) return;
-
-        if (bgAudioPlayer.paused) {
-            bgAudioPlayer.play();
-            updatePlayStateUI(true);
-            startTimer();
-        } else {
-            bgAudioPlayer.pause();
-            updatePlayStateUI(false);
-            if (audioTimer) clearInterval(audioTimer);
-        }
-    }
-
-    function updatePlayStateUI(isPlaying) {
-        const playIconSvg = isPlaying ? pauseSvgIcon : playSvgIcon;
-        const playText = isPlaying ? "Pause" : "Play";
-
-        document.getElementById('musicBtnIcon').innerHTML = playIconSvg;
-        document.getElementById('modalPlayIcon').innerHTML = playIconSvg;
-        document.getElementById('modalPlayText').innerText = playText;
-
-        if (isPlaying) {
-            vinylRecord.classList.add('playing');
-        } else {
-            vinylRecord.classList.remove('playing');
-        }
-    }
-
-    function startTimer() {
-        if (audioTimer) clearInterval(audioTimer);
-        audioTimer = setInterval(() => {
-            const current = Math.floor(bgAudioPlayer.currentTime);
-            const mins = String(Math.floor(current / 60)).padStart(2, '0');
-            const secs = String(current % 60).padStart(2, '0');
-            const timeStr = `(${mins}:${secs})`;
-            
-            musicTimeText.innerText = timeStr;
-            modalTrackTime.innerText = timeStr;
-        }, 1000);
-    }
-
-    function stopAudio() {
-        bgAudioPlayer.pause();
-        bgAudioPlayer.currentTime = 0;
-        updatePlayStateUI(false);
-        if (audioTimer) clearInterval(audioTimer);
-        musicTimeText.innerText = "(00:00)";
-        modalTrackTime.innerText = "(00:00)";
-    }
-
-    btnPlayMusic.addEventListener('click', (e) => {
-        e.stopPropagation();
-        togglePlayPause();
-    });
-
-    modalPlayBtn.addEventListener('click', togglePlayPause);
-
-    bgAudioPlayer.addEventListener('ended', function() {
-        if (currentTrackIndex + 1 < playlist.length) {
-            playTrack(currentTrackIndex + 1);
-        } else {
-            playTrack(0);
-        }
-    });
-
-    /* LATAR BELAKANG SIRKUIT ANIMASI */
-    (function initTechCircuitBackground() {
-        const canvas = document.getElementById('circuitCanvas');
-        const ctx = canvas.getContext('2d');
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
-
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            generateCircuitPaths();
-        });
-
-        const particles = [];
-        const numParticles = 35;
-        for (let i = 0; i < numParticles; i++) {
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                radius: Math.random() * 1.5 + 0.5,
-                alpha: Math.random() * 0.7 + 0.2,
-                vx: (Math.random() - 0.5) * 0.2,
-                vy: (Math.random() - 0.5) * 0.2
-            });
-        }
-
-        let circuitPaths = [];
-        let pulses = [];
-
-        function generateCircuitPaths() {
-            circuitPaths = [];
-            pulses = [];
-
-            const numLines = Math.floor(width / 70);
-            for (let i = 0; i < numLines; i++) {
-                const startX = (i + 0.5) * (width / numLines);
-                let currentX = startX;
-                let currentY = 0;
-                const pathPoints = [{ x: currentX, y: currentY }];
-                
-                const targetY = height * 0.45;
-                let segments = 3;
-
-                while (currentY < targetY && segments > 0) {
-                    currentY += (targetY - currentY) / segments;
-                    pathPoints.push({ x: currentX, y: currentY });
-
-                    if (segments > 1) {
-                        currentX = Math.max(15, Math.min(width - 15, currentX + (Math.random() - 0.5) * 100));
-                        pathPoints.push({ x: currentX, y: currentY });
-                    }
-                    segments--;
-                }
-
-                circuitPaths.push({
-                    points: pathPoints,
-                    color: Math.random() > 0.4 ? '#00f0ff' : '#0077ff'
-                });
-            }
-
-            circuitPaths.forEach((path, pathIdx) => {
-                pulses.push({
-                    pathIdx: pathIdx,
-                    progress: Math.random(),
-                    speed: Math.random() * 0.003 + 0.0015,
-                    color: path.color
-                });
-            });
-        }
-
-        generateCircuitPaths();
-
-        function getPointOnPath(points, progress) {
-            if (!points || points.length < 2) return points[0];
-
-            let totalLength = 0;
-            const lengths = [];
-            for (let i = 0; i < points.length - 1; i++) {
-                const dx = points[i+1].x - points[i].x;
-                const dy = points[i+1].y - points[i].y;
-                const len = Math.sqrt(dx * dx + dy * dy);
-                lengths.push(len);
-                totalLength += len;
-            }
-
-            let targetDist = progress * totalLength;
-            let currentDist = 0;
-
-            for (let i = 0; i < points.length - 1; i++) {
-                if (currentDist + lengths[i] >= targetDist) {
-                    const segProgress = (targetDist - currentDist) / lengths[i];
-                    return {
-                        x: points[i].x + (points[i+1].x - points[i].x) * segProgress,
-                        y: points[i].y + (points[i+1].y - points[i].y) * segProgress
-                    };
-                }
-                currentDist += lengths[i];
-            }
-            return points[points.length - 1];
-        }
-
-        function drawTechBackground() {
-            ctx.clearRect(0, 0, width, height);
-
-            particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-
-                if (p.x < 0) p.x = width;
-                if (p.x > width) p.x = 0;
-                if (p.y < 0) p.y = height;
-                if (p.y > height) p.y = 0;
-
-                ctx.save();
-                ctx.globalAlpha = p.alpha;
-                ctx.fillStyle = '#00f0ff';
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            });
-
-            circuitPaths.forEach(path => {
-                const pts = path.points;
-                if (pts.length < 2) return;
-
-                ctx.save();
-                ctx.strokeStyle = 'rgba(0, 200, 255, 0.2)';
-                ctx.lineWidth = 1.2;
-                ctx.beginPath();
-                ctx.moveTo(pts[0].x, pts[0].y);
-                for (let i = 1; i < pts.length; i++) {
-                    ctx.lineTo(pts[i].x, pts[i].y);
-                }
-                ctx.stroke();
-                ctx.restore();
-            });
-
-            pulses.forEach(pulse => {
-                pulse.progress += pulse.speed;
-                if (pulse.progress > 1) pulse.progress = 0;
-
-                const path = circuitPaths[pulse.pathIdx];
-                if (!path) return;
-
-                const headPt = getPointOnPath(path.points, pulse.progress);
-                ctx.save();
-                ctx.fillStyle = '#ffffff';
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = '#00f0ff';
-                ctx.beginPath();
-                ctx.arc(headPt.x, headPt.y, 2, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            });
-
-            requestAnimationFrame(drawTechBackground);
-        }
-
-        drawTechBackground();
-    })();
+    openMusicModalPanel.addEventListener('click', () => musicModalOverlay.classList.add('active'));
+    closeMusicModalBtn.addEventListener('click', () => musicModalOverlay.classList.remove('active'));
 
     const glassOpacitySlider = document.getElementById('glassOpacitySlider');
     const opacityValText = document.getElementById('opacityValText');
-
-    const savedOpacity = localStorage.getItem('cyber_glass_opacity') || '28';
-    glassOpacitySlider.value = savedOpacity;
-    applyGlassOpacity(savedOpacity);
-
-    function applyGlassOpacity(val) {
-        const numVal = parseInt(val, 10);
-        const alphaFloat = (numVal / 100).toFixed(2);
-        document.documentElement.style.setProperty('--glass-alpha', alphaFloat);
-        
-        let blurAmount = '0px';
-        if (numVal > 5) {
-            blurAmount = Math.max(0, Math.min(20, Math.round((numVal - 5) * 0.25))) + 'px';
-        }
-        document.documentElement.style.setProperty('--glass-blur', blurAmount);
-
-        opacityValText.innerText = val + '%';
-        localStorage.setItem('cyber_glass_opacity', val);
-    }
-
     glassOpacitySlider.addEventListener('input', function() {
-        applyGlassOpacity(this.value);
+        document.documentElement.style.setProperty('--glass-alpha', (this.value / 100).toFixed(2));
+        opacityValText.innerText = this.value + '%';
+        localStorage.setItem('cyber_glass_opacity', this.value);
     });
 
     let transactions = JSON.parse(localStorage.getItem('my_transactions')) || [];
@@ -2265,35 +1448,18 @@
     const openFilterModalBtn = document.getElementById('openFilterModalBtn');
     const filterModalOverlay = document.getElementById('filterModalOverlay');
     const closeFilterModalBtn = document.getElementById('closeFilterModalBtn');
-    const filterMonthInput = document.getElementById('filterMonthInput');
-    const btnApplyFilter = document.getElementById('btnApplyFilter');
-    const btnResetFilter = document.getElementById('btnResetFilter');
-    const filterBadgeIndicator = document.getElementById('filterBadgeIndicator');
+    openFilterModalBtn.addEventListener('click', () => filterModalOverlay.classList.add('active'));
+    closeFilterModalBtn.addEventListener('click', () => filterModalOverlay.classList.remove('active'));
 
-    openFilterModalBtn.addEventListener('click', () => {
-        filterMonthInput.value = currentFilterMonth;
-        filterModalOverlay.classList.add('active');
-    });
-
-    closeFilterModalBtn.addEventListener('click', () => {
-        filterModalOverlay.classList.remove('active');
-    });
-
-    filterModalOverlay.addEventListener('click', (e) => {
-        if (e.target === filterModalOverlay) {
-            filterModalOverlay.classList.remove('active');
-        }
-    });
-
-    btnApplyFilter.addEventListener('click', () => {
-        currentFilterMonth = filterMonthInput.value;
+    document.getElementById('btnApplyFilter').addEventListener('click', () => {
+        currentFilterMonth = document.getElementById('filterMonthInput').value;
         filterModalOverlay.classList.remove('active');
         updateUI();
     });
 
-    btnResetFilter.addEventListener('click', () => {
+    document.getElementById('btnResetFilter').addEventListener('click', () => {
         currentFilterMonth = "";
-        filterMonthInput.value = "";
+        document.getElementById('filterMonthInput').value = "";
         filterModalOverlay.classList.remove('active');
         updateUI();
     });
@@ -2302,261 +1468,45 @@
         return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
     }
 
-    const amountInput = document.getElementById('amount');
-    amountInput.addEventListener('input', function() {
+    document.getElementById('amount').addEventListener('input', function() {
         let rawValue = this.value.replace(/\D/g, '');
-        if (rawValue) {
-            this.value = parseInt(rawValue, 10).toLocaleString('id-ID');
-        } else {
-            this.value = '';
-        }
+        this.value = rawValue ? parseInt(rawValue, 10).toLocaleString('id-ID') : '';
     });
-
-    let userHasCustomDateTime = false;
-    const inputDateElem = document.getElementById('inputDate');
-    const inputTimeElem = document.getElementById('inputTime');
-
-    function updateLiveDateTime() {
-        if (userHasCustomDateTime) return;
-
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-
-        inputDateElem.value = `${year}-${month}-${day}`;
-        inputTimeElem.value = `${hours}:${minutes}`;
-    }
-
-    [inputDateElem, inputTimeElem].forEach(elem => {
-        elem.addEventListener('change', () => { userHasCustomDateTime = true; });
-        elem.addEventListener('input', () => { userHasCustomDateTime = true; });
-    });
-
-    setInterval(updateLiveDateTime, 1000);
-
-    function formatDisplayDate(dateStr, timeStr) {
-        if (!dateStr) return '';
-        try {
-            const [year, month, day] = dateStr.split('-');
-            const dateObj = new Date(year, month - 1, day);
-            const days = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
-
-            return `${days[dateObj.getDay()]}, ${day} ${months[dateObj.getMonth()]} ${year} • ${timeStr || '00:00'}`;
-        } catch (e) {
-            return `${dateStr} ${timeStr}`;
-        }
-    }
-
-    function performAutoBackup() {
-        const timestamp = new Date().toLocaleString('id-ID', {
-            day: '2-digit', month: '2-digit', year: 'numeric',
-            hour: '2-digit', minute: '2-digit', second: '2-digit'
-        });
-
-        const backupData = {
-            app: "VENUS_STUDIO",
-            version: "1.0",
-            timestamp: new Date().toISOString(),
-            lastFormattedTime: timestamp,
-            transactions: transactions
-        };
-
-        localStorage.setItem('my_transactions', JSON.stringify(transactions));
-        localStorage.setItem('cyber_vault_auto_backup', JSON.stringify(backupData));
-        localStorage.setItem('cyber_vault_backup_last_time', timestamp);
-
-        const lastBackupTimeText = document.getElementById('lastBackupTimeText');
-        if (lastBackupTimeText) {
-            lastBackupTimeText.innerText = `Backup Terakhir: ${timestamp} WIB`;
-        }
-    }
-
-    const savedLastTime = localStorage.getItem('cyber_vault_backup_last_time');
-    if (savedLastTime) {
-        document.getElementById('lastBackupTimeText').innerText = `Backup Terakhir: ${savedLastTime} WIB`;
-    }
 
     function updateUI() {
         const historyList = document.getElementById('historyList');
         historyList.innerHTML = '';
+        let filtered = currentFilterMonth ? transactions.filter(t => t.date && t.date.startsWith(currentFilterMonth)) : transactions;
 
-        let filteredTransactions = transactions;
-        if (currentFilterMonth) {
-            filteredTransactions = transactions.filter(t => t.date && t.date.startsWith(currentFilterMonth));
-            const [fYear, fMonth] = currentFilterMonth.split('-');
-            const monthsName = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-            filterBadgeIndicator.innerText = `${monthsName[parseInt(fMonth, 10)]} ${fYear}`;
+        if (filtered.length === 0) {
+            historyList.innerHTML = '<li style="text-align:center; color:#a5f3fc; font-size:0.82rem; padding:20px 0;">Tidak ada transaksi</li>';
         } else {
-            filterBadgeIndicator.innerText = "Semua Data";
-        }
-
-        if (filteredTransactions.length === 0) {
-            historyList.innerHTML = '<li class="empty-state">Tidak ada transaksi pada periode ini</li>';
-        } else {
-            const sortedTransactions = [...filteredTransactions].sort((a, b) => {
-                const dateA = new Date(`${a.date}T${a.time}`);
-                const dateB = new Date(`${b.date}T${b.time}`);
-                return dateB - dateA;
-            });
-
-            sortedTransactions.forEach((t) => {
-                const methodBadge = (t.type === 'out' && t.method) ? `<span class="item-method-badge">${t.method}</span>` : '';
+            filtered.sort((a, b) => new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`)).forEach(t => {
                 const li = document.createElement('li');
                 li.className = `history-item ${t.type}`;
-                li.onclick = function() { openEditModal(t.id); };
                 li.innerHTML = `
                     <div class="item-info">
-                        <span class="item-desc">${t.description} ${methodBadge}</span>
-                        <span class="item-date">🕒 ${formatDisplayDate(t.date, t.time)}</span>
+                        <span class="item-desc">${t.description} ${t.type === 'out' && t.method ? '<span class="item-method-badge">'+t.method+'</span>' : ''}</span>
+                        <span class="item-date">🕒 ${t.date} • ${t.time}</span>
                     </div>
-                    <span class="item-amount ${t.type === 'in' ? 'amount-in' : 'amount-out'}">
-                        ${t.type === 'in' ? '+' : '-'} ${formatRupiah(t.amount)}
-                    </span>
+                    <span class="item-amount ${t.type === 'in' ? 'amount-in' : 'amount-out'}">${t.type === 'in' ? '+' : '-'} ${formatRupiah(t.amount)}</span>
                 `;
                 historyList.appendChild(li);
             });
         }
 
-        let totalIncome = 0;
-        let totalExpense = 0;
-        transactions.forEach(t => {
-            if (t.type === 'in') totalIncome += t.amount;
-            else totalExpense += t.amount;
-        });
-
-        const saldo = totalIncome - totalExpense;
-
-        document.getElementById('totalSaldo').innerText = formatRupiah(saldo);
-        document.getElementById('totalPemasukan').innerText = formatRupiah(totalIncome);
-        document.getElementById('totalPengeluaran').innerText = formatRupiah(totalExpense);
-
-        performAutoBackup();
+        let totalIn = 0, totalOut = 0;
+        transactions.forEach(t => { if (t.type === 'in') totalIn += t.amount; else totalOut += t.amount; });
+        document.getElementById('totalSaldo').innerText = formatRupiah(totalIn - totalOut);
+        document.getElementById('totalPemasukan').innerText = formatRupiah(totalIn);
+        document.getElementById('totalPengeluaran').innerText = formatRupiah(totalOut);
+        localStorage.setItem('my_transactions', JSON.stringify(transactions));
     }
-
-    document.getElementById('btnExportBackup').addEventListener('click', function() {
-        const now = new Date();
-        const dateStr = now.toISOString().slice(0,10);
-        const backupData = {
-            app: "VENUS_STUDIO",
-            exportDate: now.toISOString(),
-            totalRecords: transactions.length,
-            transactions: transactions
-        };
-
-        const jsonStr = JSON.stringify(backupData, null, 2);
-        const blob = new Blob([jsonStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `VenusStudio_Backup_${dateStr}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-
-        showCustomNotification("Berhasil", "File backup (.json) diunduh");
-    });
-
-    const btnImportBackup = document.getElementById('btnImportBackup');
-    const importFileInput = document.getElementById('importFileInput');
-
-    btnImportBackup.addEventListener('click', function() {
-        importFileInput.click();
-    });
-
-    importFileInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-            try {
-                const parsed = JSON.parse(evt.target.result);
-                let newTransactions = [];
-
-                if (Array.isArray(parsed)) {
-                    newTransactions = parsed;
-                } else if (parsed && Array.isArray(parsed.transactions)) {
-                    newTransactions = parsed.transactions;
-                } else {
-                    showCustomNotification("Gagal", "Format backup tidak valid");
-                    return;
-                }
-
-                transactions = newTransactions;
-                updateUI();
-                showCustomNotification("Pulih!", `${transactions.length} riwayat dipulihkan`);
-            } catch (err) {
-                showCustomNotification("Error", "File JSON tidak dapat dibaca");
-            }
-        };
-        reader.readAsText(file);
-        this.value = '';
-    });
-
-    const popupNotification = document.getElementById('popupNotification');
-    const popupCloseBtn = document.getElementById('popupCloseBtn');
-
-    function playSuccessSound() {
-        try {
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            if (!AudioContext) return;
-            const ctx = new AudioContext();
-
-            const masterGain = ctx.createGain();
-            masterGain.gain.setValueAtTime(0.6, ctx.currentTime);
-            masterGain.connect(ctx.destination);
-
-            const now = ctx.currentTime;
-            [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(freq, now + idx * 0.08);
-
-                gain.gain.setValueAtTime(0.01, now + idx * 0.08);
-                gain.gain.exponentialRampToValueAtTime(0.6, now + idx * 0.08 + 0.02);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.3);
-
-                osc.connect(gain);
-                gain.connect(masterGain);
-
-                osc.start(now + idx * 0.08);
-                osc.stop(now + idx * 0.08 + 0.3);
-            });
-        } catch (e) {}
-    }
-
-    function showCustomNotification(title, subtitle) {
-        document.getElementById('popupTitle').innerText = title || "Selesai";
-        document.getElementById('popupSubtitle').innerText = subtitle || "Transaksi berhasil dicatat";
-        popupNotification.classList.add('active');
-        playSuccessSound();
-    }
-
-    function hidePopupNotification() {
-        popupNotification.classList.remove('active');
-    }
-
-    popupCloseBtn.addEventListener('click', hidePopupNotification);
-    popupNotification.addEventListener('click', function(e) {
-        if (e.target === popupNotification) hidePopupNotification();
-    });
 
     document.getElementById('transactionForm').addEventListener('submit', function(e) {
         e.preventDefault();
-
-        const btnSubmit = document.getElementById('btnSubmit');
-        const btnText = document.getElementById('btnText');
-
         const type = document.getElementById('type').value;
-        const amountRaw = document.getElementById('amount').value.replace(/\./g, '');
-        const amount = parseFloat(amountRaw);
+        const amount = parseFloat(document.getElementById('amount').value.replace(/\./g, ''));
         const description = document.getElementById('description').value;
         const date = document.getElementById('inputDate').value;
         const time = document.getElementById('inputTime').value;
@@ -2564,127 +1514,19 @@
 
         if (!amount || isNaN(amount) || !description || !date || !time) return;
 
-        btnSubmit.disabled = true;
-        btnText.innerHTML = `<span class="spinner-icon"></span> Menyimpan...`;
-
-        setTimeout(() => {
-            transactions.push({
-                id: Date.now(),
-                type,
-                amount,
-                description,
-                date,
-                time,
-                method
-            });
-
-            updateUI();
-
-            document.getElementById('amount').value = '';
-            document.getElementById('description').value = '';
-            
-            userHasCustomDateTime = false;
-            updateLiveDateTime();
-
-            btnSubmit.disabled = false;
-            btnText.innerText = "Tambah Transaksi";
-
-            showCustomNotification("Selesai", "Transaksi berhasil dicatat & dicadangkan");
-        }, 3000);
+        transactions.push({ id: Date.now(), type, amount, description, date, time, method });
+        updateUI();
+        this.reset();
+        document.getElementById('popupNotification').classList.add('active');
     });
 
-    window.openEditModal = function(id) {
-        const t = transactions.find(item => item.id === id);
-        if (!t) return;
-
-        document.getElementById('editId').value = t.id;
-        document.getElementById('editType').value = t.type;
-        document.getElementById('editAmount').value = parseInt(t.amount, 10).toLocaleString('id-ID');
-        document.getElementById('editDescription').value = t.description;
-        document.getElementById('editDate').value = t.date;
-        document.getElementById('editTime').value = t.time;
-        
-        toggleEditPaymentMethodVisibility();
-        if (t.type === 'out') {
-            document.getElementById('editPaymentMethod').value = t.method || 'CASH';
-        }
-
-        document.getElementById('editModal').classList.add('active');
-    };
-
-    document.getElementById('editAmount').addEventListener('input', function() {
-        let rawValue = this.value.replace(/\D/g, '');
-        if (rawValue) {
-            this.value = parseInt(rawValue, 10).toLocaleString('id-ID');
-        } else {
-            this.value = '';
-        }
+    document.getElementById('popupCloseBtn').addEventListener('click', () => {
+        document.getElementById('popupNotification').classList.remove('active');
     });
 
-    document.getElementById('closeEditModal').addEventListener('click', function() {
-        document.getElementById('editModal').classList.remove('active');
-    });
-
-    let pendingDeleteId = null;
-    const confirmDeleteModal = document.getElementById('confirmDeleteModal');
-
-    document.getElementById('btnDeleteModal').addEventListener('click', function() {
-        pendingDeleteId = parseInt(document.getElementById('editId').value, 10);
-        if (pendingDeleteId) {
-            confirmDeleteModal.classList.add('active');
-        }
-    });
-
-    document.getElementById('btnCancelDelete').addEventListener('click', function() {
-        confirmDeleteModal.classList.remove('active');
-        pendingDeleteId = null;
-    });
-
-    document.getElementById('btnConfirmDelete').addEventListener('click', function() {
-        if (pendingDeleteId) {
-            transactions = transactions.filter(t => t.id !== pendingDeleteId);
-            updateUI();
-            confirmDeleteModal.classList.remove('active');
-            document.getElementById('editModal').classList.remove('active');
-            pendingDeleteId = null;
-        }
-    });
-
-    document.getElementById('editForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const id = parseInt(document.getElementById('editId').value, 10);
-        const type = document.getElementById('editType').value;
-        const amountRaw = document.getElementById('editAmount').value.replace(/\./g, '');
-        const amount = parseFloat(amountRaw);
-        const description = document.getElementById('editDescription').value;
-        const date = document.getElementById('editDate').value;
-        const time = document.getElementById('editTime').value;
-        const method = (type === 'out') ? document.getElementById('editPaymentMethod').value : null;
-
-        if (!amount || isNaN(amount) || !description || !date || !time) return;
-
-        const index = transactions.findIndex(t => t.id === id);
-        if (index !== -1) {
-            transactions[index] = { id, type, amount, description, date, time, method };
-            updateUI();
-        }
-
-        document.getElementById('editModal').classList.remove('active');
-    });
-
-    updateLiveDateTime();
-    updateUI();
-</script>
-
-<!-- PENDAFTARAN SERVICE WORKER UNTUK PWA -->
-<script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js')
-                .then((reg) => console.log('Service Worker terdaftar:', reg.scope))
-                .catch((err) => console.log('Service Worker gagal:', err));
-        });
-    }
+    const now = new Date();
+    document.getElementById('inputDate').value = now.toISOString().slice(0,10);
+    document.getElementById('inputTime').value = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
 </script>
 </body>
 </html>
