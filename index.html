@@ -20,7 +20,7 @@
     <!-- Google Fonts for high-end modern sci-fi aesthetic -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700;1,9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
     
     <style>
         *, *::before, *::after {
@@ -73,7 +73,7 @@
             width: 100vw;
             height: 100vh;
             height: 100dvh;
-            background: linear-gradient(rgba(2, 7, 20, 0.88), rgba(2, 7, 20, 0.96)), url('bg-splash.jpg') no-repeat center center;
+            background: linear-gradient(rgba(2, 7, 20, 0.9), rgba(2, 7, 20, 0.98)), url('bg-splash.jpg') no-repeat center center;
             background-size: cover;
             z-index: 99999999;
             display: flex;
@@ -82,7 +82,7 @@
             align-items: center;
             padding: 20px;
             overflow: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
         .splash-screen-overlay.hidden {
@@ -129,10 +129,10 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            max-width: 340px;
+            max-width: 400px;
             z-index: 5;
             position: relative;
-            transform: translateY(-25px);
+            transform: translateY(-20px);
         }
 
         /* HOLOGRAPHIC CYBER CORE ANIMATION */
@@ -196,23 +196,64 @@
             color: #7dd3fc;
             text-transform: uppercase;
             opacity: 0.85;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
+        /* NETFLIX INTRO AUTHENTIC ANIMATION GAYA ASLI */
         .splash-title-large {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 8vw, 2.8rem);
+            font-size: clamp(1.6rem, 7vw, 2.3rem);
             font-weight: 900;
-            letter-spacing: 3px;
             text-transform: uppercase;
-            background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #38bdf8 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #00f0ff 65%, #38bdf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0, 240, 255, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            white-space: nowrap;
+            width: 100%;
+            /* 1. Mula-mula rapat & blur besar */
+            letter-spacing: -12px;
+            opacity: 0;
+            transform: scale(3.2);
+            filter: blur(18px);
+            animation: netflixIntroMaster 1.6s cubic-bezier(0.15, 0.85, 0.25, 1) forwards;
+        }
+
+        @keyframes netflixIntroMaster {
+            0% {
+                opacity: 0;
+                transform: scale(3.5);
+                letter-spacing: -14px;
+                filter: blur(20px);
+                text-shadow: 0 0 40px rgba(0, 240, 255, 1);
+            }
+            40% {
+                opacity: 1;
+                transform: scale(1.2);
+                letter-spacing: -2px;
+                filter: blur(4px);
+                text-shadow: 0 0 25px rgba(0, 240, 255, 0.9);
+            }
+            75% {
+                opacity: 1;
+                transform: scale(0.98);
+                letter-spacing: 3px;
+                filter: blur(0px);
+                text-shadow: 0 0 18px rgba(0, 240, 255, 0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                letter-spacing: 1.5px;
+                filter: blur(0px);
+                text-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+            }
         }
 
         .tap-btn-wrapper {
-            margin-top: 24px;
+            margin-top: 26px;
             min-height: 52px;
             display: flex;
             align-items: center;
@@ -1613,6 +1654,8 @@
         </div>
 
         <div class="splash-welcome-top">WELCOME TO</div>
+        
+        <!-- NETFLIX INTRO AUTHENTIC TITLE (FONT ORBITRON ASLI) -->
         <div class="splash-title-large">VENUS STUDIO</div>
         
         <div class="tap-btn-wrapper">
@@ -1918,6 +1961,51 @@
 </div>
 
 <script>
+    /* EFEK SUARA BASS "TUDUM" KHAS NETFLIX ASLI */
+    function playNetflixIntroSound() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+            if (ctx.state === 'suspended') ctx.resume();
+
+            const now = ctx.currentTime;
+
+            // 1. Dentuman Bass Pertama ("Tu...")
+            const osc1 = ctx.createOscillator();
+            const gain1 = ctx.createGain();
+            osc1.type = 'sawtooth';
+            osc1.frequency.setValueAtTime(100, now);
+            osc1.frequency.exponentialRampToValueAtTime(32, now + 0.55);
+
+            gain1.gain.setValueAtTime(0.01, now);
+            gain1.gain.linearRampToValueAtTime(0.75, now + 0.08);
+            gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.85);
+
+            osc1.connect(gain1);
+            gain1.connect(ctx.destination);
+            osc1.start(now);
+            osc1.stop(now + 0.85);
+
+            // 2. Dentuman Bass Utama Kedua ("Dum!")
+            const osc2 = ctx.createOscillator();
+            const gain2 = ctx.createGain();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(140, now + 0.22);
+            osc2.frequency.exponentialRampToValueAtTime(38, now + 1.6);
+
+            gain2.gain.setValueAtTime(0.01, now + 0.22);
+            gain2.gain.linearRampToValueAtTime(0.95, now + 0.3);
+            gain2.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
+
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+            osc2.start(now + 0.22);
+            osc2.stop(now + 1.8);
+
+        } catch (e) {}
+    }
+
     function playDramaticTransitionSound() {
         try {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -2003,15 +2091,16 @@
             }
         } else {
             setTimeout(() => {
+                playNetflixIntroSound();
                 speakWelcomeGreeting();
-            }, 500);
+            }, 600);
         }
     });
 
     function speakWelcomeGreeting() {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance("Welcome to Venus Studio, tap here to login.");
+            const utterance = new SpeechSynthesisUtterance("Welcome To Venus Studio, Tap here to Login");
             utterance.lang = 'en-US';
             utterance.rate = 0.95;
             utterance.pitch = 1.0;
@@ -2765,7 +2854,7 @@
         const description = document.getElementById('description').value;
         const date = selectedDateValue;
         const time = timeDisplayText.innerText;
-        const method = (type === 'out') ? document.getElementById('paymentMethod').value : logoDisplayMethodSelect = null; // safe
+        const method = (type === 'out') ? document.getElementById('paymentMethod').value : null;
 
         if (!amount || isNaN(amount) || !description || !date || !time) return;
 
@@ -2773,7 +2862,7 @@
         btnText.innerHTML = '<span class="btn-spinner"></span> Memproses...';
 
         setTimeout(() => {
-            transactions.push({ id: Date.now(), type, amount, description, date, time, method: (type === 'out') ? document.getElementById('paymentMethod').value : null });
+            transactions.push({ id: Date.now(), type, amount, description, date, time, method });
             updateUI();
             transactionForm.reset();
             
