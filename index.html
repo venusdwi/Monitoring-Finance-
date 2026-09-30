@@ -78,9 +78,9 @@
             z-index: 99999999;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            padding: 20px;
+            padding: 40px 20px;
             overflow: hidden;
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
@@ -123,19 +123,15 @@
             z-index: 1;
         }
 
-        .splash-content {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        /* POSISI ATAS: LOGO BULAT ANIMASI */
+        .splash-top-section {
             width: 100%;
-            max-width: 400px;
+            display: flex;
+            justify-content: center;
             z-index: 5;
-            position: relative;
-            transform: translateY(-20px);
+            padding-top: 10px;
         }
 
-        /* HOLOGRAPHIC CYBER CORE ANIMATION */
         .splash-logo-glow {
             width: 88px;
             height: 88px;
@@ -148,7 +144,6 @@
             position: relative;
             box-shadow: 0 0 35px rgba(0, 240, 255, 0.4), inset 0 0 20px rgba(0, 240, 255, 0.2);
             animation: coreRotateOuter 10s infinite linear, logoFloat 2s infinite alternate ease-in-out;
-            margin-bottom: 16px;
         }
 
         .splash-logo-glow::before {
@@ -188,21 +183,36 @@
             100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 15px rgba(0, 240, 255, 1)); }
         }
 
+        @keyframes logoFloat {
+            0% { transform: translateY(0); box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+            100% { transform: translateY(-8px); box-shadow: 0 0 40px rgba(0, 240, 255, 0.9); }
+        }
+
+        /* POSISI TENGAH: TEKS WELCOME & VENUS STUDIO */
+        .splash-center-section {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+            z-index: 5;
+        }
+
         .splash-welcome-top {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             font-weight: 800;
             letter-spacing: 5px;
             color: #7dd3fc;
             text-transform: uppercase;
             opacity: 0.85;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
-        /* NETFLIX INTRO AUTHENTIC ANIMATION GAYA ASLI */
         .splash-title-large {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(1.6rem, 7vw, 2.3rem);
+            font-size: clamp(2.1rem, 8.5vw, 2.9rem);
             font-weight: 900;
             text-transform: uppercase;
             background: linear-gradient(135deg, #ffffff 0%, #00f0ff 65%, #38bdf8 100%);
@@ -213,7 +223,6 @@
             align-items: center;
             white-space: nowrap;
             width: 100%;
-            /* 1. Mula-mula rapat & blur besar */
             letter-spacing: -12px;
             opacity: 0;
             transform: scale(3.2);
@@ -252,13 +261,13 @@
             }
         }
 
-        .tap-btn-wrapper {
-            margin-top: 26px;
-            min-height: 52px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* POSISI BAWAH: TOMBOL TAP HERE */
+        .splash-bottom-section {
             width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 5;
+            padding-bottom: 20px;
         }
 
         .tap-here-btn {
@@ -266,10 +275,10 @@
             border: 1.5px solid rgba(0, 240, 255, 0.7);
             color: #00f0ff;
             font-family: 'Rajdhani', sans-serif;
-            font-size: 0.95rem;
+            font-size: 1.15rem;
             font-weight: 800;
             letter-spacing: 3px;
-            padding: 12px 32px;
+            padding: 14px 38px;
             border-radius: 30px;
             cursor: pointer;
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
@@ -294,11 +303,6 @@
         @keyframes tapPulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
             50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 240, 255, 0.6); }
-        }
-
-        @keyframes logoFloat {
-            0% { transform: translateY(0); box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
-            100% { transform: translateY(-8px); box-shadow: 0 0 40px rgba(0, 240, 255, 0.9); }
         }
 
         /* TAHAP 2: LAYAR KODE AKSES PIN */
@@ -331,7 +335,6 @@
             pointer-events: none;
         }
 
-        /* EFEK TRANSISI HACKER MATRIX TERMINAL SAAT PIN BENAR */
         .cyber-scanner-flash {
             position: fixed;
             top: 0;
@@ -378,7 +381,7 @@
         }
 
         .hacker-line {
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: #34d399;
             letter-spacing: 1.5px;
@@ -435,7 +438,7 @@
 
         .pin-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             font-weight: 800;
             letter-spacing: 2px;
             color: #fff;
@@ -443,9 +446,9 @@
         }
 
         .pin-subtitle {
-            font-size: 0.78rem;
+            font-size: 0.88rem;
             color: #7dd3fc;
-            margin-top: -8px;
+            margin-top: -6px;
         }
 
         .pin-inputs-container {
@@ -462,7 +465,7 @@
             border: 1.5px solid rgba(0, 240, 255, 0.35);
             background: rgba(2, 12, 32, 0.8);
             color: #00f0ff;
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             font-weight: 900;
             display: flex;
             align-items: center;
@@ -483,7 +486,7 @@
 
         .pin-error-msg {
             color: #fb7185;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 700;
             min-height: 18px;
         }
@@ -502,7 +505,7 @@
             border: 1px solid rgba(0, 240, 255, 0.25);
             color: #ffffff;
             font-family: 'Rajdhani', sans-serif;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 700;
             padding: 12px 0;
             border-radius: 14px;
@@ -521,7 +524,7 @@
         }
 
         .keypad-btn.action-btn {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #7dd3fc;
         }
 
@@ -589,9 +592,9 @@
             border: 1px solid rgba(0, 240, 255, 0.6);
             color: #00f0ff;
             font-family: 'Rajdhani', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 800;
-            padding: 8px 14px;
+            padding: 10px 16px;
             border-radius: 12px;
             cursor: pointer;
             display: none;
@@ -610,8 +613,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 22px; 
-            margin-bottom: 12px;
+            gap: 14px; 
+            margin-bottom: 4px;
         }
 
         .brand-top-header {
@@ -620,28 +623,31 @@
             justify-content: center;
             pointer-events: none;
             user-select: none;
-            padding: 4px 10px;
+            padding: 2px 10px;
             background: transparent;
             border: none;
         }
 
+        /* UKURAN TEKS VENUS STUDIO DI HALAMAN UTAMA DIPERKECIL */
         .brand-studio-title {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 1.25rem;
+            font-size: 1.05rem;
             font-weight: 900;
-            letter-spacing: 5px;
+            letter-spacing: 4px;
             color: #00f0ff;
             text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.85);
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.8);
         }
 
-        .clickable-header-wrapper {
+        .clickable-header-wrapper,
+        .music-player-panel,
+        .personal-data-panel {
             cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 14px 16px;
+            padding: 18px 16px;
             border-radius: 16px;
             background: rgba(2, 10, 28, var(--glass-alpha));
             backdrop-filter: blur(var(--glass-blur));
@@ -650,18 +656,23 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.2);
             width: 100%;
             transition: transform 0.2s ease, filter 0.2s ease, background 0.2s ease;
+            margin-bottom: 12px;
         }
 
-        .clickable-header-wrapper:active {
+        .clickable-header-wrapper:active,
+        .music-player-panel:active,
+        .personal-data-panel:active {
             transform: scale(0.98);
             filter: brightness(1.2);
             background: rgba(0, 240, 255, 0.15);
         }
 
-        h2.title-cyber {
+        h2.title-cyber,
+        .title-music-box,
+        .title-personal-box {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(1.4rem, 5.5vw, 1.8rem);
+            font-size: clamp(1.4rem, 5vw, 1.8rem);
             letter-spacing: 2px;
             text-transform: uppercase;
             background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #38bdf8 100%);
@@ -673,56 +684,20 @@
 
         .subtitle-cyber {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 800;
             letter-spacing: 2px;
             color: #7dd3fc;
             text-transform: uppercase;
-            margin-top: 2px;
+            margin-top: 4px;
             opacity: 0.95;
             text-align: center;
         }
 
-        .music-player-panel {
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 14px 16px;
-            border-radius: 16px;
-            background: rgba(2, 10, 28, var(--glass-alpha));
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            border: 1.5px solid rgba(0, 240, 255, 0.45);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.2);
-            width: 100%;
-            margin-bottom: 12px;
-            transition: transform 0.2s ease, filter 0.2s ease, background 0.2s ease;
-        }
-
-        .music-player-panel:active {
-            transform: scale(0.98);
-            filter: brightness(1.2);
-            background: rgba(0, 240, 255, 0.15);
-        }
-
-        .title-music-box {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: clamp(1.2rem, 5vw, 1.5rem);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #38bdf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
-            text-align: center;
-        }
-
-        /* MODAL / POP-UP HALAMAN CYBER VAULT & PEMUTAR MUSIK */
+        /* MODAL / POP-UP HALAMAN CYBER VAULT, MUSIK & PERSONAL DATA */
         .cyber-modal-overlay,
-        .music-modal-overlay {
+        .music-modal-overlay,
+        .personal-modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -744,17 +719,19 @@
         }
 
         .cyber-modal-overlay.active,
-        .music-modal-overlay.active {
+        .music-modal-overlay.active,
+        .personal-modal-overlay.active {
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
         }
 
-        .music-modal-card {
+        .music-modal-card,
+        .personal-modal-card {
             background: rgba(3, 14, 38, 0.98);
             border: 2px solid rgba(0, 240, 255, 0.75);
             border-radius: 26px;
-            padding: 20px 16px;
+            padding: 22px 18px;
             width: 100%;
             max-width: 410px;
             height: 96vh;
@@ -774,7 +751,7 @@
             background: rgba(3, 14, 38, 0.98);
             border: none !important;
             border-radius: 26px;
-            padding: 20px 16px 24px 16px;
+            padding: 22px 18px 24px 18px;
             width: 100%;
             max-width: 410px;
             height: 96vh;
@@ -791,33 +768,33 @@
         }
 
         .cyber-modal-overlay.active .cyber-modal-card,
-        .music-modal-overlay.active .music-modal-card {
+        .music-modal-overlay.active .music-modal-card,
+        .personal-modal-overlay.active .personal-modal-card {
             transform: scale(1);
         }
 
         .close-cyber-modal,
-        .close-music-modal {
-            position: absolute;
-            top: 14px;
-            right: 14px;
+        .close-music-modal,
+        .close-personal-modal {
             background: rgba(0, 240, 255, 0.12);
             border: 1.5px solid rgba(0, 240, 255, 0.5);
             color: #00f0ff;
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             font-weight: 800;
             transition: all 0.2s ease;
-            z-index: 10;
+            flex-shrink: 0;
         }
 
         .close-cyber-modal:active,
-        .close-music-modal:active {
+        .close-music-modal:active,
+        .close-personal-modal:active {
             background: rgba(0, 240, 255, 0.35);
             transform: scale(0.92);
         }
@@ -878,7 +855,7 @@
         .track-title-text {
             color: #ffffff;
             font-weight: 800;
-            font-size: 0.88rem;
+            font-size: 1rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -901,7 +878,7 @@
             -webkit-appearance: none !important;
             appearance: none !important;
             width: 100% !important;
-            height: 2px !important;
+            height: 3px !important;
             border-radius: 1px !important;
             background: transparent !important;
             outline: none !important;
@@ -914,14 +891,14 @@
 
         .music-progress-bar::-webkit-slider-runnable-track {
             background: rgba(0, 240, 255, 0.35) !important;
-            height: 2px !important;
+            height: 3px !important;
             border: none !important;
             box-shadow: none !important;
         }
 
         .music-progress-bar::-moz-range-track {
             background: rgba(0, 240, 255, 0.35) !important;
-            height: 2px !important;
+            height: 3px !important;
             border: none !important;
             box-shadow: none !important;
         }
@@ -929,19 +906,19 @@
         .music-progress-bar::-webkit-slider-thumb {
             -webkit-appearance: none !important;
             appearance: none !important;
-            width: 12px !important;
-            height: 12px !important;
+            width: 14px !important;
+            height: 14px !important;
             border-radius: 50% !important;
             background: #00f0ff !important;
             box-shadow: 0 0 10px rgba(0, 240, 255, 0.9) !important;
             cursor: pointer !important;
-            margin-top: -5px !important;
+            margin-top: -6px !important;
         }
 
         .music-time-info {
             display: flex !important;
             justify-content: space-between !important;
-            font-size: 0.65rem !important;
+            font-size: 0.75rem !important;
             color: #7dd3fc !important;
             font-weight: 700 !important;
             order: 2 !important; 
@@ -970,14 +947,14 @@
         }
 
         .ctrl-btn.small {
-            width: 50px;
-            height: 50px;
-            font-size: 1.1rem;
+            width: 52px;
+            height: 52px;
+            font-size: 1.2rem;
         }
 
         .ctrl-btn.large {
-            width: 68px;
-            height: 68px;
+            width: 72px;
+            height: 72px;
             background: linear-gradient(135deg, rgba(0, 240, 255, 0.25), rgba(0, 119, 255, 0.35));
             border: 2px solid #00f0ff;
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
@@ -989,15 +966,15 @@
         }
 
         .cyber-icon {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             fill: #00f0ff;
             filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.8));
         }
 
         .ctrl-btn.large .cyber-icon {
-            width: 26px;
-            height: 26px;
+            width: 28px;
+            height: 28px;
         }
 
         .playlist-wrapper {
@@ -1021,10 +998,10 @@
             justify-content: space-between;
             background: rgba(0, 240, 255, 0.05);
             border: 1px solid rgba(0, 240, 255, 0.22);
-            padding: 8px 10px;
+            padding: 10px 12px;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             text-align: left;
             gap: 10px;
         }
@@ -1036,10 +1013,10 @@
 
         .playlist-delete-btn {
             color: #fb7185;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 6px;
             border: 1px solid rgba(244, 63, 94, 0.35);
             background: rgba(244, 63, 94, 0.08);
@@ -1055,16 +1032,16 @@
         }
 
         .track-music-icon-svg {
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             fill: #00f0ff;
-            margin-right: 6px;
+            margin-right: 8px;
             flex-shrink: 0;
             filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.8));
         }
 
-        /* KONTEN UTAMA DENGAN JARAK PROPORSIONAL */
-        .full-app-content {
+        .full-app-content,
+        .personal-app-content {
             display: flex;
             flex-direction: column;
             width: 100%;
@@ -1075,15 +1052,14 @@
             -webkit-backdrop-filter: none !important;
             border-radius: 0 !important;
             border: none !important;
-            padding: 6px 4px 150px 4px !important;
+            padding: 6px 4px 120px 4px !important;
             box-shadow: none !important;
             text-align: left;
-            gap: 20px;
+            gap: 16px;
             margin-top: 10px;
             scroll-behavior: smooth;
         }
 
-        /* MENGHILANGKAN KOTAK PEMBUNGKUS (BORDER & BACKGROUND) */
         .glass-control-panel,
         .backup-panel,
         form {
@@ -1093,7 +1069,6 @@
             padding: 4px 0 !important;
         }
 
-        /* SLIDER TRANSPARANSI KACA */
         .glass-control-panel {
             display: flex;
             align-items: center;
@@ -1104,7 +1079,7 @@
         }
 
         .glass-label-text {
-            font-size: 0.82rem;
+            font-size: 0.9rem;
             font-weight: 800;
             color: #7dd3fc;
             white-space: nowrap;
@@ -1126,7 +1101,7 @@
             -webkit-appearance: none !important;
             appearance: none !important;
             width: 100% !important;
-            height: 2px !important;
+            height: 3px !important;
             border-radius: 1px !important;
             background: rgba(0, 240, 255, 0.35) !important;
             outline: none !important;
@@ -1138,14 +1113,14 @@
 
         .glass-range-input::-webkit-slider-runnable-track {
             background: rgba(0, 240, 255, 0.35) !important;
-            height: 2px !important;
+            height: 3px !important;
             border: none !important;
             box-shadow: none !important;
         }
 
         .glass-range-input::-moz-range-track {
             background: rgba(0, 240, 255, 0.35) !important;
-            height: 2px !important;
+            height: 3px !important;
             border: none !important;
             box-shadow: none !important;
         }
@@ -1153,8 +1128,8 @@
         .glass-range-input::-webkit-slider-thumb {
             -webkit-appearance: none !important;
             appearance: none !important;
-            width: 14px !important;
-            height: 14px !important;
+            width: 15px !important;
+            height: 15px !important;
             border-radius: 50% !important;
             background: #00f0ff !important;
             box-shadow: 0 0 10px rgba(0, 240, 255, 0.9) !important;
@@ -1164,8 +1139,8 @@
         }
 
         .glass-range-input::-moz-range-thumb {
-            width: 14px !important;
-            height: 14px !important;
+            width: 15px !important;
+            height: 15px !important;
             border-radius: 50% !important;
             background: #00f0ff !important;
             box-shadow: 0 0 10px rgba(0, 240, 255, 0.9) !important;
@@ -1176,9 +1151,9 @@
         .opacity-value-badge {
             font-family: 'Rajdhani', sans-serif;
             font-weight: 800;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             color: #00f0ff;
-            min-width: 38px;
+            min-width: 42px;
             text-align: right;
             white-space: nowrap;
             line-height: 1;
@@ -1196,12 +1171,12 @@
         }
 
         .backup-status-tag {
-            font-size: 0.7rem;
+            font-size: 0.78rem;
             font-weight: 700;
             color: #34d399;
             background: rgba(16, 185, 129, 0.15);
             border: 1px solid rgba(16, 185, 129, 0.35);
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 12px;
         }
 
@@ -1213,7 +1188,7 @@
         .btn-backup-action {
             flex: 1;
             padding: 12px 10px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 800;
             border-radius: 12px;
             border: 1px solid rgba(0, 240, 255, 0.35);
@@ -1236,12 +1211,12 @@
             background: rgba(0, 180, 255, calc(var(--glass-alpha) * 0.45 + 0.05));
             border: 1px solid rgba(0, 240, 255, 0.5);
             border-radius: 16px;
-            padding: 16px 12px;
+            padding: 18px 14px;
             text-align: center;
         }
 
         .card-hero h4 {
-            font-size: 0.75rem;
+            font-size: 0.82rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #7dd3fc;
@@ -1250,7 +1225,7 @@
         }
 
         .card-hero p {
-            font-size: clamp(1.4rem, 5vw, 1.8rem);
+            font-size: clamp(1.6rem, 5.5vw, 2rem);
             font-weight: 900;
             color: #ffffff;
             text-shadow: 0 2px 14px rgba(0, 240, 255, 0.8);
@@ -1263,20 +1238,20 @@
         }
 
         .card-sub {
-            padding: 14px 10px;
+            padding: 16px 12px;
             border-radius: 14px;
             text-align: center;
         }
 
         .card-sub h4 {
-            font-size: 0.7rem;
+            font-size: 0.78rem;
             text-transform: uppercase;
             font-weight: 800;
             margin-bottom: 6px;
         }
 
         .card-sub p {
-            font-size: clamp(0.85rem, 3.8vw, 1rem);
+            font-size: clamp(0.95rem, 4vw, 1.15rem);
             font-weight: 800;
         }
 
@@ -1301,7 +1276,7 @@
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .datetime-group {
@@ -1311,14 +1286,14 @@
         }
 
         label {
-            font-size: 0.88rem;
+            font-size: 0.92rem;
             font-weight: 800;
             color: #7dd3fc;
             letter-spacing: 0.5px;
             margin-bottom: 2px;
         }
 
-        input, select {
+        input, select, textarea {
             padding: 15px 16px;
             border: 1.5px solid rgba(0, 240, 255, 0.45);
             border-radius: 12px;
@@ -1330,12 +1305,129 @@
             width: 100%;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             border-color: #00f0ff;
             box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
         }
 
-        /* PEMBUNGKUS KUSTOM UNTUK TANGGAL & JAM INPUT */
+        .account-title-card {
+            background: rgba(2, 12, 32, 0.85);
+            border: 1.5px solid rgba(0, 240, 255, 0.4);
+            border-radius: 14px;
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .account-title-card:active {
+            background: rgba(0, 240, 255, 0.2);
+            border-color: #00f0ff;
+            transform: scale(0.98);
+        }
+
+        .account-title-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #00f0ff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .account-title-arrow {
+            color: #7dd3fc;
+            font-weight: 900;
+            font-size: 1.25rem;
+        }
+
+        .btn-add-account-action {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1.5px dashed rgba(0, 240, 255, 0.6);
+            color: #00f0ff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            padding: 16px;
+            border-radius: 14px;
+            cursor: pointer;
+            text-align: center;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .btn-add-account-action:active {
+            background: rgba(0, 240, 255, 0.3);
+            transform: scale(0.98);
+        }
+
+        .sub-account-modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(3, 14, 38, 0.98);
+            z-index: 20;
+            display: none;
+            flex-direction: column;
+            padding: 20px 16px;
+            justify-content: space-between;
+            border-radius: 26px;
+            overflow-y: auto;
+        }
+
+        .sub-account-modal.active {
+            display: flex !important;
+        }
+
+        .account-history-box {
+            background: rgba(2, 12, 32, 0.9);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 10px;
+            max-height: 160px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .account-history-item {
+            font-size: 0.95rem;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.15s ease;
+        }
+
+        .account-history-item:active {
+            background: rgba(0, 240, 255, 0.18);
+        }
+
+        .account-history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-user-info {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .history-timestamp {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+
         .datetime-custom-wrapper {
             position: relative;
             display: flex;
@@ -1371,7 +1463,7 @@
         }
 
         .datetime-display-text {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: #ffffff;
             pointer-events: none;
@@ -1381,7 +1473,7 @@
         button[type="submit"] {
             background: linear-gradient(135deg, rgba(0, 153, 255, 0.9) 0%, rgba(0, 85, 255, 0.9) 100%);
             color: #ffffff;
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             font-weight: 900;
             letter-spacing: 1.5px;
             border: 1.5px solid rgba(0, 240, 255, 0.7);
@@ -1404,8 +1496,8 @@
         }
 
         .btn-spinner {
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             border: 2px solid rgba(255,255,255,0.3);
             border-top: 2px solid #ffffff;
             border-radius: 50%;
@@ -1430,7 +1522,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 12px;
+            padding: 12px 14px;
             border-radius: 12px;
             background: rgba(0, 240, 255, 0.06);
             border: 1.5px solid rgba(0, 240, 255, 0.25);
@@ -1438,7 +1530,7 @@
         }
 
         .history-title {
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             color: #fff;
             font-weight: 900;
             margin: 0;
@@ -1452,12 +1544,12 @@
             justify-content: center;
             background: rgba(0, 240, 255, 0.18);
             border: 1px solid rgba(0, 240, 255, 0.5);
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s ease;
             overflow: hidden;
-            min-height: 32px;
+            min-height: 36px;
         }
 
         .filter-badge-wrapper:active {
@@ -1466,7 +1558,7 @@
         }
 
         .filter-badge-text {
-            font-size: 0.75rem;
+            font-size: 0.82rem;
             font-weight: 800;
             color: #00f0ff;
             text-align: center;
@@ -1499,11 +1591,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 14px;
+            padding: 16px 15px;
             background: rgba(2, 12, 32, 0.85);
             border: 1.5px solid rgba(0, 212, 255, 0.3);
             border-radius: 14px;
-            border-left: 5px solid #a5f3fc;
+            border-left: 6px solid #a5f3fc;
             cursor: pointer;
             transition: transform 0.15s ease, background 0.15s ease;
         }
@@ -1519,18 +1611,18 @@
         .item-info {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
             flex-grow: 1;
         }
 
         .item-desc {
             font-weight: 800;
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: #fff;
         }
 
         .item-date {
-            font-size: 0.78rem;
+            font-size: 0.85rem;
             font-weight: 700;
             color: #38bdf8;
             display: flex;
@@ -1538,29 +1630,28 @@
             gap: 6px;
         }
 
-        /* IKON NOTE / CATATAN DENGAN EFEK NEON CYAN SELARAS TEMA WEB */
         .cyber-note-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.85));
         }
 
         .item-method-badge {
-            font-size: 0.7rem;
+            font-size: 0.78rem;
             font-weight: 800;
             color: #fb7185;
             background: rgba(244, 63, 94, 0.15);
             border: 1px solid rgba(244, 63, 94, 0.35);
-            padding: 2px 8px;
+            padding: 3px 9px;
             border-radius: 6px;
             margin-left: 6px;
         }
 
         .item-amount {
             font-weight: 900;
-            font-size: 1.02rem;
+            font-size: 1.15rem;
         }
 
         .amount-in { color: #34d399; }
@@ -1590,22 +1681,23 @@
         }
 
         .popup-box {
-            background: rgba(3, 14, 38, 0.95);
-            border: 1.5px solid rgba(0, 240, 255, 0.6);
-            border-radius: 22px;
-            padding: 24px 18px;
+            background: rgba(3, 14, 38, 0.98);
+            border: 2px solid rgba(0, 240, 255, 0.8);
+            border-radius: 26px;
+            padding: 32px 24px;
             width: 100%;
-            max-width: 340px;
+            max-width: 380px;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.5);
         }
 
         .popup-icon {
-            width: 54px;
-            height: 54px;
+            width: 72px;
+            height: 72px;
             border-radius: 50%;
             background: rgba(16, 185, 129, 0.25);
             border: 2px solid var(--pemasukan-green);
@@ -1613,28 +1705,41 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 2.4rem;
         }
 
         .popup-title {
-            font-size: 1.4rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.7rem;
             font-weight: 900;
             color: #fff;
         }
 
         .popup-subtitle {
-            font-size: 0.85rem;
+            font-size: 1.05rem;
             color: #a5f3fc;
+            line-height: 1.5;
         }
 
         .popup-btn {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: #fff;
-            font-weight: 800;
-            border: none;
-            padding: 10px 32px;
-            border-radius: 12px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 16px 48px;
+            border-radius: 16px;
             cursor: pointer;
+            width: 100%;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+            margin-top: 6px;
+        }
+
+        .popup-btn:active {
+            transform: scale(0.97);
+            filter: brightness(1.15);
         }
     </style>
 </head>
@@ -1645,28 +1750,29 @@
     <div class="splash-particles"></div>
     <div class="splash-pulse-line"></div>
 
-    <div class="splash-content">
-        <!-- HOLOGRAPHIC CYBER CORE & SVG ICON -->
+    <!-- POSISI ATAS: LOGO ANIMASI -->
+    <div class="splash-top-section">
         <div class="splash-logo-glow">
             <svg class="cyber-core-svg" viewBox="0 0 24 24">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
             </svg>
         </div>
+    </div>
 
+    <!-- POSISI TENGAH: TEKS WELCOME & VENUS STUDIO -->
+    <div class="splash-center-section">
         <div class="splash-welcome-top">WELCOME TO</div>
-        
-        <!-- NETFLIX INTRO AUTHENTIC TITLE (FONT ORBITRON ASLI) -->
         <div class="splash-title-large">VENUS STUDIO</div>
-        
-        <div class="tap-btn-wrapper">
-            <button type="button" class="tap-here-btn" id="btnTapHere">
-                TAP HERE
-            </button>
-        </div>
+    </div>
+    
+    <!-- POSISI BAWAH: TOMBOL TAP HERE -->
+    <div class="splash-bottom-section">
+        <button type="button" class="tap-here-btn" id="btnTapHere">
+            TAP HERE
+        </button>
     </div>
 </div>
 
-<!-- EFEK TRANSISI HACKER MATRIX TERMINAL SAAT PIN BENAR -->
 <div class="cyber-scanner-flash" id="cyberScannerFlash">
     <div class="hacker-terminal-box">
         <div class="hacker-line">&gt; INITIALIZING SECURE HANDSHAKE...</div>
@@ -1716,11 +1822,96 @@
     <div class="cyber-vignette"></div>
 </div>
 
+<!-- MODAL PERSONAL DATA -->
+<div class="personal-modal-overlay" id="personalModalOverlay">
+    <div class="personal-modal-card">
+        <div style="display: grid; grid-template-columns: 40px 1fr 40px; align-items: center; width: 100%; flex-shrink: 0; padding: 2px 0;">
+            <div></div>
+            <div style="font-family: 'Orbitron', sans-serif; font-size: 1.15rem; font-weight: 900; color: #00f0ff; letter-spacing: 1.5px; text-align: center;">PERSONAL DATA</div>
+            <div style="display: flex; justify-content: flex-end;">
+                <button type="button" class="close-personal-modal" id="closePersonalModalBtn" style="position: static;">✕</button>
+            </div>
+        </div>
+
+        <div class="personal-app-content" id="mainPersonalListContainer">
+            <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;" id="accountTitlesList"></div>
+
+            <button type="button" class="btn-add-account-action" id="btnAddAccountModal">+ TAMBAH AKUN / KOLOM BARU</button>
+
+            <div style="display: flex; gap: 10px; margin-top: auto; padding-top: 10px;">
+                <button type="button" id="btnExportPersonal" style="flex: 1; padding: 14px; font-size: 0.9rem; font-weight: 800; border-radius: 12px; background: rgba(16,185,129,0.2); border: 1px solid rgba(16,185,129,0.6); color: #34d399; cursor: pointer;">Backup Data</button>
+                <button type="button" id="btnImportPersonal" style="flex: 1; padding: 14px; font-size: 0.9rem; font-weight: 800; border-radius: 12px; background: rgba(245,158,11,0.2); border: 1px solid rgba(245,158,11,0.6); color: #fbbf24; cursor: pointer;">Pulihkan Data</button>
+                <input type="file" id="importPersonalFileInput" accept=".json" style="display: none;">
+            </div>
+        </div>
+
+        <!-- SUB-MODAL DETAIL AKUN -->
+        <div class="sub-account-modal" id="subAccountModal">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,240,255,0.2); padding-bottom: 10px;">
+                <div id="subModalHeading" style="font-family: 'Orbitron', sans-serif; font-size: 1.05rem; font-weight: 900; color: #00f0ff; text-transform: uppercase;">EDIT AKUN</div>
+                <button type="button" id="closeSubModalBtn" style="background:none; border:none; color:#00f0ff; font-size:1.4rem; font-weight:900; cursor:pointer;">✕</button>
+            </div>
+
+            <form id="subAccountForm" style="display: flex; flex-direction: column; gap: 14px; flex-grow: 1; margin-top: 10px;">
+                <input type="hidden" id="subEditIndex">
+                <div class="form-group">
+                    <label>Nama Akun / Username / Email</label>
+                    <input type="text" id="subAccountUsername" placeholder="Masukkan username atau email..." required>
+                </div>
+                <div class="form-group">
+                    <label>Password / Kata Sandi</label>
+                    <input type="text" id="subAccountPassword" placeholder="Masukkan password..." required>
+                </div>
+                
+                <button type="submit" id="btnSaveSubAccount"><span id="btnSubText">Simpan</span></button>
+
+                <div class="form-group" style="margin-top: 4px;">
+                    <label style="font-size: 0.92rem; color: #38bdf8; font-weight: 800; margin-bottom: 4px;">Aktivitas Riwayat Akun</label>
+                    <div class="account-history-box" id="subAccountHistoryList">
+                        <div style="font-size: 0.8rem; color: #64748b; font-style: italic; text-align: center;">Belum ada riwayat perubahan.</div>
+                    </div>
+                </div>
+            </form>
+
+            <button type="button" id="btnDeleteAccountItem" style="background: rgba(244,63,94,0.15); border: 1.5px solid rgba(244,63,94,0.5); font-weight: 800; padding: 12px; border-radius: 12px; cursor: pointer; color: #fb7185; margin-top: 10px; font-size: 0.95rem;">Hapus Akun Ini</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDIT / HAPUS SATU ITEM RIWAYAT AKUN -->
+<div class="popup-overlay" id="editHistoryItemModal">
+    <div class="popup-box" style="max-width: 365px; text-align: left; align-items: stretch; gap: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900; color: #00f0ff;">EDIT RIWAYAT AKTIVITAS</div>
+            <button type="button" id="closeEditHistoryModalBtn" style="background:none; border:none; color:#94a3b8; font-size:1.5rem; cursor:pointer;">✕</button>
+        </div>
+        <input type="hidden" id="editHistoryAccIndex">
+        <input type="hidden" id="editHistoryItemIndex">
+        <div class="form-group">
+            <label>Username / Email</label>
+            <input type="text" id="modalHistoryUsername">
+        </div>
+        <div class="form-group">
+            <label>Password / Kata Sandi</label>
+            <input type="text" id="modalHistoryPassword">
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 6px;">
+            <button type="button" id="btnDeleteHistoryItem" style="background: rgba(244, 63, 94, 0.2); border: 1.5px solid rgba(244, 63, 94, 0.6); color: #fb7185; flex: 1; padding: 14px; border-radius: 12px; font-weight: 800; cursor:pointer;">Hapus</button>
+            <button type="button" id="btnSaveHistoryItem" style="background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%); border: none; color: #020714; flex: 2; padding: 14px; border-radius: 12px; font-weight: 900; cursor:pointer;">Simpan</button>
+        </div>
+    </div>
+</div>
+
 <!-- MODAL PEMUTAR MUSIK -->
 <div class="music-modal-overlay" id="musicModalOverlay">
     <div class="music-modal-card">
-        <button type="button" class="close-music-modal" id="closeMusicModalBtn">✕</button>
-        <div style="font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 900; color: #00f0ff; letter-spacing: 1.5px;">CYBER AUDIO PLAYER</div>
+        <div style="display: grid; grid-template-columns: 40px 1fr 40px; align-items: center; width: 100%; flex-shrink: 0; padding: 2px 0;">
+            <div></div>
+            <div style="font-family: 'Orbitron', sans-serif; font-size: 1.05rem; font-weight: 900; color: #00f0ff; letter-spacing: 1.5px; text-align: center;">CYBER AUDIO PLAYER</div>
+            <div style="display: flex; justify-content: flex-end;">
+                <button type="button" class="close-music-modal" id="closeMusicModalBtn" style="position: static;">✕</button>
+            </div>
+        </div>
         
         <div class="audio-stabilizer-container" id="audioStabilizerBox">
             <div class="stabilizer-bars-wrapper" id="stabilizerBarsWrapper">
@@ -1736,7 +1927,7 @@
         </div>
         
         <div class="track-title-display-box">
-            <svg class="cyber-icon" viewBox="0 0 24 24" style="width: 14px; height: 14px; flex-shrink: 0;"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            <svg class="cyber-icon" viewBox="0 0 24 24" style="width: 16px; height: 16px; flex-shrink: 0;"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
             <span class="track-title-text" id="modalTrackTitle">Belum ada musik dipilih</span>
         </div>
         
@@ -1756,20 +1947,20 @@
                 <svg id="playPauseSvgIcon" class="cyber-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             </button>
             <button type="button" class="ctrl-btn small" id="nextTrackBtn" title="Next">
-                <svg class="cyber-icon" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                <svg class="cyber-icon" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12h2V6h-2z"/></svg>
             </button>
         </div>
 
-        <div style="display: flex; gap: 6px; width: 100%;">
-            <button type="button" id="modalUploadBtn" style="flex: 2; padding: 10px; font-size: 0.8rem; font-weight: 800; border-radius: 12px; background: linear-gradient(135deg, rgba(0,240,255,0.25), rgba(0,119,255,0.25)); border: 1px solid rgba(0,240,255,0.6); color: #00f0ff; cursor: pointer;">Add music</button>
-            <button type="button" id="btnExportMusic" style="flex: 1; padding: 10px; font-size: 0.72rem; font-weight: 800; border-radius: 12px; background: rgba(16,185,129,0.2); border: 1px solid rgba(16,185,129,0.6); color: #34d399; cursor: pointer;" title="Simpan Playlist ke File">Backup Musik</button>
-            <button type="button" id="btnImportMusic" style="flex: 1; padding: 10px; font-size: 0.72rem; font-weight: 800; border-radius: 12px; background: rgba(245,158,11,0.2); border: 1px solid rgba(245,158,11,0.6); color: #fbbf24; cursor: pointer;" title="Muat Playlist dari File">Pulihkan Musik</button>
+        <div style="display: flex; gap: 8px; width: 100%;">
+            <button type="button" id="modalUploadBtn" style="flex: 2; padding: 12px; font-size: 0.9rem; font-weight: 800; border-radius: 12px; background: linear-gradient(135deg, rgba(0,240,255,0.25), rgba(0,119,255,0.25)); border: 1px solid rgba(0,240,255,0.6); color: #00f0ff; cursor: pointer;">Add music</button>
+            <button type="button" id="btnExportMusic" style="flex: 1; padding: 12px; font-size: 0.78rem; font-weight: 800; border-radius: 12px; background: rgba(16,185,129,0.2); border: 1px solid rgba(16,185,129,0.6); color: #34d399; cursor: pointer;" title="Simpan Playlist ke File">Backup Musik</button>
+            <button type="button" id="btnImportMusic" style="flex: 1; padding: 12px; font-size: 0.78rem; font-weight: 800; border-radius: 12px; background: rgba(245,158,11,0.2); border: 1px solid rgba(245,158,11,0.6); color: #fbbf24; cursor: pointer;" title="Muat Playlist dari File">Pulihkan Musik</button>
             <input type="file" id="audioFileInput" accept="audio/*" multiple style="display: none;">
             <input type="file" id="importMusicFileInput" accept=".json" style="display: none;">
         </div>
 
         <div class="playlist-wrapper" id="playlistContainer">
-            <div style="font-size: 0.78rem; color: #64748b; font-style: italic; padding: 10px; text-align: center;">Daftar lagu masih kosong.</div>
+            <div style="font-size: 0.85rem; color: #64748b; font-style: italic; padding: 10px; text-align: center;">Daftar lagu masih kosong.</div>
         </div>
     </div>
 </div>
@@ -1777,11 +1968,15 @@
 <!-- MODAL POP-UP CYBER VAULT -->
 <div class="cyber-modal-overlay" id="cyberModalOverlay">
     <div class="cyber-modal-card">
-        <button type="button" class="close-cyber-modal" id="closeCyberModalBtn">✕</button>
-        <div style="font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 900; color: #00f0ff; letter-spacing: 1.5px; flex-shrink: 0;">CYBER VAULT SYSTEM</div>
+        <div style="display: grid; grid-template-columns: 40px 1fr 40px; align-items: center; width: 100%; flex-shrink: 0; padding: 2px 0;">
+            <div></div>
+            <div style="font-family: 'Orbitron', sans-serif; font-size: 1.05rem; font-weight: 900; color: #00f0ff; letter-spacing: 1.5px; text-align: center;">CYBER VAULT SYSTEM</div>
+            <div style="display: flex; justify-content: flex-end;">
+                <button type="button" class="close-cyber-modal" id="closeCyberModalBtn" style="position: static;">✕</button>
+            </div>
+        </div>
 
         <div class="full-app-content" id="fullAppContent">
-            <!-- SLIDER TRANSPARANSI KACA -->
             <div class="glass-control-panel">
                 <span class="glass-label-text">Transparansi Kaca:</span>
                 <div class="glass-slider-wrapper">
@@ -1792,7 +1987,7 @@
 
             <div class="backup-panel">
                 <div class="backup-header">
-                    <span style="font-size: 0.82rem; font-weight: 800; color: #a5f3fc;">BACKUP KEUANGAN</span>
+                    <span style="font-size: 0.9rem; font-weight: 800; color: #a5f3fc;">BACKUP KEUANGAN</span>
                     <span class="backup-status-tag" id="backupStatusText">Auto-Saved</span>
                 </div>
                 <div class="backup-actions">
@@ -1876,14 +2071,12 @@
     </div>
 </div>
 
-<!-- AUDIO ELEMENT UTAMA -->
 <audio id="bgAudioPlayer" crossorigin="anonymous" style="display: none;"></audio>
 
-<!-- MODAL DETAIL / EDIT / HAPUS TRANSAKSI -->
 <div class="popup-overlay" id="detailTransactionModal">
     <div class="popup-box" style="max-width: 380px; text-align: left; align-items: stretch; gap: 16px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900; color: #00f0ff;">DETAIL TRANSAKSI</div>
+            <div style="font-family: 'Orbitron', sans-serif; font-size: 1.15rem; font-weight: 900; color: #00f0ff;">DETAIL TRANSAKSI</div>
             <button type="button" id="closeDetailModalBtn" style="background:none; border:none; color:#94a3b8; font-size:1.5rem; cursor:pointer;">✕</button>
         </div>
         
@@ -1924,8 +2117,8 @@
         </div>
 
         <div style="display: flex; gap: 10px; margin-top: 6px;">
-            <button type="button" id="btnDeleteTransaction" style="background: rgba(244, 63, 94, 0.2); border: 1.5px solid rgba(244, 63, 94, 0.6); color: #fb7185; flex: 1; padding: 12px; border-radius: 12px; font-weight: 800; cursor:pointer;">Hapus</button>
-            <button type="button" id="btnUpdateTransaction" style="background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%); border: none; color: #020714; flex: 2; padding: 12px; border-radius: 12px; font-weight: 900; cursor:pointer;">Simpan Perubahan</button>
+            <button type="button" id="btnDeleteTransaction" style="background: rgba(244, 63, 94, 0.2); border: 1.5px solid rgba(244, 63, 94, 0.6); color: #fb7185; flex: 1; padding: 14px; border-radius: 12px; font-weight: 800; cursor:pointer; font-size: 1rem;">Hapus</button>
+            <button type="button" id="btnUpdateTransaction" style="background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%); border: none; color: #020714; flex: 2; padding: 14px; border-radius: 12px; font-weight: 900; cursor:pointer; font-size: 1rem;">Simpan Perubahan</button>
         </div>
     </div>
 </div>
@@ -1945,12 +2138,17 @@
         </div>
     </div>
 
+    <div class="personal-data-panel" id="openPersonalModalPanel" title="Ketuk untuk membuka Personal Data">
+        <h2 class="title-personal-box">PERSONAL DATA</h2>
+        <div class="subtitle-cyber">ACCOUNTS & PASSWORDS MANAGER</div>
+    </div>
+
     <div class="music-player-panel" id="openMusicModalPanel" title="Ketuk untuk membuka Playlist Music">
         <h2 class="title-music-box">PLAYLIST MUSIC</h2>
+        <div class="subtitle-cyber">CYBER AUDIO PLAYER</div>
     </div>
 </div>
 
-<!-- MODAL NOTIFIKASI TRANSAKSI BERHASIL & SUARA -->
 <div class="popup-overlay" id="popupNotification">
     <div class="popup-box">
         <div class="popup-icon" id="popupIcon">✓</div>
@@ -1960,8 +2158,21 @@
     </div>
 </div>
 
+<div class="popup-overlay" id="newPlatformModal">
+    <div class="popup-box" style="max-width: 360px; text-align: left; align-items: stretch; gap: 16px;">
+        <div style="font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900; color: #00f0ff; text-align: center;">TAMBAH PLATFORM BARU</div>
+        <div class="form-group">
+            <label>Nama Platform / Judul Akun</label>
+            <input type="text" id="newPlatformInput" placeholder="Misal: Twitter, Facebook, Netflix">
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 6px;">
+            <button type="button" id="cancelNewPlatformBtn" style="background: rgba(244, 63, 94, 0.2); border: 1.5px solid rgba(244, 63, 94, 0.6); color: #fb7185; flex: 1; padding: 14px; border-radius: 12px; font-weight: 800; cursor:pointer; font-size: 1rem;">Batal</button>
+            <button type="button" id="saveNewPlatformBtn" style="background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%); border: none; color: #020714; flex: 2; padding: 14px; border-radius: 12px; font-weight: 900; cursor:pointer; font-size: 1rem;">Tambah</button>
+        </div>
+    </div>
+</div>
+
 <script>
-    /* EFEK SUARA BASS "TUDUM" KHAS NETFLIX ASLI */
     function playNetflixIntroSound() {
         try {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -1971,7 +2182,6 @@
 
             const now = ctx.currentTime;
 
-            // 1. Dentuman Bass Pertama ("Tu...")
             const osc1 = ctx.createOscillator();
             const gain1 = ctx.createGain();
             osc1.type = 'sawtooth';
@@ -1987,7 +2197,6 @@
             osc1.start(now);
             osc1.stop(now + 0.85);
 
-            // 2. Dentuman Bass Utama Kedua ("Dum!")
             const osc2 = ctx.createOscillator();
             const gain2 = ctx.createGain();
             osc2.type = 'sine';
@@ -2063,10 +2272,12 @@
     const mainAppContainer = document.getElementById('mainAppContainer');
     const cyberModalOverlay = document.getElementById('cyberModalOverlay');
     const musicModalOverlay = document.getElementById('musicModalOverlay');
+    const personalModalOverlay = document.getElementById('personalModalOverlay');
     const cyberScannerFlash = document.getElementById('cyberScannerFlash');
 
     window.addEventListener('DOMContentLoaded', () => {
         initIndexedDB();
+        renderAccountTitles();
         
         const savedOpacity = localStorage.getItem('cyber_glass_opacity');
         if (savedOpacity !== null) {
@@ -2088,6 +2299,8 @@
                 cyberModalOverlay.classList.add('active');
             } else if (activeModal === 'music') {
                 musicModalOverlay.classList.add('active');
+            } else if (activeModal === 'personal') {
+                personalModalOverlay.classList.add('active');
             }
         } else {
             setTimeout(() => {
@@ -2236,6 +2449,9 @@
     const openMusicModalPanel = document.getElementById('openMusicModalPanel');
     const closeMusicModalBtn = document.getElementById('closeMusicModalBtn');
 
+    const openPersonalModalPanel = document.getElementById('openPersonalModalPanel');
+    const closePersonalModalBtn = document.getElementById('closePersonalModalBtn');
+
     toggleAppViewBtn.addEventListener('click', () => {
         cyberModalOverlay.classList.add('active');
         sessionStorage.setItem('venus_active_modal', 'cyber');
@@ -2255,6 +2471,278 @@
     closeMusicModalBtn.addEventListener('click', () => {
         musicModalOverlay.classList.remove('active');
         sessionStorage.setItem('venus_active_modal', 'none');
+    });
+
+    openPersonalModalPanel.addEventListener('click', () => {
+        personalModalOverlay.classList.add('active');
+        sessionStorage.setItem('venus_active_modal', 'personal');
+    });
+
+    closePersonalModalBtn.addEventListener('click', () => {
+        personalModalOverlay.classList.remove('active');
+        sessionStorage.setItem('venus_active_modal', 'none');
+    });
+
+    const accountTitlesList = document.getElementById('accountTitlesList');
+    const btnAddAccountModal = document.getElementById('btnAddAccountModal');
+    const newPlatformModal = document.getElementById('newPlatformModal');
+    const newPlatformInput = document.getElementById('newPlatformInput');
+    const saveNewPlatformBtn = document.getElementById('saveNewPlatformBtn');
+    const cancelNewPlatformBtn = document.getElementById('cancelNewPlatformBtn');
+
+    const subAccountModal = document.getElementById('subAccountModal');
+    const closeSubModalBtn = document.getElementById('closeSubModalBtn');
+    const subAccountForm = document.getElementById('subAccountForm');
+    const subModalHeading = document.getElementById('subModalHeading');
+    const subEditIndex = document.getElementById('subEditIndex');
+    const subAccountUsername = document.getElementById('subAccountUsername');
+    const subAccountPassword = document.getElementById('subAccountPassword');
+    const btnSaveSubAccount = document.getElementById('btnSaveSubAccount');
+    const btnSubText = document.getElementById('btnSubText');
+    const subAccountHistoryList = document.getElementById('subAccountHistoryList');
+    const btnDeleteAccountItem = document.getElementById('btnDeleteAccountItem');
+
+    const editHistoryItemModal = document.getElementById('editHistoryItemModal');
+    const closeEditHistoryModalBtn = document.getElementById('closeEditHistoryModalBtn');
+    const editHistoryAccIndex = document.getElementById('editHistoryAccIndex');
+    const editHistoryItemIndex = document.getElementById('editHistoryItemIndex');
+    const modalHistoryUsername = document.getElementById('modalHistoryUsername');
+    const modalHistoryPassword = document.getElementById('modalHistoryPassword');
+    const btnSaveHistoryItem = document.getElementById('btnSaveHistoryItem');
+    const btnDeleteHistoryItem = document.getElementById('btnDeleteHistoryItem');
+
+    function getStoredAccounts() {
+        let data = JSON.parse(localStorage.getItem('venus_password_manager_data'));
+        if (!data || !Array.isArray(data) || data.length === 0) {
+            data = [
+                { label: 'Akun Google', username: '', password: '', history: [] },
+                { label: 'Tiktok', username: '', password: '', history: [] },
+                { label: 'Tiktok', username: '', password: '', history: [] }
+            ];
+            localStorage.setItem('venus_password_manager_data', JSON.stringify(data));
+        }
+        return data;
+    }
+
+    function renderAccountTitles() {
+        const accounts = getStoredAccounts();
+        accountTitlesList.innerHTML = '';
+
+        accounts.forEach((acc, index) => {
+            const div = document.createElement('div');
+            div.className = 'account-title-card';
+            div.innerHTML = `
+                <span class="account-title-name">${acc.label}</span>
+                <span class="account-title-arrow">›</span>
+            `;
+            div.addEventListener('click', () => openSubAccountModal(index));
+            accountTitlesList.appendChild(div);
+        });
+    }
+
+    function renderSubHistory(accIndex, historyArray) {
+        if (!historyArray || historyArray.length === 0) {
+            subAccountHistoryList.innerHTML = '<div style="font-size: 0.8rem; color: #64748b; font-style: italic; text-align: center;">Belum ada riwayat perubahan.</div>';
+            return;
+        }
+        subAccountHistoryList.innerHTML = '';
+        historyArray.slice().reverse().forEach((h, revIdx) => {
+            const origIndex = historyArray.length - 1 - revIdx;
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'account-history-item';
+            itemDiv.innerHTML = `
+                <div class="history-user-info">User: ${h.username} | Pass: ${h.password}</div>
+                <div class="history-timestamp">🕒 ${h.timestamp}</div>
+            `;
+            itemDiv.addEventListener('click', () => openEditHistoryModal(accIndex, origIndex));
+            subAccountHistoryList.appendChild(itemDiv);
+        });
+    }
+
+    function openSubAccountModal(index) {
+        const accounts = getStoredAccounts();
+        const acc = accounts[index];
+
+        subEditIndex.value = index;
+        subModalHeading.innerText = acc.label;
+        subAccountUsername.value = '';
+        subAccountPassword.value = '';
+        renderSubHistory(index, acc.history);
+
+        subAccountModal.classList.add('active');
+    }
+
+    closeSubModalBtn.addEventListener('click', () => {
+        subAccountModal.classList.remove('active');
+    });
+
+    btnAddAccountModal.addEventListener('click', () => {
+        newPlatformInput.value = '';
+        newPlatformModal.classList.add('active');
+    });
+
+    cancelNewPlatformBtn.addEventListener('click', () => {
+        newPlatformModal.classList.remove('active');
+    });
+
+    saveNewPlatformBtn.addEventListener('click', () => {
+        const platformName = newPlatformInput.value.trim();
+        if (!platformName) {
+            alert('Nama platform tidak boleh kosong!');
+            return;
+        }
+
+        let accounts = getStoredAccounts();
+        accounts.push({ label: platformName, username: '', password: '', history: [] });
+        localStorage.setItem('venus_password_manager_data', JSON.stringify(accounts));
+        renderAccountTitles();
+
+        newPlatformModal.classList.remove('active');
+        playSuccessSound();
+    });
+
+    subAccountForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = parseInt(subEditIndex.value);
+        let accounts = getStoredAccounts();
+
+        btnSaveSubAccount.disabled = true;
+        subAccountUsername.disabled = true;
+        subAccountPassword.disabled = true;
+        btnSubText.innerHTML = '<span class="btn-spinner"></span> Menyimpan...';
+
+        setTimeout(() => {
+            const newU = subAccountUsername.value;
+            const newP = subAccountPassword.value;
+
+            accounts[index].username = newU;
+            accounts[index].password = newP;
+
+            if (!accounts[index].history) accounts[index].history = [];
+            
+            const nowTime = new Date();
+            const timeStr = `${String(nowTime.getDate()).padStart(2,'0')}/${String(nowTime.getMonth()+1).padStart(2,'0')}/${nowTime.getFullYear()} ${String(nowTime.getHours()).padStart(2,'0')}:${String(nowTime.getMinutes()).padStart(2,'0')}`;
+
+            accounts[index].history.push({
+                timestamp: timeStr,
+                username: newU,
+                password: newP
+            });
+
+            localStorage.setItem('venus_password_manager_data', JSON.stringify(accounts));
+            renderAccountTitles();
+            renderSubHistory(index, accounts[index].history);
+
+            subAccountUsername.value = '';
+            subAccountPassword.value = '';
+
+            btnSaveSubAccount.disabled = false;
+            subAccountUsername.disabled = false;
+            subAccountPassword.disabled = false;
+            btnSubText.innerText = 'Simpan';
+
+            playSuccessSound();
+
+            popupTitle.innerText = "Berhasil!";
+            popupSubtitle.innerText = `Data akun ${accounts[index].label} berhasil diperbarui`;
+            popupNotification.classList.add('active');
+        }, 2000);
+    });
+
+    btnDeleteAccountItem.addEventListener('click', () => {
+        const index = parseInt(subEditIndex.value);
+        let accounts = getStoredAccounts();
+        if (confirm('Apakah Anda yakin ingin menghapus platform akun ini?')) {
+            accounts.splice(index, 1);
+            localStorage.setItem('venus_password_manager_data', JSON.stringify(accounts));
+            renderAccountTitles();
+            subAccountModal.classList.remove('active');
+        }
+    });
+
+    function openEditHistoryModal(accIdx, itemIdx) {
+        const accounts = getStoredAccounts();
+        const historyItem = accounts[accIdx].history[itemIdx];
+        if (!historyItem) return;
+
+        editHistoryAccIndex.value = accIdx;
+        editHistoryItemIndex.value = itemIdx;
+        modalHistoryUsername.value = historyItem.username;
+        modalHistoryPassword.value = historyItem.password;
+
+        editHistoryItemModal.classList.add('active');
+    }
+
+    closeEditHistoryModalBtn.addEventListener('click', () => {
+        editHistoryItemModal.classList.remove('active');
+    });
+
+    btnSaveHistoryItem.addEventListener('click', () => {
+        const accIdx = parseInt(editHistoryAccIndex.value);
+        const itemIdx = parseInt(editHistoryItemIndex.value);
+        let accounts = getStoredAccounts();
+
+        if (accounts[accIdx] && accounts[accIdx].history[itemIdx]) {
+            accounts[accIdx].history[itemIdx].username = modalHistoryUsername.value;
+            accounts[accIdx].history[itemIdx].password = modalHistoryPassword.value;
+            localStorage.setItem('venus_password_manager_data', JSON.stringify(accounts));
+            renderSubHistory(accIdx, accounts[accIdx].history);
+            editHistoryItemModal.classList.remove('active');
+            playSuccessSound();
+        }
+    });
+
+    btnDeleteHistoryItem.addEventListener('click', () => {
+        const accIdx = parseInt(editHistoryAccIndex.value);
+        const itemIdx = parseInt(editHistoryItemIndex.value);
+        let accounts = getStoredAccounts();
+
+        if (confirm('Apakah Anda yakin ingin menghapus riwayat aktivitas ini?')) {
+            if (accounts[accIdx] && accounts[accIdx].history) {
+                accounts[accIdx].history.splice(itemIdx, 1);
+                localStorage.setItem('venus_password_manager_data', JSON.stringify(accounts));
+                renderSubHistory(accIdx, accounts[accIdx].history);
+                editHistoryItemModal.classList.remove('active');
+            }
+        }
+    });
+
+    document.getElementById('btnExportPersonal').addEventListener('click', () => {
+        const savedData = localStorage.getItem('venus_password_manager_data');
+        if (!savedData) {
+            alert('Belum ada data akun yang tersimpan!');
+            return;
+        }
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(savedData);
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `venus_accounts_data_${new Date().toISOString().slice(0,10)}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+    });
+
+    const importPersonalFileInput = document.getElementById('importPersonalFileInput');
+    document.getElementById('btnImportPersonal').addEventListener('click', () => importPersonalFileInput.click());
+
+    importPersonalFileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            try {
+                const parsed = JSON.parse(event.target.result);
+                if (!Array.isArray(parsed)) throw new Error();
+                localStorage.setItem('venus_password_manager_data', JSON.stringify(parsed));
+                renderAccountTitles();
+                alert('Data Akun & Password berhasil dipulihkan!');
+            } catch (err) {
+                alert('File backup data akun tidak valid!');
+            }
+        };
+        reader.readAsText(file);
+        importPersonalFileInput.value = '';
     });
 
     let db = null;
@@ -2476,7 +2964,7 @@
 
     function renderPlaylist() {
         if (playlist.length === 0) {
-            playlistContainer.innerHTML = '<div style="font-size: 0.78rem; color: #64748b; font-style: italic; padding: 10px; text-align: center;">Daftar lagu masih kosong.</div>';
+            playlistContainer.innerHTML = '<div style="font-size: 0.85rem; color: #64748b; font-style: italic; padding: 10px; text-align: center;">Daftar lagu masih kosong.</div>';
             return;
         }
 
@@ -2718,7 +3206,6 @@
         return dateObj.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
     }
 
-    // FUNGSI FORMAT TANGGAL & WAKTU: 🗒️ 29 Sept 2026 ( 14.50 WIB )
     function formatTransactionDateTime(dateStr, timeStr) {
         if (!dateStr) return timeStr || '';
         const parts = dateStr.split('-');
@@ -2726,17 +3213,12 @@
         const [y, m, d] = parts;
         const dateObj = new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
         
-        // Daftar Bulan Disingkat
         const shortMonthNames = [
             "Jan", "Feb", "Mar", "Apr", "Mei", "Jun", 
             "Jul", "Agt", "Sept", "Okt", "Nov", "Des"
         ];
         const monthName = shortMonthNames[dateObj.getMonth()] || m;
-        
-        // Format jam dengan titik (misal: 14.50)
         let formattedTime = timeStr ? timeStr.replace(':', '.') : '00.00';
-        
-        // Ikon Catatan (Note) bernuansa tema web
         const cyberNoteIcon = `<span class="cyber-note-icon">🗒️</span>`;
 
         return `${cyberNoteIcon} ${parseInt(d)} ${monthName} ${y} ( ${formattedTime} WIB )`;
@@ -2748,7 +3230,7 @@
         let filtered = currentFilterMonth ? transactions.filter(t => t.date && t.date.startsWith(currentFilterMonth)) : transactions;
 
         if (filtered.length === 0) {
-            historyList.innerHTML = '<li style="text-align:center; color:#a5f3fc; font-size:0.9rem; padding:20px 0;">Tidak ada transaksi pada periode ini</li>';
+            historyList.innerHTML = '<li style="text-align:center; color:#a5f3fc; font-size:0.95rem; padding:20px 0;">Tidak ada transaksi pada periode ini</li>';
         } else {
             filtered.sort((a, b) => new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`)).forEach(t => {
                 const li = document.createElement('li');
