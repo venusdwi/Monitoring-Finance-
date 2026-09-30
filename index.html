@@ -969,20 +969,33 @@
             padding: 4px 0 !important;
         }
 
-        /* SLIDER TRANSPARANSI KACA: GARIS TIPIS DENGAN TITIK BULAT */
+        /* SLIDER TRANSPARANSI KACA */
         .glass-control-panel {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
             flex-shrink: 0;
+            height: 40px;
+        }
+
+        .glass-label-text {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #7dd3fc;
+            white-space: nowrap;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            height: 100%;
         }
 
         .glass-slider-wrapper {
             display: flex;
             align-items: center;
-            gap: 12px;
             flex-grow: 1;
+            padding: 0 4px;
+            height: 100%;
         }
 
         .glass-range-input {
@@ -1041,8 +1054,14 @@
             font-weight: 800;
             font-size: 0.85rem;
             color: #00f0ff;
-            min-width: 32px;
+            min-width: 38px;
             text-align: right;
+            white-space: nowrap;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            height: 100%;
         }
 
         .backup-header {
@@ -1390,6 +1409,18 @@
             font-size: 0.78rem;
             font-weight: 700;
             color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* IKON NOTE / CATATAN DENGAN EFEK NEON CYAN SELARAS TEMA WEB */
+        .cyber-note-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.85));
         }
 
         .item-method-badge {
@@ -1611,13 +1642,13 @@
         <div style="font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 900; color: #00f0ff; letter-spacing: 1.5px; flex-shrink: 0;">CYBER VAULT SYSTEM</div>
 
         <div class="full-app-content" id="fullAppContent">
-            <!-- SLIDER TRANSPARANSI KACA: GARIS TIPIS DENGAN TITIK BULAT -->
+            <!-- SLIDER TRANSPARANSI KACA -->
             <div class="glass-control-panel">
-                <div style="font-size: 0.82rem; font-weight: 800; color: #7dd3fc;">Transparansi Kaca:</div>
+                <span class="glass-label-text">Transparansi Kaca:</span>
                 <div class="glass-slider-wrapper">
-                    <input type="range" id="glassOpacitySlider" class="glass-range-input" min="5" max="85" value="28">
-                    <span class="opacity-value-badge" id="opacityValText">28%</span>
+                    <input type="range" id="glassOpacitySlider" class="glass-range-input" min="0" max="100" value="28">
                 </div>
+                <span class="opacity-value-badge" id="opacityValText">28%</span>
             </div>
 
             <div class="backup-panel">
@@ -1854,7 +1885,7 @@
         initIndexedDB();
         
         const savedOpacity = localStorage.getItem('cyber_glass_opacity');
-        if (savedOpacity) {
+        if (savedOpacity !== null) {
             document.documentElement.style.setProperty('--glass-alpha', (savedOpacity / 100).toFixed(2));
             document.getElementById('glassOpacitySlider').value = savedOpacity;
             document.getElementById('opacityValText').innerText = savedOpacity + '%';
@@ -2427,7 +2458,6 @@
         }
     });
 
-    // LOGIKA TANGGAL INPUT
     let selectedDateValue = new Date().toISOString().slice(0,10);
     const inputDate = document.getElementById('inputDate');
     const dateWrapperBtn = document.getElementById('dateWrapperBtn');
@@ -2459,7 +2489,6 @@
         }
     });
 
-    // LOGIKA JAM INPUT LANGSUNG MENGGUNAKAN <input type="time"> TRANSPARAN
     const inputTime = document.getElementById('inputTime');
     const timeWrapperBtn = document.getElementById('timeWrapperBtn');
     const timeDisplayText = document.getElementById('timeDisplayText');
@@ -2504,6 +2533,30 @@
         return dateObj.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
     }
 
+    // FUNGSI FORMAT TANGGAL & WAKTU: 🗒️ 29 Sept 2026 ( 14.50 WIB )
+    function formatTransactionDateTime(dateStr, timeStr) {
+        if (!dateStr) return timeStr || '';
+        const parts = dateStr.split('-');
+        if (parts.length !== 3) return `${dateStr} (${timeStr} WIB)`;
+        const [y, m, d] = parts;
+        const dateObj = new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
+        
+        // Daftar Bulan Disingkat
+        const shortMonthNames = [
+            "Jan", "Feb", "Mar", "Apr", "Mei", "Jun", 
+            "Jul", "Agt", "Sept", "Okt", "Nov", "Des"
+        ];
+        const monthName = shortMonthNames[dateObj.getMonth()] || m;
+        
+        // Format jam dengan titik (misal: 14.50)
+        let formattedTime = timeStr ? timeStr.replace(':', '.') : '00.00';
+        
+        // Ikon Catatan (Note) bernuansa tema web
+        const cyberNoteIcon = `<span class="cyber-note-icon">🗒️</span>`;
+
+        return `${cyberNoteIcon} ${parseInt(d)} ${monthName} ${y} ( ${formattedTime} WIB )`;
+    }
+
     function updateUI() {
         const historyList = document.getElementById('historyList');
         historyList.innerHTML = '';
@@ -2518,7 +2571,7 @@
                 li.innerHTML = `
                     <div class="item-info">
                         <span class="item-desc">${t.description} ${t.type === 'out' && t.method ? '<span class="item-method-badge">'+t.method+'</span>' : ''}</span>
-                        <span class="item-date">🕒 ${t.date} • ${t.time}</span>
+                        <span class="item-date">${formatTransactionDateTime(t.date, t.time)}</span>
                     </div>
                     <span class="item-amount ${t.type === 'in' ? 'amount-in' : 'amount-out'}">${t.type === 'in' ? '+' : '-'} ${formatRupiah(t.amount)}</span>
                 `;
