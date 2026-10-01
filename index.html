@@ -50,6 +50,18 @@
             overflow-x: hidden;
             position: relative;
         }
+    /* --- CSS UNTUK MENYEMBUNYIKAN SCROLLBAR --- */
+
+/* Untuk Chrome, Safari, Samsung Internet, dan Opera */
+*::-webkit-scrollbar {
+    display: none;
+}
+
+/* Untuk IE, Edge, dan Firefox */
+* {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
 
         :root {
             --bg-cyber-dark: #020714;
@@ -3600,6 +3612,66 @@
     dateDisplayText.innerText = formatDateDisplay(selectedDateValue);
     inputTime.value = initTimeStr;
     timeDisplayText.innerText = initTimeStr;
+// --- FITUR UNDUH BACKUP KEUANGAN (Export ke JSON) ---
+document.getElementById('btnExportBackup').addEventListener('click', () => {
+    if (!transactions || transactions.length === 0) {
+        alert('Belum ada data transaksi untuk di-backup!');
+        return;
+    }
+    
+    // Mengubah array transaksi menjadi format file JSON
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(transactions));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    
+    // Penamaan file dinamis berdasarkan tanggal
+    const tanggalHariIni = new Date().toISOString().split('T')[0];
+    downloadAnchor.setAttribute("download", `CyberVault_Finance_Backup_${tanggalHariIni}.json`);
+    
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+});
+
+// --- FITUR PULIHKAN DATA KEUANGAN (Import dari JSON) ---
+const importFinanceFileInput = document.getElementById('importFileInput');
+
+// Memicu elemen <input type="file"> saat tombol diklik
+document.getElementById('btnImportBackup').addEventListener('click', () => {
+    importFinanceFileInput.click();
+});
+
+// Memproses file JSON saat pengguna selesai memilih file
+importFinanceFileInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        try {
+            const dataPulih = JSON.parse(event.target.result);
+            
+            // Validasi apakah format yang diimpor sesuai (Array)
+            if (Array.isArray(dataPulih)) {
+                // Konfirmasi sebelum menimpa data
+                if(confirm('Apakah Anda yakin ingin memulihkan data? Data transaksi saat ini akan tertimpa.')) {
+                    transactions = dataPulih;
+                    updateUI(); // Render ulang tampilan & simpan otomatis ke LocalStorage
+                    alert('Data transaksi keuangan berhasil dipulihkan!');
+                }
+            } else {
+                alert('Format file backup tidak sesuai!');
+            }
+        } catch (err) {
+            alert('Gagal membaca file. Pastikan file yang dipilih adalah .json yang valid.');
+        }
+    };
+    reader.readAsText(file);
+    
+    // Reset nilai input agar bisa memilih file yang sama jika diulang
+    e.target.value = '';
+});
+
 </script>
 </body>
 </html>
