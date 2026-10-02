@@ -271,12 +271,18 @@
         .card-hero { background: rgba(0, 180, 255, calc(var(--glass-alpha) * 0.45 + 0.05)); border: 1px solid rgba(0, 240, 255, 0.5); border-radius: 16px; padding: 18px 14px; text-align: center; }
         .card-hero h4 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1.5px; color: #7dd3fc; font-weight: 800; margin-bottom: 6px; }
         .card-hero p { font-size: clamp(1.6rem, 5.5vw, 2rem); font-weight: 900; color: #ffffff; text-shadow: 0 2px 14px rgba(0, 240, 255, 0.8); }
+        
         .sub-dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card-sub { padding: 16px 12px; border-radius: 14px; text-align: center; }
         .card-sub h4 { font-size: 0.78rem; text-transform: uppercase; font-weight: 800; margin-bottom: 6px; }
         .card-sub p { font-size: clamp(0.95rem, 4vw, 1.15rem); font-weight: 800; }
+        
         .pemasukan { background: rgba(16, 185, 129, calc(var(--glass-alpha) * 0.45 + 0.05)); border: 1px solid rgba(16, 185, 129, 0.55); color: #34d399; }
         .pengeluaran { background: rgba(244, 63, 94, calc(var(--glass-alpha) * 0.45 + 0.05)); border: 1px solid rgba(244, 63, 94, 0.55); color: #fb7185; }
+        
+        /* WARNA KUSTOM UNTUK SALDO CASH & SALDO BANK */
+        .card-cash { background: rgba(56, 189, 248, calc(var(--glass-alpha) * 0.45 + 0.05)); border: 1px solid rgba(56, 189, 248, 0.55); color: #38bdf8; }
+        .card-bank { background: rgba(168, 85, 247, calc(var(--glass-alpha) * 0.45 + 0.05)); border: 1px solid rgba(168, 85, 247, 0.55); color: #c084fc; }
 
         form { display: flex; flex-direction: column; gap: 14px; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
@@ -580,6 +586,13 @@
 
             <div class="dashboard">
                 <div class="card-hero"><h4>SALDO SISA</h4><p id="totalSaldo">Rp 0</p></div>
+                
+                <!-- KOLOM TAMBAHAN: SALDO CASH & SALDO BANK / DIGITAL -->
+                <div class="sub-dashboard">
+                    <div class="card-sub card-cash"><h4>SALDO CASH</h4><p id="totalSaldoCash">Rp 0</p></div>
+                    <div class="card-sub card-bank"><h4>SALDO BANK / QRIS</h4><p id="totalSaldoBank">Rp 0</p></div>
+                </div>
+
                 <div class="sub-dashboard">
                     <div class="card-sub pemasukan"><h4>PEMASUKAN</h4><p id="totalPemasukan">Rp 0</p></div>
                     <div class="card-sub pengeluaran"><h4>PENGELUARAN</h4><p id="totalPengeluaran">Rp 0</p></div>
@@ -876,7 +889,7 @@
     openPersonalModalPanel.addEventListener('click', () => { personalModalOverlay.classList.add('active'); sessionStorage.setItem('venus_active_modal', 'personal'); });
     closePersonalModalBtn.addEventListener('click', () => { personalModalOverlay.classList.remove('active'); sessionStorage.setItem('venus_active_modal', 'none'); });
 
-    // --- FUNGSI CUSTOM SELECT BOX (AGAR BISA DI TENGAH LAYAR) ---
+    // --- FUNGSI CUSTOM SELECT BOX ---
     function selectType(val, text) {
         document.getElementById('type').value = val;
         document.getElementById('btnSelectType').innerText = text;
@@ -1168,7 +1181,7 @@
             filtered.sort((a, b) => {
                 const timeCompare = new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`);
                 if (timeCompare !== 0) return timeCompare;
-                return b.id - cIdFallback(a.id, b.id); // Fallback ke ID (timestamp milidetik) agar yang diinput paling akhir selalu di atas
+                return b.id - cIdFallback(a.id, b.id);
             }).forEach(t => {
                 const li = document.createElement('li'); 
                 li.className = `history-item ${t.type}`;
@@ -1183,19 +1196,36 @@
                 li.addEventListener('click', () => openDetailModal(t.id)); historyList.appendChild(li);
             });
         }
-        let totalIn = 0, totalOut = 0; 
+        
+        let totalIn = 0, totalOut = 0;
+        let cashBalance = 0, bankBalance = 0;
+
         transactions.forEach(t => { 
+            const isCash = (t.method === 'CASH');
+            
             if (t.type === 'in') {
-                totalIn += t.amount; 
+                totalIn += t.amount;
+                if (isCash) cashBalance += t.amount;
+                else bankBalance += t.amount; // TRANSFER / QRIS
             } else if (t.type === 'out') {
-                totalOut += t.amount; 
+                totalOut += t.amount;
+                if (isCash) cashBalance -= t.amount;
+                else bankBalance -= t.amount;
             } else if (t.type === 'refund') {
-                totalOut -= t.amount; 
+                totalOut -= t.amount; // Pengembalian dana mengurangi total pengeluaran
+                if (isCash) cashBalance += t.amount; // Dana kembali ke cash/bank sesuai metodenya
+                else bankBalance += t.amount;
             }
         });
+
         document.getElementById('totalSaldo').innerText = formatRupiah(totalIn - totalOut); 
         document.getElementById('totalPemasukan').innerText = formatRupiah(totalIn); 
         document.getElementById('totalPengeluaran').innerText = formatRupiah(totalOut);
+        
+        // MENAMPILKAN SALDO CASH & SALDO BANK OTOMATIS
+        document.getElementById('totalSaldoCash').innerText = formatRupiah(cashBalance);
+        document.getElementById('totalSaldoBank').innerText = formatRupiah(bankBalance);
+
         try { localStorage.setItem('my_transactions', JSON.stringify(transactions)); } catch(e) { alert('PERINGATAN: Memori penyimpanan penuh.'); }
     }
 
@@ -1283,7 +1313,6 @@
         btnSubmit.disabled = true; btnText.innerHTML = '<span class="btn-spinner"></span> Memproses...';
         compressImage(proofFile, function(base64Proof) {
             setTimeout(() => {
-                // Menggunakan Date.now() sebagai ID unik agar urutan terbaru presisi di posisi paling atas
                 transactions.push({ id: Date.now(), type, amount, description, date, time, method, proof: base64Proof }); 
                 updateUI(); 
                 
