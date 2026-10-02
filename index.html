@@ -1178,8 +1178,9 @@
             historyList.innerHTML = '<li style="text-align:center; color:#a5f3fc; font-size:0.95rem; padding:20px 0;">Tidak ada transaksi pada periode ini</li>';
         } else {
             // PENGURUTAN: Transaksi terbaru (berdasarkan ID / Waktu Input) selalu berada di posisi paling atas
-                    filtered.sort((a, b) => b.id - a.id)
-            }).forEach(t => {
+                            // PENGURUTAN: Transaksi terbaru (berdasarkan ID / Waktu Input) selalu berada di posisi paling atas
+        filtered.sort((a, b) => b.id - a.id).forEach(t => {
+
                 const li = document.createElement('li'); 
                 li.className = `history-item ${t.type}`;
                 const proofBadge = t.proof ? `<span class="item-method-badge" style="background: rgba(0, 240, 255, 0.15); color: #00f0ff; border-color: rgba(0, 240, 255, 0.4);">📸 Ada Bukti</span>` : '';
