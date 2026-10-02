@@ -1178,10 +1178,7 @@
             historyList.innerHTML = '<li style="text-align:center; color:#a5f3fc; font-size:0.95rem; padding:20px 0;">Tidak ada transaksi pada periode ini</li>';
         } else {
             // PENGURUTAN: Transaksi terbaru (berdasarkan ID / Waktu Input) selalu berada di posisi paling atas
-            filtered.sort((a, b) => {
-                const timeCompare = new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`);
-                if (timeCompare !== 0) return timeCompare;
-                return b.id - cIdFallback(a.id, b.id);
+                    filtered.sort((a, b) => b.id - a.id)
             }).forEach(t => {
                 const li = document.createElement('li'); 
                 li.className = `history-item ${t.type}`;
