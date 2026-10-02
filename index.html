@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -50,18 +51,15 @@
             overflow-x: hidden;
             position: relative;
         }
-    /* --- CSS UNTUK MENYEMBUNYIKAN SCROLLBAR --- */
 
-/* Untuk Chrome, Safari, Samsung Internet, dan Opera */
-*::-webkit-scrollbar {
-    display: none;
-}
-
-/* Untuk IE, Edge, dan Firefox */
-* {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}
+        /* --- CSS UNTUK MENYEMBUNYIKAN SCROLLBAR --- */
+        *::-webkit-scrollbar {
+            display: none;
+        }
+        * {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
 
         :root {
             --bg-cyber-dark: #020714;
@@ -2152,8 +2150,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group" id="paymentMethodGroup" style="display: none;">
-                    <label for="paymentMethod">Metode Pembayaran Pengeluaran</label>
+                <div class="form-group" id="paymentMethodGroup">
+                    <label for="paymentMethod">Metode Pembayaran</label>
                     <select id="paymentMethod">
                         <option value="CASH">💵 CASH (Tunai)</option>
                         <option value="TRANSFER">🏦 TRANSFER BANK</option>
@@ -2213,7 +2211,7 @@
                 <input type="time" id="editTime">
             </div>
         </div>
-        <div class="form-group" id="editMethodGroup" style="display: none;">
+        <div class="form-group" id="editMethodGroup">
             <label>Metode Pembayaran</label>
             <select id="editMethod">
                 <option value="CASH">💵 CASH (Tunai)</option>
@@ -2608,13 +2606,11 @@
     const subAccountHistoryList = document.getElementById('subAccountHistoryList');
     const btnDeleteAccountItem = document.getElementById('btnDeleteAccountItem');
 
-    // MODAL FULL RIWAYAT AKTIVITAS
     const openAllHistoryBtn = document.getElementById('openAllHistoryBtn');
     const allHistoryModal = document.getElementById('allHistoryModal');
     const closeAllHistoryModalBtn = document.getElementById('closeAllHistoryModalBtn');
     const fullHistoryListContainer = document.getElementById('fullHistoryListContainer');
 
-    // VARIABEL MODAL PIN HAPUS AKUN
     const deleteAccountPinModal = document.getElementById('deleteAccountPinModal');
     const cancelDeletePinBtn = document.getElementById('cancelDeletePinBtn');
     const deletePinBoxes = document.querySelectorAll('[data-del-index]');
@@ -2806,7 +2802,6 @@
         }, 2000);
     });
 
-    // FUNGSI PENGAMANAN PIN SAAT HAPUS AKUN
     btnDeleteAccountItem.addEventListener('click', () => {
         clearDelPin();
         deleteAccountPinModal.classList.add('active');
@@ -3301,18 +3296,6 @@
         return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     }
 
-    const typeSelect = document.getElementById('type');
-    const paymentMethodGroup = document.getElementById('paymentMethodGroup');
-    typeSelect.addEventListener('change', () => {
-        paymentMethodGroup.style.display = (typeSelect.value === 'out') ? 'flex' : 'none';
-    });
-
-    const editTypeSelect = document.getElementById('editType');
-    const editMethodGroup = document.getElementById('editMethodGroup');
-    editTypeSelect.addEventListener('change', () => {
-        editMethodGroup.style.display = (editTypeSelect.value === 'out') ? 'flex' : 'none';
-    });
-
     const glassOpacitySlider = document.getElementById('glassOpacitySlider');
     const opacityValText = document.getElementById('opacityValText');
     glassOpacitySlider.addEventListener('input', function() {
@@ -3460,7 +3443,7 @@
                 li.className = `history-item ${t.type}`;
                 li.innerHTML = `
                     <div class="item-info">
-                        <span class="item-desc">${t.description} ${t.type === 'out' && t.method ? '<span class="item-method-badge">'+t.method+'</span>' : ''}</span>
+                        <span class="item-desc">${t.description} ${t.method ? '<span class="item-method-badge">'+t.method+'</span>' : ''}</span>
                         <span class="item-date">${formatTransactionDateTime(t.date, t.time)}</span>
                     </div>
                     <span class="item-amount ${t.type === 'in' ? 'amount-in' : 'amount-out'}">${t.type === 'in' ? '+' : '-'} ${formatRupiah(t.amount)}</span>
@@ -3498,13 +3481,7 @@
         editDescription.value = tx.description;
         editDate.value = tx.date;
         editTime.value = tx.time;
-        
-        if (tx.type === 'out' && tx.method) {
-            editMethodGroup.style.display = 'flex';
-            editMethod.value = tx.method;
-        } else {
-            editMethodGroup.style.display = 'none';
-        }
+        editMethod.value = tx.method || 'CASH';
 
         detailTransactionModal.classList.add('active');
     }
@@ -3520,7 +3497,7 @@
         const description = editDescription.value;
         const date = editDate.value;
         const time = editTime.value;
-        const method = (type === 'out') ? editMethod.value : null;
+        const method = editMethod.value;
 
         if (!amount || isNaN(amount) || !description || !date || !time) {
             alert('Semua kolom harus diisi dengan benar!');
@@ -3559,7 +3536,7 @@
         const description = document.getElementById('description').value;
         const date = selectedDateValue;
         const time = timeDisplayText.innerText;
-        const method = (type === 'out') ? document.getElementById('paymentMethod').value : null;
+        const method = document.getElementById('paymentMethod').value;
 
         if (!amount || isNaN(amount) || !description || !date || !time) return;
 
@@ -3612,66 +3589,67 @@
     dateDisplayText.innerText = formatDateDisplay(selectedDateValue);
     inputTime.value = initTimeStr;
     timeDisplayText.innerText = initTimeStr;
-// --- FITUR UNDUH BACKUP KEUANGAN (Export ke JSON) ---
-document.getElementById('btnExportBackup').addEventListener('click', () => {
-    if (!transactions || transactions.length === 0) {
-        alert('Belum ada data transaksi untuk di-backup!');
-        return;
-    }
-    
-    // Mengubah array transaksi menjadi format file JSON
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(transactions));
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    
-    // Penamaan file dinamis berdasarkan tanggal
-    const tanggalHariIni = new Date().toISOString().split('T')[0];
-    downloadAnchor.setAttribute("download", `CyberVault_Finance_Backup_${tanggalHariIni}.json`);
-    
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-});
 
-// --- FITUR PULIHKAN DATA KEUANGAN (Import dari JSON) ---
-const importFinanceFileInput = document.getElementById('importFileInput');
-
-// Memicu elemen <input type="file"> saat tombol diklik
-document.getElementById('btnImportBackup').addEventListener('click', () => {
-    importFinanceFileInput.click();
-});
-
-// Memproses file JSON saat pengguna selesai memilih file
-importFinanceFileInput.addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        try {
-            const dataPulih = JSON.parse(event.target.result);
-            
-            // Validasi apakah format yang diimpor sesuai (Array)
-            if (Array.isArray(dataPulih)) {
-                // Konfirmasi sebelum menimpa data
-                if(confirm('Apakah Anda yakin ingin memulihkan data? Data transaksi saat ini akan tertimpa.')) {
-                    transactions = dataPulih;
-                    updateUI(); // Render ulang tampilan & simpan otomatis ke LocalStorage
-                    alert('Data transaksi keuangan berhasil dipulihkan!');
-                }
-            } else {
-                alert('Format file backup tidak sesuai!');
-            }
-        } catch (err) {
-            alert('Gagal membaca file. Pastikan file yang dipilih adalah .json yang valid.');
+    // --- FITUR UNDUH BACKUP KEUANGAN (Export ke JSON) ---
+    document.getElementById('btnExportBackup').addEventListener('click', () => {
+        if (!transactions || transactions.length === 0) {
+            alert('Belum ada data transaksi untuk di-backup!');
+            return;
         }
-    };
-    reader.readAsText(file);
-    
-    // Reset nilai input agar bisa memilih file yang sama jika diulang
-    e.target.value = '';
-});
+        
+        // Mengubah array transaksi menjadi format file JSON
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(transactions));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        
+        // Penamaan file dinamis berdasarkan tanggal
+        const tanggalHariIni = new Date().toISOString().split('T')[0];
+        downloadAnchor.setAttribute("download", `CyberVault_Finance_Backup_${tanggalHariIni}.json`);
+        
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+    });
 
+    // --- FITUR PULIHKAN DATA KEUANGAN (Import dari JSON) ---
+    const importFinanceFileInput = document.getElementById('importFileInput');
+
+    // Memicu elemen <input type="file"> saat tombol diklik
+    document.getElementById('btnImportBackup').addEventListener('click', () => {
+        importFinanceFileInput.click();
+    });
+
+    // Memproses file JSON saat pengguna selesai memilih file
+    importFinanceFileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            try {
+                const dataPulih = JSON.parse(event.target.result);
+                
+                // Validasi apakah format yang diimpor sesuai (Array)
+                if (Array.isArray(dataPulih)) {
+                    // Konfirmasi sebelum menimpa data
+                    if(confirm('Apakah Anda yakin ingin memulihkan data? Data transaksi saat ini akan tertimpa.')) {
+                        transactions = dataPulih;
+                        updateUI(); // Render ulang tampilan & simpan otomatis ke LocalStorage
+                        alert('Data transaksi keuangan berhasil dipulihkan!');
+                    }
+                } else {
+                    alert('Format file backup tidak sesuai!');
+                }
+            } catch (err) {
+                alert('Gagal membaca file. Pastikan file yang dipilih adalah .json yang valid.');
+            }
+        };
+        reader.readAsText(file);
+        
+        // Reset nilai input agar bisa memilih file yang sama jika diulang
+        e.target.value = '';
+    });
 </script>
 </body>
 </html>
+```
