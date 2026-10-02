@@ -67,6 +67,7 @@
             --accent-blue: #0077ff;
             --pemasukan-green: #10b981;
             --pengeluaran-red: #f43f5e;
+            --refund-yellow: #fbbf24;
             --text-light: #ffffff;
             --text-muted: #a5f3fc;
             
@@ -132,66 +133,19 @@
             z-index: 1;
         }
 
-        /* POSISI ATAS: LOGO BULAT ANIMASI */
-        .splash-top-section {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            z-index: 5;
-            padding-top: 10px;
-        }
-
-        .splash-logo-glow {
-            width: 88px;
-            height: 88px;
-            border-radius: 50%;
-            background: rgba(0, 240, 255, 0.08);
-            border: 2px dashed rgba(0, 240, 255, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            box-shadow: 0 0 35px rgba(0, 240, 255, 0.4), inset 0 0 20px rgba(0, 240, 255, 0.2);
-            animation: coreRotateOuter 10s infinite linear, logoFloat 2s infinite alternate ease-in-out;
-        }
-
-        .splash-logo-glow::before {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: -6px;
-            right: -6px;
-            bottom: -6px;
-            border-radius: 50%;
-            border: 2px solid var(--accent-cyan);
-            border-top-color: transparent;
-            border-bottom-color: transparent;
-            animation: coreRotateInner 3s infinite linear;
-        }
-
-        .cyber-core-svg {
-            width: 38px;
-            height: 38px;
-            fill: var(--accent-cyan);
-            filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.9));
-            animation: corePulseIcon 1.5s infinite alternate ease-in-out;
-        }
+        .splash-top-section { width: 100%; display: flex; justify-content: center; z-index: 5; padding-top: 10px; }
+        .splash-logo-glow { width: 88px; height: 88px; border-radius: 50%; background: rgba(0, 240, 255, 0.08); border: 2px dashed rgba(0, 240, 255, 0.6); display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 0 35px rgba(0, 240, 255, 0.4), inset 0 0 20px rgba(0, 240, 255, 0.2); animation: coreRotateOuter 10s infinite linear, logoFloat 2s infinite alternate ease-in-out; }
+        .splash-logo-glow::before { content: ''; position: absolute; top: -6px; left: -6px; right: -6px; bottom: -6px; border-radius: 50%; border: 2px solid var(--accent-cyan); border-top-color: transparent; border-bottom-color: transparent; animation: coreRotateInner 3s infinite linear; }
+        .cyber-core-svg { width: 38px; height: 38px; fill: var(--accent-cyan); filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.9)); animation: corePulseIcon 1.5s infinite alternate ease-in-out; }
 
         @keyframes coreRotateOuter { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes coreRotateInner { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
         @keyframes corePulseIcon { 0% { transform: scale(0.92); opacity: 0.8; filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.6)); } 100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 15px rgba(0, 240, 255, 1)); } }
         @keyframes logoFloat { 0% { transform: translateY(0); box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); } 100% { transform: translateY(-8px); box-shadow: 0 0 40px rgba(0, 240, 255, 0.9); } }
 
-        /* POSISI TENGAH: TEKS WELCOME & VENUS STUDIO */
         .splash-center-section { text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 400px; z-index: 5; }
         .splash-welcome-top { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 800; letter-spacing: 5px; color: #7dd3fc; text-transform: uppercase; opacity: 0.85; margin-bottom: 4px; }
-
-        .splash-title-large {
-            font-family: 'Orbitron', sans-serif; font-size: clamp(2.1rem, 8.5vw, 2.9rem); font-weight: 900; text-transform: uppercase;
-            background: linear-gradient(135deg, #ffffff 0%, #00f0ff 65%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            display: flex; justify-content: center; align-items: center; white-space: nowrap; width: 100%; letter-spacing: -12px;
-            opacity: 0; transform: scale(3.2); filter: blur(18px); animation: netflixIntroMaster 1.6s cubic-bezier(0.15, 0.85, 0.25, 1) forwards;
-        }
+        .splash-title-large { font-family: 'Orbitron', sans-serif; font-size: clamp(2.1rem, 8.5vw, 2.9rem); font-weight: 900; text-transform: uppercase; background: linear-gradient(135deg, #ffffff 0%, #00f0ff 65%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; justify-content: center; align-items: center; white-space: nowrap; width: 100%; letter-spacing: -12px; opacity: 0; transform: scale(3.2); filter: blur(18px); animation: netflixIntroMaster 1.6s cubic-bezier(0.15, 0.85, 0.25, 1) forwards; }
 
         @keyframes netflixIntroMaster {
             0% { opacity: 0; transform: scale(3.5); letter-spacing: -14px; filter: blur(20px); text-shadow: 0 0 40px rgba(0, 240, 255, 1); }
@@ -200,36 +154,19 @@
             100% { opacity: 1; transform: scale(1); letter-spacing: 1.5px; filter: blur(0px); text-shadow: 0 0 12px rgba(0, 240, 255, 0.5); }
         }
 
-        /* POSISI BAWAH: TOMBOL TAP HERE */
         .splash-bottom-section { width: 100%; display: flex; justify-content: center; z-index: 5; padding-bottom: 20px; }
-        .tap-here-btn {
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15) 0%, rgba(0, 119, 255, 0.25) 100%);
-            border: 1.5px solid rgba(0, 240, 255, 0.7); color: #00f0ff; font-family: 'Rajdhani', sans-serif;
-            font-size: 1.15rem; font-weight: 800; letter-spacing: 3px; padding: 14px 38px; border-radius: 30px;
-            cursor: pointer; box-shadow: 0 0 20px rgba(0, 240, 255, 0.35); text-transform: uppercase;
-            opacity: 0; visibility: hidden; transition: opacity 0.5s ease, transform 0.2s ease;
-        }
+        .tap-here-btn { background: linear-gradient(135deg, rgba(0, 240, 255, 0.15) 0%, rgba(0, 119, 255, 0.25) 100%); border: 1.5px solid rgba(0, 240, 255, 0.7); color: #00f0ff; font-family: 'Rajdhani', sans-serif; font-size: 1.15rem; font-weight: 800; letter-spacing: 3px; padding: 14px 38px; border-radius: 30px; cursor: pointer; box-shadow: 0 0 20px rgba(0, 240, 255, 0.35); text-transform: uppercase; opacity: 0; visibility: hidden; transition: opacity 0.5s ease, transform 0.2s ease; }
         .tap-here-btn.show { opacity: 1; visibility: visible; animation: tapPulse 1.5s infinite ease-in-out; }
         .tap-here-btn:active { transform: scale(0.95); background: rgba(0, 240, 255, 0.35); box-shadow: 0 0 30px rgba(0, 240, 255, 0.8); }
 
         @keyframes tapPulse { 0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); } 50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 240, 255, 0.6); } }
 
         /* TAHAP 2: LAYAR KODE AKSES PIN */
-        .pin-screen-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
-            background: rgba(2, 7, 20, 0.98); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            z-index: 9999990; display: none; flex-direction: column; justify-content: center; align-items: center;
-            padding: 20px; transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .pin-screen-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh; background: rgba(2, 7, 20, 0.98); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 9999990; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .pin-screen-overlay.active { display: flex !important; }
         .pin-screen-overlay.hidden { opacity: 0; transform: scale(1.05); pointer-events: none; }
 
-        .cyber-scanner-flash {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.2) 0%, rgba(2, 7, 20, 0.98) 85%), linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
-            background-size: 100% 100%, 20px 20px, 20px 20px; z-index: 99999995; opacity: 0; visibility: hidden; pointer-events: none;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; transition: opacity 0.25s ease;
-        }
+        .cyber-scanner-flash { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh; background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.2) 0%, rgba(2, 7, 20, 0.98) 85%), linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px); background-size: 100% 100%, 20px 20px, 20px 20px; z-index: 99999995; opacity: 0; visibility: hidden; pointer-events: none; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; transition: opacity 0.25s ease; }
         .cyber-scanner-flash.active { opacity: 1; visibility: visible; animation: hackerTerminalSeq 1.1s forwards cubic-bezier(0.1, 0.9, 0.2, 1); }
 
         .hacker-terminal-box { background: rgba(2, 12, 32, 0.92); border: 1.5px solid #00f0ff; border-radius: 14px; padding: 20px 24px; max-width: 340px; width: 100%; box-shadow: 0 0 40px rgba(0, 240, 255, 0.5), inset 0 0 15px rgba(0, 240, 255, 0.25); font-family: 'Rajdhani', sans-serif; text-align: left; display: flex; flex-direction: column; gap: 8px; }
@@ -276,7 +213,7 @@
         h2.title-cyber, .title-music-box, .title-personal-box { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: clamp(1.4rem, 5vw, 1.8rem); letter-spacing: 2px; text-transform: uppercase; background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px rgba(0, 240, 255, 0.8); text-align: center; }
         .subtitle-cyber { font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; font-weight: 800; letter-spacing: 2px; color: #7dd3fc; text-transform: uppercase; margin-top: 4px; opacity: 0.95; text-align: center; }
 
-        /* MODAL / POP-UP HALAMAN CYBER VAULT, MUSIK & PERSONAL DATA */
+        /* MODAL / POP-UP */
         .cyber-modal-overlay, .music-modal-overlay, .personal-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh; background: rgba(2, 7, 20, 0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 99999999; display: flex; justify-content: center; align-items: center; padding: 12px; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s ease; }
         .cyber-modal-overlay.active, .music-modal-overlay.active, .personal-modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
 
@@ -345,8 +282,15 @@
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .datetime-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         label { font-size: 0.92rem; font-weight: 800; color: #7dd3fc; letter-spacing: 0.5px; margin-bottom: 2px; }
+        
         input, select, textarea { padding: 15px 16px; border: 1.5px solid rgba(0, 240, 255, 0.45); border-radius: 12px; font-size: 1.05rem; font-weight: 600; outline: none; background: rgba(2, 12, 32, 0.85); color: #ffffff; width: 100%; }
         input:focus, select:focus, textarea:focus { border-color: #00f0ff; box-shadow: 0 0 12px rgba(0, 240, 255, 0.4); }
+
+        /* KODE CSS UNTUK CUSTOM SELECT BOX AGAR SELALU DI TENGAH */
+        .custom-select-box { padding: 15px 16px; border: 1.5px solid rgba(0, 240, 255, 0.45); border-radius: 12px; font-size: 1.05rem; font-weight: 800; background: rgba(2, 12, 32, 0.85); color: #64748b; text-align: center; cursor: pointer; transition: all 0.2s ease; }
+        .custom-select-box.selected { color: #ffffff; border-color: #00f0ff; }
+        .custom-option-btn { background: rgba(2, 12, 32, 0.85); border: 1.5px solid rgba(0, 240, 255, 0.45); border-radius: 12px; color: #ffffff; font-size: 1.05rem; font-weight: 800; padding: 16px; width: 100%; text-align: center; cursor: pointer; transition: all 0.2s ease; display: block; }
+        .custom-option-btn:active { background: rgba(0, 240, 255, 0.25); border-color: #00f0ff; transform: scale(0.98); }
 
         .account-title-card { background: rgba(2, 12, 32, 0.85); border: 1.5px solid rgba(0, 240, 255, 0.4); border-radius: 14px; padding: 16px 18px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s ease; }
         .account-title-card:active { background: rgba(0, 240, 255, 0.2); border-color: #00f0ff; transform: scale(0.98); }
@@ -392,6 +336,7 @@
         .history-item:active { transform: scale(0.98); background: rgba(0, 240, 255, 0.12); }
         .history-item.in { border-left-color: var(--pemasukan-green); }
         .history-item.out { border-left-color: var(--pengeluaran-red); }
+        .history-item.refund { border-left-color: var(--refund-yellow); }
 
         .item-info { display: flex; flex-direction: column; gap: 5px; flex-grow: 1; }
         .item-desc { font-weight: 800; font-size: 1.1rem; color: #fff; line-height: 1.4; }
@@ -401,6 +346,7 @@
         .item-amount { font-weight: 900; font-size: 1.15rem; }
         .amount-in { color: #34d399; }
         .amount-out { color: #fb7185; }
+        .amount-refund { color: #fbbf24; }
 
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(1, 4, 12, 0.85); backdrop-filter: blur(10px); z-index: 99999999; display: flex; justify-content: center; align-items: center; padding: 16px; opacity: 0; pointer-events: none; transition: opacity 0.2s ease-out; }
         .popup-overlay.active { opacity: 1; pointer-events: auto; }
@@ -641,24 +587,28 @@
             </div>
 
             <form id="transactionForm">
+                <!-- CUSTOM SELECT BOX: JENIS TRANSAKSI -->
                 <div class="form-group">
-                    <label for="type">Jenis Transaksi</label>
-                    <select id="type" required><option value="in">Pemasukan (+)</option><option value="out">Pengeluaran (-)</option></select>
+                    <label>Jenis Transaksi</label>
+                    <div class="custom-select-box" id="btnSelectType">-- Pilih Jenis --</div>
+                    <input type="hidden" id="type" required>
                 </div>
+                
                 <div class="form-group"><label for="amount">Jumlah (Rp)</label><input type="text" id="amount" placeholder="Contoh: 500.000" inputmode="numeric" required></div>
                 <div class="form-group"><label for="description">Keterangan</label><input type="text" id="description" placeholder="Contoh: Gaji, Makan Siang" required></div>
+                
                 <div class="datetime-group">
                     <div class="form-group"><label for="inputDate">Tanggal Input</label><div class="datetime-custom-wrapper" id="dateWrapperBtn"><span class="datetime-display-text" id="dateDisplayText"></span><input type="date" id="inputDate" required></div></div>
                     <div class="form-group"><label for="inputTime">Jam Input</label><div class="datetime-custom-wrapper" id="timeWrapperBtn"><span class="datetime-display-text" id="timeDisplayText"></span><input type="time" id="inputTime" required></div></div>
                 </div>
+                
+                <!-- CUSTOM SELECT BOX: METODE PEMBAYARAN -->
                 <div class="form-group" id="paymentMethodGroup">
-                    <label for="paymentMethod">Metode Pembayaran</label>
-                    <select id="paymentMethod">
-                        <option value="CASH">💵 CASH (Tunai)</option>
-                        <option value="TRANSFER">🏦 TRANSFER BANK</option>
-                        <option value="QRIS">📱 QRIS (E-Wallet)</option>
-                    </select>
+                    <label>Metode Pembayaran</label>
+                    <div class="custom-select-box" id="btnSelectMethod">-- Pilih Metode --</div>
+                    <input type="hidden" id="paymentMethod" required>
                 </div>
+
                 <!-- BUKTI TRANSAKSI -->
                 <div class="form-group">
                     <label for="proofInput">Bukti Transaksi (Opsional)</label>
@@ -702,21 +652,22 @@
 
         <div class="form-group">
             <label>Jenis Transaksi</label>
-            <select id="editType"><option value="in">Pemasukan (+)</option><option value="out">Pengeluaran (-)</option></select>
+            <div class="custom-select-box selected" id="btnEditSelectType">-- Pilih Jenis --</div>
+            <input type="hidden" id="editType">
         </div>
+        
         <div class="form-group"><label>Jumlah (Rp)</label><input type="text" id="editAmount" inputmode="numeric"></div>
         <div class="form-group"><label>Keterangan</label><input type="text" id="editDescription"></div>
+        
         <div class="datetime-group">
             <div class="form-group"><label>Tanggal</label><input type="date" id="editDate"></div>
             <div class="form-group"><label>Jam</label><input type="time" id="editTime"></div>
         </div>
-        <div class="form-group" id="editMethodGroup">
+        
+        <div class="form-group">
             <label>Metode Pembayaran</label>
-            <select id="editMethod">
-                <option value="CASH">💵 CASH (Tunai)</option>
-                <option value="TRANSFER">🏦 TRANSFER BANK</option>
-                <option value="QRIS">📱 QRIS (E-Wallet)</option>
-            </select>
+            <div class="custom-select-box selected" id="btnEditSelectMethod">-- Pilih Metode --</div>
+            <input type="hidden" id="editMethod">
         </div>
 
         <div style="display: flex; gap: 10px; margin-top: 6px;">
@@ -771,6 +722,47 @@
     <div style="position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 20px;">
         <button type="button" id="closeFullscreenBtn" style="position: absolute; top: 20px; right: 20px; background: rgba(2, 7, 20, 0.8); border: 2px solid #00f0ff; color: #00f0ff; width: 44px; height: 44px; border-radius: 50%; font-size: 1.2rem; font-weight: bold; cursor: pointer; z-index: 10; display: flex; justify-content: center; align-items: center; transition: transform 0.2s;">✕</button>
         <img id="fullscreenImageView" src="" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 0 40px rgba(0, 240, 255, 0.4);" alt="Bukti Fullscreen">
+    </div>
+</div>
+
+<!-- MODAL-MODAL KHUSUS UNTUK CUSTOM SELECT BOX (MENJAGA TEXT RATA TENGAH) -->
+<div class="popup-overlay" id="modalSelectType">
+    <div class="popup-box" style="max-width: 320px; padding: 24px;">
+        <div class="popup-title" style="font-size: 1.2rem; margin-bottom: 16px;">JENIS TRANSAKSI</div>
+        <button type="button" class="custom-option-btn" onclick="selectType('in', '🟩 PEMASUKAN (+)')">🟩 PEMASUKAN (+)</button>
+        <button type="button" class="custom-option-btn" style="margin-top: 10px;" onclick="selectType('out', '🟥 PENGELUARAN (-)')">🟥 PENGELUARAN (-)</button>
+        <button type="button" class="custom-option-btn" style="margin-top: 10px; color: #fbbf24; border-color: rgba(251,191,36,0.5);" onclick="selectType('refund', '🟨 PENGEMBALIAN DANA')">🟨 PENGEMBALIAN DANA</button>
+        <button type="button" class="popup-btn" style="margin-top: 20px; background: transparent; border: 1px solid #00f0ff; color: #00f0ff; padding: 12px; box-shadow: none;" onclick="document.getElementById('modalSelectType').classList.remove('active')">Batal</button>
+    </div>
+</div>
+
+<div class="popup-overlay" id="modalEditSelectType">
+    <div class="popup-box" style="max-width: 320px; padding: 24px;">
+        <div class="popup-title" style="font-size: 1.2rem; margin-bottom: 16px;">JENIS TRANSAKSI</div>
+        <button type="button" class="custom-option-btn" onclick="selectEditType('in', '🟩 PEMASUKAN (+)')">🟩 PEMASUKAN (+)</button>
+        <button type="button" class="custom-option-btn" style="margin-top: 10px;" onclick="selectEditType('out', '🟥 PENGELUARAN (-)')">🟥 PENGELUARAN (-)</button>
+        <button type="button" class="custom-option-btn" style="margin-top: 10px; color: #fbbf24; border-color: rgba(251,191,36,0.5);" onclick="selectEditType('refund', '🟨 PENGEMBALIAN DANA')">🟨 PENGEMBALIAN DANA</button>
+        <button type="button" class="popup-btn" style="margin-top: 20px; background: transparent; border: 1px solid #00f0ff; color: #00f0ff; padding: 12px; box-shadow: none;" onclick="document.getElementById('modalEditSelectType').classList.remove('active')">Batal</button>
+    </div>
+</div>
+
+<div class="popup-overlay" id="modalSelectMethod">
+    <div class="popup-box" style="max-width: 320px; padding: 24px;">
+        <div class="popup-title" style="font-size: 1.2rem; margin-bottom: 16px;">METODE PEMBAYARAN</div>
+        <button type="button" class="custom-option-btn" onclick="selectMethod('CASH', '💵 CASH (Tunai)')">💵 CASH (Tunai)</button>
+        <button type="button" class="custom-option-btn" style="margin-top: 10px;" onclick="selectMethod('TRANSFER', '🏦 TRANSFER BANK')">🏦 TRANSFER BANK</button>
+        <button type="button" class="custom-option-btn" style="margin-top: 10px;" onclick="selectMethod('QRIS', '📱 QRIS (E-Wallet)')">📱 QRIS (E-Wallet)</button>
+        <button type="button" class="popup-btn" style="margin-top: 20px; background: transparent; border: 1px solid #00f0ff; color: #00f0ff; padding: 12px; box-shadow: none;" onclick="document.getElementById('modalSelectMethod').classList.remove('active')">Batal</button>
+    </div>
+</div>
+
+<div class="popup-overlay" id="modalEditSelectMethod">
+    <div class="popup-box" style="max-width: 320px; padding: 24px;">
+        <div class="popup-title" style="font-size: 1.2rem; margin-bottom: 16px;">METODE PEMBAYARAN</div>
+        <button type="button" class="custom-option-btn" onclick="selectEditMethod('CASH', '💵 CASH (Tunai)')">💵 CASH (Tunai)</button>
+        <button type="button" class="custom-option-btn" style="margin-top: 10px;" onclick="selectEditMethod('TRANSFER', '🏦 TRANSFER BANK')">🏦 TRANSFER BANK</button>
+        <button type="button" class="custom-option-btn" style="margin-top: 10px;" onclick="selectEditMethod('QRIS', '📱 QRIS (E-Wallet)')">📱 QRIS (E-Wallet)</button>
+        <button type="button" class="popup-btn" style="margin-top: 20px; background: transparent; border: 1px solid #00f0ff; color: #00f0ff; padding: 12px; box-shadow: none;" onclick="document.getElementById('modalEditSelectMethod').classList.remove('active')">Batal</button>
     </div>
 </div>
 
@@ -883,6 +875,38 @@
     closeMusicModalBtn.addEventListener('click', () => { musicModalOverlay.classList.remove('active'); sessionStorage.setItem('venus_active_modal', 'none'); });
     openPersonalModalPanel.addEventListener('click', () => { personalModalOverlay.classList.add('active'); sessionStorage.setItem('venus_active_modal', 'personal'); });
     closePersonalModalBtn.addEventListener('click', () => { personalModalOverlay.classList.remove('active'); sessionStorage.setItem('venus_active_modal', 'none'); });
+
+    // --- FUNGSI CUSTOM SELECT BOX (AGAR BISA DI TENGAH LAYAR) ---
+    function selectType(val, text) {
+        document.getElementById('type').value = val;
+        document.getElementById('btnSelectType').innerText = text;
+        document.getElementById('btnSelectType').classList.add('selected');
+        document.getElementById('modalSelectType').classList.remove('active');
+    }
+    document.getElementById('btnSelectType').addEventListener('click', () => document.getElementById('modalSelectType').classList.add('active'));
+
+    function selectMethod(val, text) {
+        document.getElementById('paymentMethod').value = val;
+        document.getElementById('btnSelectMethod').innerText = text;
+        document.getElementById('btnSelectMethod').classList.add('selected');
+        document.getElementById('modalSelectMethod').classList.remove('active');
+    }
+    document.getElementById('btnSelectMethod').addEventListener('click', () => document.getElementById('modalSelectMethod').classList.add('active'));
+
+    function selectEditType(val, text) {
+        document.getElementById('editType').value = val;
+        document.getElementById('btnEditSelectType').innerText = text;
+        document.getElementById('modalEditSelectType').classList.remove('active');
+    }
+    document.getElementById('btnEditSelectType').addEventListener('click', () => document.getElementById('modalEditSelectType').classList.add('active'));
+
+    function selectEditMethod(val, text) {
+        document.getElementById('editMethod').value = val;
+        document.getElementById('btnEditSelectMethod').innerText = text;
+        document.getElementById('modalEditSelectMethod').classList.remove('active');
+    }
+    document.getElementById('btnEditSelectMethod').addEventListener('click', () => document.getElementById('modalEditSelectMethod').classList.add('active'));
+
 
     // --- FITUR PERSONAL DATA ---
     const accountTitlesList = document.getElementById('accountTitlesList');
@@ -1140,24 +1164,67 @@
         if (filtered.length === 0) {
             historyList.innerHTML = '<li style="text-align:center; color:#a5f3fc; font-size:0.95rem; padding:20px 0;">Tidak ada transaksi pada periode ini</li>';
         } else {
-            filtered.sort((a, b) => new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`)).forEach(t => {
-                const li = document.createElement('li'); li.className = `history-item ${t.type}`;
+            // PENGURUTAN: Transaksi terbaru (berdasarkan ID / Waktu Input) selalu berada di posisi paling atas
+            filtered.sort((a, b) => {
+                const timeCompare = new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`);
+                if (timeCompare !== 0) return timeCompare;
+                return b.id - cIdFallback(a.id, b.id); // Fallback ke ID (timestamp milidetik) agar yang diinput paling akhir selalu di atas
+            }).forEach(t => {
+                const li = document.createElement('li'); 
+                li.className = `history-item ${t.type}`;
                 const proofBadge = t.proof ? `<span class="item-method-badge" style="background: rgba(0, 240, 255, 0.15); color: #00f0ff; border-color: rgba(0, 240, 255, 0.4);">📸 Ada Bukti</span>` : '';
-                li.innerHTML = `<div class="item-info"><span class="item-desc">${t.description} ${t.method ? '<span class="item-method-badge">'+t.method+'</span>' : ''} ${proofBadge}</span><span class="item-date">${formatTransactionDateTime(t.date, t.time)}</span></div><span class="item-amount ${t.type === 'in' ? 'amount-in' : 'amount-out'}">${t.type === 'in' ? '+' : '-'} ${formatRupiah(t.amount)}</span>`;
+                
+                let amountSign = '-';
+                let amountClass = 'amount-out';
+                if (t.type === 'in') { amountSign = '+'; amountClass = 'amount-in'; }
+                else if (t.type === 'refund') { amountSign = '-'; amountClass = 'amount-refund'; }
+
+                li.innerHTML = `<div class="item-info"><span class="item-desc">${t.description} ${t.method ? '<span class="item-method-badge">'+t.method+'</span>' : ''} ${proofBadge}</span><span class="item-date">${formatTransactionDateTime(t.date, t.time)}</span></div><span class="item-amount ${amountClass}">${amountSign} ${formatRupiah(t.amount)}</span>`;
                 li.addEventListener('click', () => openDetailModal(t.id)); historyList.appendChild(li);
             });
         }
-        let totalIn = 0, totalOut = 0; transactions.forEach(t => { if (t.type === 'in') totalIn += t.amount; else totalOut += t.amount; });
-        document.getElementById('totalSaldo').innerText = formatRupiah(totalIn - totalOut); document.getElementById('totalPemasukan').innerText = formatRupiah(totalIn); document.getElementById('totalPengeluaran').innerText = formatRupiah(totalOut);
-        try { localStorage.setItem('my_transactions', JSON.stringify(transactions)); } catch(e) { alert('PERINGATAN: Memori penyimpanan penuh. Tidak dapat menyimpan bukti gambar baru, harap hapus data lama atau lakukan backup data.'); }
+        let totalIn = 0, totalOut = 0; 
+        transactions.forEach(t => { 
+            if (t.type === 'in') {
+                totalIn += t.amount; 
+            } else if (t.type === 'out') {
+                totalOut += t.amount; 
+            } else if (t.type === 'refund') {
+                totalOut -= t.amount; 
+            }
+        });
+        document.getElementById('totalSaldo').innerText = formatRupiah(totalIn - totalOut); 
+        document.getElementById('totalPemasukan').innerText = formatRupiah(totalIn); 
+        document.getElementById('totalPengeluaran').innerText = formatRupiah(totalOut);
+        try { localStorage.setItem('my_transactions', JSON.stringify(transactions)); } catch(e) { alert('PERINGATAN: Memori penyimpanan penuh.'); }
     }
+
+    function cIdFallback(idA, idB) { return idA; }
 
     const detailTransactionModal = document.getElementById('detailTransactionModal'); const closeDetailModalBtn = document.getElementById('closeDetailModalBtn');
     const editTxId = document.getElementById('editTxId'); const editType = document.getElementById('editType'); const editAmount = document.getElementById('editAmount'); const editDescription = document.getElementById('editDescription'); const editDate = document.getElementById('editDate'); const editTime = document.getElementById('editTime'); const editMethod = document.getElementById('editMethod'); const detailProofImage = document.getElementById('detailProofImage'); const editProofInput = document.getElementById('editProofInput');
 
     function openDetailModal(id) {
         const tx = transactions.find(t => t.id === id); if (!tx) return;
-        editTxId.value = tx.id; editType.value = tx.type; editAmount.value = tx.amount.toLocaleString('id-ID'); editDescription.value = tx.description; editDate.value = tx.date; editTime.value = tx.time; editMethod.value = tx.method || 'CASH';
+        editTxId.value = tx.id; 
+        
+        editType.value = tx.type; 
+        let typeText = '🟩 PEMASUKAN (+)';
+        if(tx.type === 'out') typeText = '🟥 PENGELUARAN (-)';
+        if(tx.type === 'refund') typeText = '🟨 PENGEMBALIAN DANA';
+        document.getElementById('btnEditSelectType').innerText = typeText;
+        
+        editAmount.value = tx.amount.toLocaleString('id-ID'); 
+        editDescription.value = tx.description; 
+        editDate.value = tx.date; 
+        editTime.value = tx.time; 
+        
+        editMethod.value = tx.method || 'CASH';
+        let methodText = '💵 CASH (Tunai)';
+        if(editMethod.value === 'TRANSFER') methodText = '🏦 TRANSFER BANK';
+        if(editMethod.value === 'QRIS') methodText = '📱 QRIS (E-Wallet)';
+        document.getElementById('btnEditSelectMethod').innerText = methodText;
+
         if (tx.proof) { detailProofImage.src = tx.proof; detailProofImage.style.display = 'block'; } else { detailProofImage.src = ''; detailProofImage.style.display = 'none'; }
         editProofInput.value = ''; detailTransactionModal.classList.add('active');
     }
@@ -1200,16 +1267,45 @@
     const transactionForm = document.getElementById('transactionForm'); const btnSubmit = document.getElementById('btnSubmit'); const btnText = document.getElementById('btnText'); const popupNotification = document.getElementById('popupNotification'); const popupTitle = document.getElementById('popupTitle'); const popupSubtitle = document.getElementById('popupSubtitle');
 
     transactionForm.addEventListener('submit', function(e) {
-        e.preventDefault(); const type = document.getElementById('type').value; const amount = parseFloat(document.getElementById('amount').value.replace(/\./g, '')); const description = document.getElementById('description').value; const date = selectedDateValue; const time = timeDisplayText.innerText; const method = document.getElementById('paymentMethod').value; const proofFile = document.getElementById('proofInput').files[0];
-        if (!amount || isNaN(amount) || !description || !date || !time) return;
+        e.preventDefault(); 
+        const type = document.getElementById('type').value; 
+        const method = document.getElementById('paymentMethod').value;
+        const amount = parseFloat(document.getElementById('amount').value.replace(/\./g, '')); 
+        const description = document.getElementById('description').value; 
+        const date = selectedDateValue; 
+        const time = timeDisplayText.innerText; 
+        const proofFile = document.getElementById('proofInput').files[0];
+        
+        if (!type || !method || !amount || isNaN(amount) || !description || !date || !time) {
+            return alert('Mohon pastikan Jenis Transaksi dan Metode Pembayaran sudah dipilih!');
+        }
+        
         btnSubmit.disabled = true; btnText.innerHTML = '<span class="btn-spinner"></span> Memproses...';
         compressImage(proofFile, function(base64Proof) {
             setTimeout(() => {
-                transactions.push({ id: Date.now(), type, amount, description, date, time, method, proof: base64Proof }); updateUI(); transactionForm.reset(); document.getElementById('proofInput').value = '';
+                // Menggunakan Date.now() sebagai ID unik agar urutan terbaru presisi di posisi paling atas
+                transactions.push({ id: Date.now(), type, amount, description, date, time, method, proof: base64Proof }); 
+                updateUI(); 
+                
+                transactionForm.reset(); 
+                document.getElementById('proofInput').value = '';
+                
+                document.getElementById('type').value = '';
+                document.getElementById('btnSelectType').innerText = '-- Pilih Jenis --';
+                document.getElementById('btnSelectType').classList.remove('selected');
+                
+                document.getElementById('paymentMethod').value = '';
+                document.getElementById('btnSelectMethod').innerText = '-- Pilih Metode --';
+                document.getElementById('btnSelectMethod').classList.remove('selected');
+
                 const freshNow = new Date(); selectedDateValue = freshNow.toISOString().slice(0,10); const freshHour = String(freshNow.getHours()).padStart(2,'0'); const freshMinute = String(freshNow.getMinutes()).padStart(2,'0'); const freshTimeString = `${freshHour}:${freshMinute}`;
                 inputDate.value = selectedDateValue; dateDisplayText.innerText = formatDateDisplay(selectedDateValue); inputTime.value = freshTimeString; timeDisplayText.innerText = freshTimeString;
                 btnSubmit.disabled = false; btnText.innerText = 'Tambah Transaksi'; playCashSound();
-                if (type === 'in') { popupTitle.innerText = "Pemasukan Masuk!"; popupSubtitle.innerText = `Berhasil mencatat ${description} (+${formatRupiah(amount)})`; } else { popupTitle.innerText = "Pengeluaran Dicatat!"; popupSubtitle.innerText = `Berhasil mencatat ${description} (-${formatRupiah(amount)})`; }
+                
+                if (type === 'in') { popupTitle.innerText = "Pemasukan Masuk!"; popupSubtitle.innerText = `Berhasil mencatat ${description} (+${formatRupiah(amount)})`; } 
+                else if (type === 'out') { popupTitle.innerText = "Pengeluaran Dicatat!"; popupSubtitle.innerText = `Berhasil mencatat ${description} (-${formatRupiah(amount)})`; }
+                else if (type === 'refund') { popupTitle.innerText = "Pengembalian Dana!"; popupSubtitle.innerText = `Berhasil mencatat ${description} (Pengurangan Pengeluaran)`; }
+                
                 popupNotification.classList.add('active');
             }, 500);
         });
